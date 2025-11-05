@@ -5,55 +5,166 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mediwaste Solutions</title>
-  <meta name="description" content="Lovable Generated Project">
-  <meta name="author" content="Lovable">
-
-  <meta property="og:title" content="waste-wise-offer">
-  <meta property="og:description" content="Lovable Generated Project">
-  <meta property="og:type" content="website">
-  <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png">
-
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:site" content="@lovable_dev">
-  <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png">
-
   <style>
     body {
       font-family: Arial, sans-serif;
       margin: 0;
-      height: 100vh; /* Hele schermhoogte */
+      background-color: #ebe7e7;
+      line-height: 1.5;
       display: flex;
-      justify-content: center; /* Horizontaal centreren */
-      align-items: center;     /* Verticaal centreren */
-      background-color: #ffffff;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    header {
+      display: flex;
+      justify-content: flex-end;
+      padding: 20px;
+    }
+    .login-btn {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1rem;
+      border-radius: 6px;
+      cursor: pointer;
     }
     #root {
-      text-align: center; /* Centraal uitlijnen van tekst */
-      max-width: 600px;  /* Optioneel: niet te brede tekst */
+      text-align: center;
+      max-width: 600px;
+      margin: 100px auto 50px;
     }
     h1 {
       color: #2150b6;
+      font-size: 3rem; /* Groter gemaakt */
+      margin-bottom: 20px;
+    }
+    p {
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+    }
+    .btn {
+      background-color: #2150b6;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-bottom: 100px;
+    }
+    .section {
+      max-width: 1000px;
+      margin: 0 auto 50px;
+      padding: 50px 20px;
+    }
+    .section h2 {
+      text-align: center;
+      color: #2150b6;
+      margin-bottom: 40px;
+    }
+    .options {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: nowrap;
+    }
+    .option {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 20px;
+      width: 300px;
+      box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .option h3 {
+      margin-bottom: 10px;
+      color: #2150b6;
+    }
+    footer {
+      margin-top: auto;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      background-color: #f1f1f1;
+      font-size: 0.9rem;
     }
   </style>
-
 </head>
 <body>
+  <header>
+    <button class="login-btn" onclick="window.open('', '_blank')">Inloggen</button>
+  </header>
+
   <div id="root"></div>
 
   <script>
-    // Vul de "root"-div met content
     const root = document.getElementById('root');
 
     const title = document.createElement('h1');
-    title.textContent = 'Bespaar op uw medische afvalkosten!';
+    title.textContent = 'Bespaar op uw medische afvalkosten'; // Uitroepteken verwijderd
 
     const description = document.createElement('p');
     description.textContent = 'Ontdek hoeveel uw organisatie kan besparen met een alternatieve manier van medische afvalverwerking. Vraag vandaag nog uw gratis besparingsanalyse aan.';
 
+    const button = document.createElement('button');
+    button.className = 'btn';
+    button.textContent = 'Vraag je besparingsanalyse aan';
+    button.addEventListener('click', () => {
+      window.open('', '_blank');
+    });
+
     root.appendChild(title);
     root.appendChild(description);
+    root.appendChild(button);
+
+    const section = document.createElement('div');
+    section.className = 'section';
+
+    const sectionTitle = document.createElement('h2');
+    sectionTitle.textContent = 'Waarom kiezen voor onze oplossing?';
+    section.appendChild(sectionTitle);
+
+    const optionsContainer = document.createElement('div');
+    optionsContainer.className = 'options';
+
+    const optionsData = [
+      { title: 'Kostenbesparend', text: 'Ontdek directe besparingen op uw huidige afvalbeheerkosten met onze geavanceerde analyse.' },
+      { title: 'Duurzaam', text: 'Een milieuvriendelijk alternatief dat perfect past binnen de duurzaamheidsdoelen van uw organisatie.' },
+      { title: 'Veilig & Compliant', text: 'Volledig conform alle Belgische en Europese regelgeving voor medisch afvalbeheer.' }
+    ];
+
+    optionsData.forEach(opt => {
+      const div = document.createElement('div');
+      div.className = 'option';
+      const h3 = document.createElement('h3');
+      h3.textContent = opt.title;
+      const p = document.createElement('p');
+      p.textContent = opt.text;
+      div.appendChild(h3);
+      div.appendChild(p);
+      optionsContainer.appendChild(div);
+    });
+
+    section.appendChild(optionsContainer);
+    document.body.appendChild(section);
+
+    const footer = document.createElement('footer');
+    const leftText = document.createElement('div');
+    leftText.textContent = 'Mediwaste Solutions';
+    const rightText = document.createElement('div');
+    rightText.textContent = '© 2025 Mediwaste Solutions. Alle rechten voorbehouden.';
+    footer.appendChild(leftText);
+    footer.appendChild(rightText);
+    document.body.appendChild(footer);
   </script>
 
 </body>
 </html>
+
+
+
+
+
 
