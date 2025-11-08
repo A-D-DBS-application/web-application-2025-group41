@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-
-<html lang="en">
+<html lang="nl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,34 +14,53 @@
       flex-direction: column;
       min-height: 100vh;
     }
+
     header {
       display: flex;
-      justify-content: flex-end;
+      flex-direction: column; /* onder elkaar */
+      align-items: flex-end;  /* rechts uitlijnen */
       padding: 20px;
+      gap: 10px;
     }
+
+    .register-btn,
     .login-btn {
-      background-color: #28a745;
-      color: white;
       border: none;
       padding: 10px 20px;
       font-size: 1rem;
       border-radius: 6px;
       cursor: pointer;
+      width: 160px; /* even breed */
+      text-align: center;
     }
+
+    .register-btn {
+      background-color: #2150b6;
+      color: white;
+    }
+
+    .login-btn {
+      background-color: #28a745;
+      color: white;
+    }
+
     #root {
       text-align: center;
       max-width: 600px;
       margin: 100px auto 50px;
     }
+
     h1 {
       color: #2150b6;
-      font-size: 3rem; /* Groter gemaakt */
+      font-size: 3rem;
       margin-bottom: 20px;
     }
+
     p {
       font-size: 1.1rem;
       margin-bottom: 20px;
     }
+
     .btn {
       background-color: #2150b6;
       color: white;
@@ -53,22 +71,26 @@
       cursor: pointer;
       margin-bottom: 100px;
     }
+
     .section {
       max-width: 1000px;
       margin: 0 auto 50px;
       padding: 50px 20px;
     }
+
     .section h2 {
       text-align: center;
       color: #2150b6;
       margin-bottom: 40px;
     }
+
     .options {
       display: flex;
       justify-content: center;
       gap: 20px;
       flex-wrap: nowrap;
     }
+
     .option {
       border: 1px solid #ccc;
       border-radius: 8px;
@@ -78,10 +100,12 @@
       text-align: center;
       flex-shrink: 0;
     }
+
     .option h3 {
       margin-bottom: 10px;
       color: #2150b6;
     }
+
     footer {
       margin-top: auto;
       padding: 20px;
@@ -94,7 +118,8 @@
 </head>
 <body>
   <header>
-    <button class="login-btn" onclick="window.open('Register.html', '_blank')">Inloggen</button>
+    <button class="register-btn" onclick="window.open('register.html', '_blank')">Registreren</button>
+    <button class="login-btn" onclick="window.open('login.html', '_blank')">Login</button>
   </header>
 
   <div id="root"></div>
@@ -103,7 +128,7 @@
     const root = document.getElementById('root');
 
     const title = document.createElement('h1');
-    title.textContent = 'Bespaar op uw medische afvalkosten'; // Uitroepteken verwijderd
+    title.textContent = 'Bespaar op uw medische afvalkosten';
 
     const description = document.createElement('p');
     description.textContent = 'Ontdek hoeveel uw organisatie kan besparen met een alternatieve manier van medische afvalverwerking. Vraag vandaag nog uw gratis besparingsanalyse aan.';
@@ -159,9 +184,8 @@
     footer.appendChild(rightText);
     document.body.appendChild(footer);
   </script>
-
 </body>
-</html> 
+</html>
 
 
 
