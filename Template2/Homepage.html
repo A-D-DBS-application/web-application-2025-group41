@@ -165,16 +165,11 @@
     const description = document.createElement('p');
     description.textContent = 'Ontdek hoeveel uw organisatie kan besparen met een alternatieve manier van medische afvalverwerking. Vraag vandaag nog uw gratis besparingsanalyse aan.';
 
-    const button = document.createElement('button');
-    button.className = 'btn';
-    button.textContent = 'Vraag je besparingsanalyse aan';
-    button.addEventListener('click', () => {
-      window.open('', '_blank');
-    });
+
 
     root.appendChild(title);
     root.appendChild(description);
-    root.appendChild(button);
+    
 
     const section = document.createElement('div');
     section.className = 'section';
