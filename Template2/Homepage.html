@@ -8,7 +8,7 @@
     body {
       font-family: Arial, sans-serif;
       margin: 0;
-      background-color: #ebe7e7;
+      background-color: #FFFFFF;
       line-height: 1.5;
       display: flex;
       flex-direction: column;
@@ -114,13 +114,45 @@
       background-color: #f1f1f1;
       font-size: 0.9rem;
     }
+    header {
+      position: relative;    /* belangrijk voor absolute buttons */
+      height: 120px;         /* bepaal een vaste hoogte voor de header */
+      text-align: center;    /* logo in het midden */
+      padding-top: 20px;     /* ruimte boven logo */
+    }
+
+    .logo {
+      width: 300px;
+      height: auto;
+      display: block;
+      margin: 0 auto;        /* centreer horizontaal */
+    }
+
+    .buttons {
+      position: absolute;    /* los van logo en flow */
+      top: 20px;             /* afstand vanaf bovenkant */
+      right: 20px;           /* helemaal rechts */
+      display: flex;
+      flex-direction: column; /* knoppen onder elkaar */
+      gap: 10px;             /* ruimte tussen knoppen */
+    }
+
+
+
   </style>
 </head>
 <body>
   <header>
-    <button class="register-btn" onclick="window.open('register.html', '_blank')">Registreren</button>
-    <button class="login-btn" onclick="window.open('login.html', '_blank')">Login</button>
+    <img src="Logo-Mediwaste-Wit.svg" alt="Mediwaste Solutions logo" class="logo">
+
+    <div class="buttons">
+      <button class="register-btn" onclick="window.open('register.html', '_blank')">Registreren</button>
+      <button class="login-btn" onclick="window.open('login.html', '_blank')">Login</button>
+    </div>
   </header>
+
+
+
 
   <div id="root"></div>
 
