@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resultaat Besparingsanalyse - Mediwaste Solutions</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #e6ebf8;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    main {
+      flex: 1; /* vult de resterende ruimte zodat footer onderaan staat */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 40px 20px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      color: #2150b6;
+      margin-bottom: 40px;
+      text-align: center;
+    }
+
+    .results {
+      display: flex;
+      gap: 30px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
+    }
+
+    .result-box {
+      background-color: #fff;
+      padding: 20px 25px;
+      border-radius: 10px;
+      box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+      min-width: 200px;
+      text-align: center;
+    }
+
+    .result-box h3 {
+      color: #2150b6;
+      margin-bottom: 10px;
+    }
+
+    .result-box p {
+      font-size: 1.1rem;
+      margin: 0;
+      color: #333;
+    }
+
+    .contact {
+      text-align: center;
+      font-size: 0.95rem;
+      color: #555;
+    }
+
+    .contact a {
+      color: #2150b6;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .contact a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        padding: 10px 20px;
+        background-color: #f1f1f1;
+        border-top: 1px solid #ccc;
+        font-size: 0.85rem;
+        color: #333;
+        box-sizing: border-box;
+        flex-wrap: wrap; /* laat content op kleine schermen onder elkaar */
+    }
+
+    footer > div {
+        max-width: 48%; /* voorkomt dat ze te breed worden en horizontaal scrollen */
+        text-align: left; /* links voor de linkse div */
+    }
+
+    footer > div:last-child {
+        text-align: right; /* rechts voor de copyright */
+    }
+
+    @media(max-width: 500px) {
+        footer > div {
+            max-width: 100%;
+            text-align: center; /* centeren op smalle schermen */
+            margin: 5px 0;
+  }
+
+}
+  </style>
+</head>
+<body>
+
+  <main>
+    <h1>Resultaat Besparingsanalyse</h1>
+
+    <div class="results">
+      <div class="result-box">
+        <h3>Aanbevolen machinetype</h3>
+        <p>Machine X</p>
+      </div>
+      <div class="result-box">
+        <h3>Nieuwe totale kosten</h3>
+        <p>X</p>
+      </div>
+      <div class="result-box">
+        <h3>Terugverdientijd</h3>
+        <p>X</p>
+      </div>
+      <div class="result-box">
+        <h3>Discounted Cashflow</h3>
+        <p>X</p>
+      </div>
+    </div>
+
+    <div class="contact">
+      Voor vragen of meer informatie over uw besparingsanalyse, <a href="contact.html">neem contact op</a>.
+    </div>
+  </main>
+
+  <footer>
+    <div>Mediwaste Solutions</div>
+    <div>© 2025 Mediwaste Solutions BV. Alle rechten voorbehouden.</div>
+  </footer>
+
+</body>
+</html>
+
+
+
