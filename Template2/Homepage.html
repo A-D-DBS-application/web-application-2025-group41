@@ -1,218 +1,212 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mediwaste Solutions</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background-color: #FFFFFF;
-      line-height: 1.5;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-
-    header {
-      display: flex;
-      flex-direction: column; /* onder elkaar */
-      align-items: flex-end;  /* rechts uitlijnen */
-      padding: 20px;
-      gap: 10px;
-    }
-
-    .register-btn,
-    .login-btn {
-      border: none;
-      padding: 10px 20px;
-      font-size: 1rem;
-      border-radius: 6px;
-      cursor: pointer;
-      width: 160px; /* even breed */
-      text-align: center;
-    }
-
-    .register-btn {
-      background-color: #2150b6;
-      color: white;
-    }
-
-    .login-btn {
-      background-color: #eded1a;
-      color: white;
-    }
-
-    #root {
-      text-align: center;
-      max-width: 600px;
-      margin: 100px auto 50px;
-    }
-
-    h1 {
-      color: #2150b6;
-      font-size: 3rem;
-      margin-bottom: 20px;
-    }
-
-    p {
-      font-size: 1.1rem;
-      margin-bottom: 20px;
-    }
-
-    .btn {
-      background-color: #2150b6;
-      color: white;
-      border: none;
-      padding: 12px 24px;
-      font-size: 1rem;
-      border-radius: 6px;
-      cursor: pointer;
-      margin-bottom: 100px;
-    }
-
-    .section {
-      max-width: 1000px;
-      margin: 0 auto 50px;
-      padding: 50px 20px;
-    }
-
-    .section h2 {
-      text-align: center;
-      color: #2150b6;
-      margin-bottom: 40px;
-    }
-
-    .options {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: nowrap;
-    }
-
-    .option {
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      padding: 20px;
-      width: 300px;
-      box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
-      text-align: center;
-      flex-shrink: 0;
-    }
-
-    .option h3 {
-      margin-bottom: 10px;
-      color: #2150b6;
-    }
-
-    footer {
-      margin-top: auto;
-      padding: 20px;
-      display: flex;
-      justify-content: space-between;
-      background-color: #f1f1f1;
-      font-size: 0.9rem;
-    }
-    header {
-      position: relative;    /* belangrijk voor absolute buttons */
-      height: 120px;         /* bepaal een vaste hoogte voor de header */
-      text-align: center;    /* logo in het midden */
-      padding-top: 20px;     /* ruimte boven logo */
-    }
-
-    .logo {
-      width: 400px;
-      height: auto;
-      display: block;
-      margin: 0 auto;        /* centreer horizontaal */
-    }
-
-    .buttons {
-      position: absolute;    /* los van logo en flow */
-      top: 20px;             /* afstand vanaf bovenkant */
-      right: 20px;           /* helemaal rechts */
-      display: flex;
-      flex-direction: column; /* knoppen onder elkaar */
-      gap: 10px;             /* ruimte tussen knoppen */
-    }
-
-
-
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mediwaste Solutions</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background-color: #FFFFFF;
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+header {
+  display: flex;
+  flex-direction: column; /* onder elkaar */
+  align-items: flex-end; /* rechts uitlijnen */
+  padding: 20px;
+  gap: 10px;
+}
+.register-btn, .login-btn {
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 160px; /* even breed */
+  text-align: center;
+}
+.register-btn {
+  background-color: #2150b6;
+  color: white;
+}
+.login-btn {
+  background-color: #eded1a;
+  color: white;
+}
+#root {
+  text-align: center;
+  max-width: 600px;
+  margin: 100px auto 50px;
+}
+h1 {
+  color: #2150b6;
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+p {
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+}
+.btn {
+  background-color: #2150b6;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-bottom: 100px;
+}
+.section {
+  max-width: 1000px;
+  margin: 0 auto 50px;
+  padding: 50px 20px;
+}
+.section h2 {
+  text-align: center;
+  color: #2150b6;
+  margin-bottom: 40px;
+}
+.options {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: nowrap;
+}
+.option {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  width: 300px;
+  box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+  text-align: center;
+  flex-shrink: 0;
+}
+.option h3 {
+  margin-bottom: 10px;
+  color: #2150b6;
+}
+footer {
+  margin-top: auto;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  background-color: #f1f1f1;
+  font-size: 0.9rem;
+}
+header {
+  position: relative; /* belangrijk voor absolute buttons */
+  height: 120px; /* bepaal een vaste hoogte voor de header */
+  text-align: center; /* logo in het midden */
+  padding-top: 20px; /* ruimte boven logo */
+}
+.logo {
+  width: 400px;
+  height: auto;
+  display: block;
+  margin: 0 auto; /* centreer horizontaal */
+}
+.buttons {
+  position: absolute; /* los van logo en flow */
+  top: 20px; /* afstand vanaf bovenkant */
+  right: 20px; /* helemaal rechts */
+  display: flex;
+  flex-direction: column; /* knoppen onder elkaar */
+  gap: 10px; /* ruimte tussen knoppen */
+}
+</style>
 </head>
 <body>
-  <header>
-    <img src="Logo-Mediwaste-Wit.svg" alt="Mediwaste Solutions logo" class="logo">
+<header>
+  <img src="Logo-Mediwaste-Wit.svg" alt="Mediwaste Solutions logo" class="logo">
+  <div class="buttons">
+    <button class="register-btn" onclick="window.open('register.html', '_blank')">Registreren</button>
+    <button class="login-btn" onclick="window.open('login.html', '_blank')">Login</button>
+  </div>
+</header>
+<div id="root"></div>
+<script>
+const root = document.getElementById('root');
 
-    <div class="buttons">
-      <button class="register-btn" onclick="window.open('register.html', '_blank')">Registreren</button>
-      <button class="login-btn" onclick="window.open('login.html', '_blank')">Login</button>
-    </div>
-  </header>
+// Titel en beschrijving
+const title = document.createElement('h1');
+title.textContent = 'Bespaar op uw medische afvalkosten';
+const description = document.createElement('p');
+description.textContent = 'Ontdek hoeveel uw organisatie kan besparen met een alternatieve manier van medische afvalverwerking. Vraag vandaag nog uw gratis besparingsanalyse aan.';
+root.appendChild(title);
+root.appendChild(description);
 
+// Sectie opties
+const section = document.createElement('div');
+section.className = 'section';
+const sectionTitle = document.createElement('h2');
+sectionTitle.textContent = 'Waarom kiezen voor onze oplossing?';
+section.appendChild(sectionTitle);
 
+const optionsContainer = document.createElement('div');
+optionsContainer.className = 'options';
 
+const optionsData = [
+  { title: 'Kostenbesparend', text: 'Ontdek directe besparingen op uw huidige afvalbeheerkosten met onze geavanceerde analyse.' },
+  { title: 'Duurzaam', text: 'Minder transport, minder uitstoot: ons systeem helpt uw afvalbeheer efficiënter te organiseren, wat bijdraagt aan een duurzamer proces.' },
+  { title: 'Toekomstgericht', text: 'Blijf voorbereid op veranderingen in de sector en ontdek kansen om uw afvalbeheer continu te verbeteren.' }
+];
 
-  <div id="root"></div>
+optionsData.forEach(opt => {
+  const div = document.createElement('div');
+  div.className = 'option';
 
-  <script>
-    const root = document.getElementById('root');
+  // Afbeelding boven de titel toevoegen
+  const img = document.createElement('img');
+  img.style.width = '60px';       // grootte aanpassen
+  img.style.marginBottom = '10px'; // ruimte tussen afbeelding en titel
 
-    const title = document.createElement('h1');
-    title.textContent = 'Bespaar op uw medische afvalkosten';
+  if(opt.title === 'Duurzaam') {
+    img.src = 'greenrecycle.png';
+    img.alt = 'Duurzaam icoon';
+    div.appendChild(img);
+  } else if(opt.title === 'Toekomstgericht') {
+    img.src = 'toekomstgericht.png';
+    img.alt = 'Toekomstgericht icoon';
+    div.appendChild(img);
+  } else if(opt.title === 'Kostenbesparend') {
+    img.src = 'kostenbesparend.png';
+    img.alt = 'Kostenbesparend icoon';
+    div.appendChild(img);
+  }
 
-    const description = document.createElement('p');
-    description.textContent = 'Ontdek hoeveel uw organisatie kan besparen met een alternatieve manier van medische afvalverwerking. Vraag vandaag nog uw gratis besparingsanalyse aan.';
+  const h3 = document.createElement('h3');
+  h3.textContent = opt.title;
+  const p = document.createElement('p');
+  p.textContent = opt.text;
 
+  div.appendChild(h3);
+  div.appendChild(p);
+  optionsContainer.appendChild(div);
+});
 
+section.appendChild(optionsContainer);
+document.body.appendChild(section);
 
-    root.appendChild(title);
-    root.appendChild(description);
-    
-
-    const section = document.createElement('div');
-    section.className = 'section';
-
-    const sectionTitle = document.createElement('h2');
-    sectionTitle.textContent = 'Waarom kiezen voor onze oplossing?';
-    section.appendChild(sectionTitle);
-
-    const optionsContainer = document.createElement('div');
-    optionsContainer.className = 'options';
-
-    const optionsData = [
-      { title: 'Kostenbesparend', text: 'Ontdek directe besparingen op uw huidige afvalbeheerkosten met onze geavanceerde analyse.' },
-      { title: 'Duurzaam', text: 'Minder transport, minder uitstoot: ons systeem helpt uw afvalbeheer efficiënter te organiseren, wat bijdraagt aan een duurzamer proces.' },
-      { title: 'Toekomstgericht', text: 'Blijf voorbereid op veranderingen in de sector en ontdek kansen om uw afvalbeheer continu te verbeteren.' }
-    ];
-
-    optionsData.forEach(opt => {
-      const div = document.createElement('div');
-      div.className = 'option';
-      const h3 = document.createElement('h3');
-      h3.textContent = opt.title;
-      const p = document.createElement('p');
-      p.textContent = opt.text;
-      div.appendChild(h3);
-      div.appendChild(p);
-      optionsContainer.appendChild(div);
-    });
-
-    section.appendChild(optionsContainer);
-    document.body.appendChild(section);
-
-    const footer = document.createElement('footer');
-    const leftText = document.createElement('div');
-    leftText.textContent = 'Mediwaste Solutions';
-    const rightText = document.createElement('div');
-    rightText.textContent = '© 2025 Mediwaste Solutions BV. Alle rechten voorbehouden.';
-    footer.appendChild(leftText);
-    footer.appendChild(rightText);
-    document.body.appendChild(footer);
-  </script>
+// Footer
+const footer = document.createElement('footer');
+const leftText = document.createElement('div');
+leftText.textContent = 'Mediwaste Solutions';
+const rightText = document.createElement('div');
+rightText.textContent = '© 2025 Mediwaste Solutions BV. Alle rechten voorbehouden.';
+footer.appendChild(leftText);
+footer.appendChild(rightText);
+document.body.appendChild(footer);
+</script>
 </body>
 </html>
+
+
 
 
 
