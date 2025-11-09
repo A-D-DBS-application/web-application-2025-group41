@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nieuwe berekening - Mediwaste Solutions</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #ebe7e7;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .calc-page {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 60px 20px;
+    }
+
+    .calc-container {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+      padding: 40px 50px;
+      width: 600px;
+    }
+
+    h2 {
+      color: #2150b6;
+      text-align: center;
+      margin-bottom: 5px;
+    }
+
+    p.subtitle {
+      text-align: center;
+      color: #333;
+      font-size: 1rem;
+      margin-bottom: 35px;
+    }
+
+    h3 {
+      color: #2150b6;
+      border-bottom: 2px solid #2150b6;
+      padding-bottom: 5px;
+      margin-top: 30px;
+      margin-bottom: 20px;
+      font-size: 1.2rem;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 6px;
+      color: #2150b6;
+    }
+
+    .input-group {
+      position: relative;
+      margin-bottom: 18px;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 10px 40px 10px 10px; /* ruimte voor de eenheid rechts */
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+
+    .unit {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #666;
+      font-size: 0.95rem;
+      pointer-events: none; /* klik gaat gewoon naar input */
+    }
+
+    .button-group {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    button {
+      background-color: #2150b6;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+      margin: 10px;
+      transition: background-color 0.2s;
+    }
+
+    button:hover {
+      background-color: #1b4499;
+    }
+
+    .secondary-btn {
+      background-color: #777;
+    }
+
+    .secondary-btn:hover {
+      background-color: #555;
+    }
+
+    footer {
+      text-align: center;
+      background-color: #f1f1f1;
+      padding: 10px 0;
+      font-size: 0.85rem;
+      color: #333;
+      border-top: 1px solid #ccc;
+      margin-top: auto;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #2150b6;
+      box-shadow: 0 0 5px rgba(33, 80, 182, 0.3);
+      transition: 0.2s;
+    }
+  </style>
+</head>
+<body>
+  <div class="calc-page">
+    <div class="calc-container">
+      <h2>Maak een nieuwe berekening</h2>
+      <p class="subtitle">Vul de gegevens in voor een besparingsanalyse</p>
+
+      <form method="POST">
+        <h3>Kosten</h3>
+
+        <label for="rma_kg">Te verwerken RMA per jaar</label>
+        <div class="input-group">
+          <input type="number" id="rma_kg" name="rma_kg" placeholder="Bijv. 160000" required>
+          <span class="unit">kg</span>
+        </div>
+
+        <label for="rma_vaten">Aantal RMA-vaten</label>
+        <div class="input-group">
+          <input type="number" id="rma_vaten" name="rma_vaten" placeholder="Bijv. 45" required>
+        </div>
+
+        <label for="kost_vaten">Huidige kost RMA-vaten per jaar</label>
+        <div class="input-group">
+          <input type="number" id="kost_vaten" name="kost_vaten" placeholder="Bijv. 100000" required>
+          <span class="unit">€</span>
+        </div>
+
+        <label for="kost_ophaling">Huidige kost ophaling per jaar</label>
+        <div class="input-group">
+          <input type="number" id="kost_ophaling" name="kost_ophaling" placeholder="Bijv. 200000" required>
+          <span class="unit">€</span>
+        </div>
+
+        <h3>Arbeid</h3>
+
+        <label for="paritair">Paritair comité</label>
+        <div class="input-group">
+          <input type="text" id="paritair" name="paritair" placeholder="Bijv. 330 of anders" required>
+        </div>
+
+        <label for="arbeid_kost">Totale arbeidskost per jaar</label>
+        <div class="input-group">
+          <input type="number" id="arbeid_kost" name="arbeid_kost" placeholder="Bijv. 45000" required>
+          <span class="unit">€</span>
+        </div>
+
+         <label for="aantal_werkdagen">Aantal actieve werkdagen per jaar</label>
+        <div class="input-group">
+          <input type="number" id="aantal_werkdagen" name="aantal_werkdagen" placeholder="Bijv. 365" required>
+          <span class="unit">dagen</span>
+        </div>
+
+         <div class="button-group">
+          <button type="button" class="secondary-btn" onclick="window.location.href='{{ url_for('home') }}'">Terug naar dashboard</button>
+          <button type="submit">Bewaar en bekijk resultaat</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    © 2025 Mediwaste Solutions BV. Alle rechten voorbehouden.
+  </footer>
+</body>
+</html>
