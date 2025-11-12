@@ -135,9 +135,11 @@ const root = document.getElementById('root');
 
 // Titel en beschrijving
 const title = document.createElement('h1');
-title.textContent = 'Bespaar op uw medische afvalkosten';
+title.textContent = 'Bespaar op de kosten voor de verwerking van RMA';
 const description = document.createElement('p');
-description.textContent = 'Ontdek hoeveel uw organisatie kan besparen met een alternatieve manier van medische afvalverwerking. Vraag vandaag nog uw gratis besparingsanalyse aan.';
+description.innerHTML = 
+  'Ontdek hoeveel uw organisatie kan besparen met een alternatieve manier van medische afvalverwerking.<br>' +
+  'Vraag vandaag nog uw gratis besparingsanalyse aan.';
 root.appendChild(title);
 root.appendChild(description);
 

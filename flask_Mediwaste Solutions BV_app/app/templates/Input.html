@@ -155,11 +155,24 @@
           <span class="unit">€</span>
         </div>
 
+       <label for="inhoud_vat">Wat is de inhoud per WIVA-vat?</label>
+        <div class="input-group">
+          <input type="number" id="inhoud_vat" name="inhoud_vat" placeholder="Bijv. 60" required>
+          <span class="unit">Liter</span>
+        </div>
+
         <label for="kost_ophaling">Huidige kost ophaling per jaar</label>
         <div class="input-group">
           <input type="number" id="kost_ophaling" name="kost_ophaling" placeholder="Bijv. 200000" required>
           <span class="unit">€</span>
         </div>
+
+        <label for="kost_verwerking">Huidige kost verwerking & ophaling RMA per jaar (zonder WIVA-vaten)</label>
+        <div class="input-group">
+          <input type="number" id="kost_verwerking" name="kost_verwerking" placeholder="Bijv. 5000" required>
+          <span class="unit">€</span>
+        </div>
+
 
         <h3>Arbeid</h3>
 
@@ -167,14 +180,8 @@
         <div class="input-group">
           <input type="text" id="paritair" name="paritair" placeholder="Bijv. 330 of anders" required>
         </div>
-
-        <label for="arbeid_kost">Totale arbeidskost per jaar</label>
-        <div class="input-group">
-          <input type="number" id="arbeid_kost" name="arbeid_kost" placeholder="Bijv. 45000" required>
-          <span class="unit">€</span>
-        </div>
-
-         <label for="aantal_werkdagen">Aantal actieve werkdagen per jaar</label>
+ 
+         <label for="aantal_werkdagen">Aantal werkdagen per jaar</label>
         <div class="input-group">
           <input type="number" id="aantal_werkdagen" name="aantal_werkdagen" placeholder="Bijv. 365" required>
           <span class="unit">dagen</span>
