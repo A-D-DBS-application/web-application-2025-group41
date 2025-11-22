@@ -9,15 +9,15 @@ from supabase import create_client
 
 db = SQLAlchemy()
 migrate = Migrate()
+bcrypt = Bcrypt() 
 
-
-
+from . import models
 
 def create_app():
     load_dotenv()
 
-
 app = Flask(__name__)
+
 
 
 # Database configuratie (Supabase PostgreSQL)
@@ -27,6 +27,7 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db.init_app(app)
 migrate.init_app(app, db)
+bcrypt.init_app(app)
 
 
 
