@@ -139,15 +139,15 @@
     <div class="results">
       <div class="result-box">
         <h3>Aanbevolen machinetype</h3>
-        <p>{{ recommended_machine }}</p>
+        <p>{{ calc.recommended_machine or "—" }}</p>
       </div>
       <div class="result-box">
         <h3>Terugverdientijd</h3>
-        <p>{{ payback }}</p>
+        <p>{{ calc.payback if calc and calc.payback is not none else "—" }}</p>
       </div>
       <div class="result-box">
         <h3>Discounted Cashflow</h3>
-        <p>{{ dcf }}</p>
+        <p>{{ ("%0.2f"|format(calc.dcf)) if calc and calc.dcf is not none else "—" }}</p>
       </div>
     </div>
 

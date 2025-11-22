@@ -94,11 +94,13 @@ def new_calc():
     return render_template("Input.html")
 
 # -------------------------------------------------
-# Resultaat (statische template)
+# Resultaat (statische template)# NU NIET MEER STATISCH
 # -------------------------------------------------
 @main.route("/Output.html")
 def output():
-    return render_template("Output.html")
+    from .models import Calculation
+    calc = Calculation.query.order_by(Calculation.id.desc()).first()
+    return render_template("Output.html", calc=calc)
 
 # -------------------------------------------------
 # Debug: toon wat er in de database zit als JSON
