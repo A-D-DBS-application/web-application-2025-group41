@@ -15,7 +15,7 @@
     }
 
     main {
-      flex: 1; /* vult de resterende ruimte zodat footer onderaan staat */
+      flex: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -62,7 +62,7 @@
       text-align: center;
       font-size: 0.95rem;
       color: #555;
-      margin-bottom: 30px; /* Extra ruimte voor de knop eronder */
+      margin-bottom: 30px;
     }
 
     .contact a {
@@ -75,15 +75,13 @@
       text-decoration: underline;
     }
 
-    /* NIEUW: Container om de knop naar beneden en links te duwen */
     .action-bar {
       width: 100%;
       display: flex;
-      justify-content: flex-start; /* Links uitlijnen */
-      margin-top: auto; /* Duwt dit blok naar beneden tegen de footer aan */
+      justify-content: flex-start;
+      margin-top: auto;
     }
 
-    /* NIEUW: Styling voor de terug-knop */
     .btn-back {
       background-color: #2150b6;
       color: white;
@@ -93,7 +91,7 @@
       font-size: 0.95rem;
       display: inline-flex;
       align-items: center;
-      gap: 8px; /* Ruimte tussen pijl en tekst */
+      gap: 8px;
       transition: background-color 0.2s;
     }
 
@@ -102,34 +100,34 @@
     }
 
     footer {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: 100%;
-        padding: 10px 20px;
-        background-color: #f1f1f1;
-        border-top: 1px solid #ccc;
-        font-size: 0.85rem;
-        color: #333;
-        box-sizing: border-box;
-        flex-wrap: wrap; 
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      padding: 10px 20px;
+      background-color: #f1f1f1;
+      border-top: 1px solid #ccc;
+      font-size: 0.85rem;
+      color: #333;
+      box-sizing: border-box;
+      flex-wrap: wrap;
     }
 
     footer > div {
-        max-width: 48%; 
-        text-align: left; 
+      max-width: 48%;
+      text-align: left;
     }
 
     footer > div:last-child {
-        text-align: right; 
+      text-align: right;
     }
 
     @media(max-width: 500px) {
-        footer > div {
-            max-width: 100%;
-            text-align: center; 
-            margin: 5px 0;
-        }
+      footer > div {
+        max-width: 100%;
+        text-align: center;
+        margin: 5px 0;
+      }
     }
   </style>
 </head>
@@ -141,15 +139,15 @@
     <div class="results">
       <div class="result-box">
         <h3>Aanbevolen machinetype</h3>
-        <p>Machine X</p>
+        <p>{{ recommended_machine }}</p>
       </div>
       <div class="result-box">
         <h3>Terugverdientijd</h3>
-        <p>X</p>
+        <p>{{ payback }}</p>
       </div>
       <div class="result-box">
         <h3>Discounted Cashflow</h3>
-        <p>X</p>
+        <p>{{ dcf }}</p>
       </div>
     </div>
 
@@ -158,9 +156,9 @@
     </div>
 
     <div class="action-bar">
-        <a href="Dashboard.html" class="btn-back">
-            <span>←</span> Terug naar dashboard
-        </a>
+      <a href="Dashboard.html" class="btn-back">
+        <span>←</span> Terug naar dashboard
+      </a>
     </div>
   </main>
 

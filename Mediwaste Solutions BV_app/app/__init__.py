@@ -1,46 +1,37 @@
-import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_bcrypt import Bcrypt
 from supabase import create_client
-
-
+from .config import Config
 
 db = SQLAlchemy()
 migrate = Migrate()
-
-
-
+bcrypt = Bcrypt()
 
 def create_app():
-    load_dotenv()
+    app = Flask(__name__, template_folder="templates", static_folder="static")
 
-app = Flask(__name__)
+    # Config met hardcoded keys (zoals jullie prof wil)
+    app.config.from_object(Config)
 
+    # Init extensions
+    db.init_app(app)
+    migrate.init_app(app, db)
+    bcrypt.init_app(app)
 
+    # Zorg dat models gekend zijn voor migrations
+    from . import models  # noqa: F401
 
-# Database configuratie (Supabase PostgreSQL)
-app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+    # Blueprints registreren
+    from .routes import main
+    app.register_blueprint(main)
 
-
-db.init_app(app)
-migrate.init_app(app, db)
-
-
-
-
-# Supabase client
-app.supabase = create_client(
-os.getenv("SUPABASE_URL"),
-os.getenv("SUPABASE_KEY")
-)
-
-
-# Blueprint registreren
-from .routes import main
-app.register_blueprint(main)
+    # (optioneel) Supabase client – past bij jullie config
+    # Supabase is optioneel: alleen aanmaken als keys bestaan in Config
+    url = getattr(Config, "SUPABASE_URL", None)
+    key = getattr(Config, "SUPABASE_KEY", None)
+    app.supabase = create_client(url, key) if url and key else None
 
 
-return app
+    return app
