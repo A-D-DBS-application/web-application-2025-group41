@@ -47,7 +47,12 @@ h1 {
   color: #2150b6;
   font-size: 3rem;
   margin-bottom: 20px;
-}
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}  
+
+
 p {
   font-size: 1.1rem;
   margin-bottom: 20px;
@@ -77,7 +82,16 @@ p {
   justify-content: center;
   gap: 20px;
   flex-wrap: nowrap;
+  align-items: stretch; 
 }
+
+.options img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  margin-bottom: 10px;
+}
+
 .option {
   border: 1px solid #ccc;
   border-radius: 8px;
@@ -86,6 +100,10 @@ p {
   box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
   text-align: center;
   flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 }
 .option h3 {
   margin-bottom: 10px;
@@ -139,7 +157,7 @@ const root = document.getElementById('root');
 
 // Titel en beschrijving
 const title = document.createElement('h1');
-title.textContent = 'Bespaar op de kosten voor de verwerking van RMA';
+title.innerHTML = 'Bespaar op de kosten voor de verwerking van RMA';
 const description = document.createElement('p');
 description.innerHTML = 
   'Ontdek hoeveel uw organisatie kan besparen met een alternatieve manier van medische afvalverwerking.<br>' +
