@@ -50,13 +50,14 @@
       color: #2150b6;
     }
 
-    input {
+    input, select {
       width: 100%;
       padding: 10px;
       margin-bottom: 15px;
       border: 1px solid #ccc;
       border-radius: 6px;
       font-size: 1rem;
+      box-sizing: border-box;
     }
 
     button {
@@ -109,6 +110,12 @@
       color: #333;
       border-top: 1px solid #ccc;
     }
+
+    /* AANGEPAST: Verbergt nu beide containers standaard */
+    #other-org-container, 
+    #other-job-container {
+        display: none;
+    }
   </style>
 </head>
 <body>
@@ -123,6 +130,31 @@
 
         <label for="email">E-mailadres</label>
         <input type="email" id="email" name="email" placeholder="naam@organisatie.be" required>
+
+        <label for="organization_type">Soort organisatie</label>
+        <select id="organization_type" name="organization_type" onchange="toggleOtherInput()" required>
+            <option value="" disabled selected>Selecteer een optie</option>
+            <option value="Ziekenhuis">Ziekenhuis</option>
+            <option value="Andere">Andere</option>
+        </select>
+
+        <div id="other-org-container">
+            <label for="organization_other">Specificeer organisatie</label>
+            <input type="text" id="organization_other" name="organization_other" placeholder="Typ type organisatie...">
+        </div>
+
+        <label for="job_title">Functie</label>
+        <select id="job_title" name="job_title" onchange="toggleJobInput()" required>
+            <option value="" disabled selected>Selecteer een optie</option>
+            <option value="Technisch Directeur">Technisch Directeur</option>
+            <option value="Milieucoördinator">Milieucoördinator</option>
+            <option value="Andere">Andere</option>
+        </select>
+
+        <div id="other-job-container">
+            <label for="job_other">Specificeer functie</label>
+            <input type="text" id="job_other" name="job_other" placeholder="Typ uw functie...">
+        </div>
 
         <label for="password">Wachtwoord</label>
         <input type="password" id="password" name="password" placeholder="••••••••" required>
@@ -144,5 +176,39 @@
   <footer>
     © 2025 Mediwaste Solutions BV. Alle rechten voorbehouden.
   </footer>
+
+  <script>
+      // Functie voor Organisatie veld
+      function toggleOtherInput() {
+          const select = document.getElementById('organization_type');
+          const otherContainer = document.getElementById('other-org-container');
+          const otherInput = document.getElementById('organization_other');
+
+          if (select.value === 'Andere') {
+              otherContainer.style.display = 'block';
+              otherInput.required = true;
+          } else {
+              otherContainer.style.display = 'none';
+              otherInput.required = false;
+              otherInput.value = '';
+          }
+      }
+
+      // NIEUWE Functie voor Functie veld
+      function toggleJobInput() {
+          const select = document.getElementById('job_title');
+          const otherContainer = document.getElementById('other-job-container');
+          const otherInput = document.getElementById('job_other');
+
+          if (select.value === 'Andere') {
+              otherContainer.style.display = 'block';
+              otherInput.required = true;
+          } else {
+              otherContainer.style.display = 'none';
+              otherInput.required = false;
+              otherInput.value = '';
+          }
+      }
+  </script>
 </body>
 </html>
