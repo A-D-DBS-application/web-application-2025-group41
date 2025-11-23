@@ -1,46 +1,43 @@
-"""Constants/Assumptions used in the calculations:"""
-rma_avg_density = 0.12 #1,2kg/10L => 0,12kg/1L
+from app.algorithm_settings import values, models
 
-cycle_duration = 30 #in minutes: sterilising one batch of rma
-handling_duration = 7.5 #in minutes: manually loading and emptying machine
-cycle_total_duration = cycle_duration + handling_duration #in minutes: total duration for one cycle, handling included
+def recommend_machine(rma_kg, inhoud_vat, werkdagen): #recommends a machine based on the needs of the client
+    rma_volume= rma_kg / values.rma_avg_density
+    max_yearly_cycles= values.max_daily_cycles*werkdagen
 
-max_daily_running_time_hrs = 5 #in hours: max daily time the machine is operational, handling included
-max_daily_running_time_min = max_daily_running_time_hrs * 60 #in minutes: max daily time the machine is operational, handling included
+    if max_yearly_cycles<= 0: #watch out for division by zero
+        return None
 
-max_daily_cycles = max_daily_running_time_min // cycle_total_duration #in amount of cycles: rounded down max amount of daily cycles
+    volume_per_cycle= rma_volume / max_yearly_cycles
+    for machine in models.machine_list:
+        if volume_per_cycle<= machine.capacity_l_per_cycle:
+            return machine
+    return None  #no machines found that fit the criteria
 
-def recommend_machine(rma_kg, inhoud_vat, werkdagen):
+def annuity(price, months): #calculates the annuity of the investment
+    i = values.yearly_interest / 12
+    a =(price * i) / (1 - (1 + i) ** (-months))
+    return a
 
-    rma_volume = rma_kg / rma_avg_density #volume in liter
-    max_yearly_cycles = max_daily_cycles * werkdagen
-    volume_per_cycle = rma_volume / max_yearly_cycles #volume in liter
-    
-    if volume_per_cycle <= 100:
-        return 'T100 machine.'
-    elif 100 < volume_per_cycle <= 150:
-        return 'T150 machine.'
-    elif 150 < volume_per_cycle <= 350:
-        return 'T350 machine.'
-    elif 350 < volume_per_cycle <= 700:
-        return 'T700 machine.'
-    else:
-        return "Geen machine beschikbaar voor deze behoefte."
-
-
+#main algorithm
 def run_user_algorithm(
-    rma_kg, rma_vaten, kost_vaten,
-    inhoud_vat, kost_ophaling, kost_verwerking,
-    paritair, werkdagen
-):
-    """
-    TODO: vul je eigen algoritme hier in.
-    Return een dict met: recommended_machine, new_cost, payback, dcf.
-    """
-    advice_machine = recommend_machine(rma_kg, inhoud_vat, werkdagen)
-    return {
-        "recommended_machine": advice_machine,
-        "new_cost": None,
+    rma_kg: int|float, rma_vaten: int|float, kost_vaten: int|float,
+    inhoud_vat: int|float, kost_ophaling: int|float, kost_verwerking: int|float,
+    paritair: int|float, werkdagen: int|float):
+
+    machine = recommend_machine(rma_kg, inhoud_vat, werkdagen)
+    if machine is not None:
+        advice_machine= machine.name
+        machine_price = machine.price
+    else:
+        advice_machine= None
+        machine_price= None
+
+    if machine_price is not None:
+        monthly_cost = annuity(machine_price, 120)
+    else:
+        monthly_cost= None
+
+    return {"recommended_machine": advice_machine,
+        "new_cost": monthly_cost,
         "payback": None,
-        "dcf": None,
-    }
+        "dcf": None,}
