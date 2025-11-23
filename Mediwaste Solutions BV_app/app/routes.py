@@ -3,21 +3,20 @@ from flask import (
     current_app, send_from_directory, abort, jsonify
 )
 from .models import db, Calculation
-from .algorithm import run_user_algorithm  # <-- gebruik de versie uit app/algorithm.py
+from .algorithm import run_user_algorithm
 
 main = Blueprint("main", __name__)
 
 # -------------------------------------------------
-# Afbeeldingen uit /templates rechtstreeks kunnen openen
-# (bv. /Logo-Mediwaste-Wit.svg, /greencycle.png, ...)
+# Afbeeldingen in /templates rechtstreeks kunnen openen
 # -------------------------------------------------
 @main.route("/<path:filename>")
 def serve_template_assets(filename: str):
-    # Alleen veilige extensies uit templates toelaten
     allowed = (".png", ".svg", ".jpg", ".jpeg", ".gif", ".webp", ".ico")
     if filename.lower().endswith(allowed):
         return send_from_directory(current_app.template_folder, filename)
     abort(404)
+
 
 # -------------------------------------------------
 # Front-end pagina’s
@@ -35,7 +34,6 @@ def login():
 @main.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
-        # Client-side flow: na registreren naar login
         return redirect("login.html")
     return render_template("Register.html")
 
@@ -43,17 +41,17 @@ def register():
 def dashboard():
     return render_template("Dashboard.html")
 
+
 # -------------------------------------------------
-# Nieuwe berekening (input)
-#   - GET: formulier tonen
-#   - POST: formulier lezen → algoritme → opslaan → Output.html
+# Nieuwe berekening (input → algoritme → opslaan → output)
 # -------------------------------------------------
 @main.route("/input.html", methods=["GET", "POST"])
 @main.route("/input", methods=["GET", "POST"])
 def new_calc():
     if request.method == "POST":
-        # Formvelden exact zoals in Input.html
-        rma_kg          = float(request.form["rma_kg"])
+
+        # -- Formvelden exact zoals in Input.html --
+        rma_dichtheid   = float(request.form["rma_dichtheid"])
         rma_vaten       = int(request.form["rma_vaten"])
         kost_vaten      = float(request.form["kost_vaten"])
         inhoud_vat      = float(request.form["inhoud_vat"])
@@ -62,16 +60,21 @@ def new_calc():
         paritair        = request.form["paritair"]
         werkdagen       = int(request.form["aantal_werkdagen"])
 
-        # --- Algoritme (in app/algorithm.py) ---
+        # --- Algoritme ---
         result = run_user_algorithm(
-            rma_kg, rma_vaten, kost_vaten,
-            inhoud_vat, kost_ophaling, kost_verwerking,
-            paritair, werkdagen
+            rma_dichtheid,      # <--- vervangen!
+            rma_vaten,
+            kost_vaten,
+            inhoud_vat,
+            kost_ophaling,
+            kost_verwerking,
+            paritair,
+            werkdagen
         )
 
-        # --- Opslaan (None is oké voor de resultvelden) ---
+        # --- Opslaan in DB ---
         calc = Calculation(
-            rma_kg=rma_kg,
+            rma_dichtheid=rma_dichtheid,
             rma_vaten=rma_vaten,
             kost_vaten=kost_vaten,
             inhoud_vat=inhoud_vat,
@@ -79,6 +82,7 @@ def new_calc():
             kost_verwerking=kost_verwerking,
             paritair=paritair,
             werkdagen=werkdagen,
+
             recommended_machine=result.get("recommended_machine"),
             new_cost=result.get("new_cost"),
             payback=result.get("payback"),
@@ -87,32 +91,32 @@ def new_calc():
         db.session.add(calc)
         db.session.commit()
 
-        # Output is statisch (nu nog), dus gewoon tonen
         return redirect("Output.html")
 
-    # GET → formulier tonen
     return render_template("Input.html")
 
+
 # -------------------------------------------------
-# Resultaat (statische template)# NU NIET MEER STATISCH
+# Output (nu dynamisch)
 # -------------------------------------------------
 @main.route("/Output.html")
 def output():
-    from .models import Calculation
     calc = Calculation.query.order_by(Calculation.id.desc()).first()
     return render_template("Output.html", calc=calc)
 
+
 # -------------------------------------------------
-# Debug: toon wat er in de database zit als JSON
+# Debug JSON endpoint
 # -------------------------------------------------
 @main.route("/debug/calcs")
 def debug_calcs():
+
     rows = Calculation.query.order_by(Calculation.id.desc()).all()
 
     def row_to_dict(r: Calculation):
         return {
             "id": r.id,
-            "rma_kg": r.rma_kg,
+            "rma_dichtheid": r.rma_dichtheid,  # <--- vervangen!
             "rma_vaten": r.rma_vaten,
             "kost_vaten": r.kost_vaten,
             "inhoud_vat": r.inhoud_vat,
@@ -130,6 +134,6 @@ def debug_calcs():
     payload = {
         "count": len(data),
         "latest": data[0] if data else None,
-        "sample": data[:10],  # eerste 10 records
+        "sample": data[:10],
     }
     return jsonify(payload)

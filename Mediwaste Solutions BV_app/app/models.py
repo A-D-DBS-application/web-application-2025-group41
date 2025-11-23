@@ -22,7 +22,7 @@ class Calculation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     # --- Inputvelden (exact zoals in Input.html) ---
-    rma_kg         = db.Column(db.Float,  nullable=False)   # name="rma_kg"
+    rma_dichtheid        = db.Column(db.Float,  nullable=False)   # name="rma_dichtheid"
     rma_vaten      = db.Column(db.Integer, nullable=False)   # name="rma_vaten"
     kost_vaten     = db.Column(db.Float,  nullable=False)    # name="kost_vaten"
     inhoud_vat     = db.Column(db.Float,  nullable=False)    # name="inhoud_vat"
