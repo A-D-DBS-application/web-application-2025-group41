@@ -22,19 +22,19 @@ class Calculation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     # --- Inputvelden (exact zoals in Input.html) ---
-    rma_dichtheid        = db.Column(db.Float,  nullable=False)   # name="rma_dichtheid"
-    rma_vaten      = db.Column(db.Integer, nullable=False)   # name="rma_vaten"
-    kost_vaten     = db.Column(db.Float,  nullable=False)    # name="kost_vaten"
-    inhoud_vat     = db.Column(db.Float,  nullable=False)    # name="inhoud_vat"
-    kost_ophaling  = db.Column(db.Float,  nullable=False)    # name="kost_ophaling"
-    kost_verwerking= db.Column(db.Float,  nullable=False)    # name="kost_verwerking"
-    paritair       = db.Column(db.String(50), nullable=False)# name="paritair"
-    werkdagen      = db.Column(db.Integer, nullable=False)   # name="aantal_werkdagen"
+    hmw_density        = db.Column(db.Float,  nullable=False)   # name="hmw_density"
+    number_of_barrels      = db.Column(db.Integer, nullable=False)   # name="number_of_barrels"
+    cost_hmw_barrels     = db.Column(db.Float,  nullable=False)    # name="cost_hmw_barrels"
+    volume_barrel     = db.Column(db.Float,  nullable=False)    # name="volume_barrel"
+    cost_collection  = db.Column(db.Float,  nullable=False)    # name="cost_collection"
+    cost_hmw= db.Column(db.Float,  nullable=False)    # name="cost_hmw"
+    joint_committee       = db.Column(db.String(50), nullable=False)# name="joint_committee"
+    workdays      = db.Column(db.Integer, nullable=False)   # name="workdays"
 
     # --- Berekende output (getoond op Output.html; template blijft ongewijzigd) ---
-    recommended_machine = db.Column(db.String(80))
-    new_cost            = db.Column(db.Float)
-    payback             = db.Column(db.Float)
+    machine_id = db.Column(db.String(80))
+    selling_price            = db.Column(db.Float)
+    payback_period             = db.Column(db.Float)
     dcf                 = db.Column(db.Float)
 
     # (optioneel) koppeling aan user later toevoegen:

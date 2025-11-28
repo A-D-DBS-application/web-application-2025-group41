@@ -51,41 +51,41 @@ def new_calc():
     if request.method == "POST":
 
         # -- Formvelden exact zoals in Input.html --
-        rma_dichtheid   = float(request.form["rma_dichtheid"])
-        rma_vaten       = int(request.form["rma_vaten"])
-        kost_vaten      = float(request.form["kost_vaten"])
-        inhoud_vat      = float(request.form["inhoud_vat"])
-        kost_ophaling   = float(request.form["kost_ophaling"])
-        kost_verwerking = float(request.form["kost_verwerking"])
-        paritair        = request.form["paritair"]
-        werkdagen       = int(request.form["aantal_werkdagen"])
+        hmw_density   = float(request.form["hmw_density"])
+        number_of_barrels       = int(request.form["number_of_barrels"])
+        cost_hmw_barrels      = float(request.form["cost_hmw_barrels"])
+        volume_barrel      = float(request.form["volume_barrel"])
+        cost_collection   = float(request.form["cost_collection"])
+        cost_hmw = float(request.form["cost_hmw"])
+        joint_committee        = request.form["joint_committee"]
+        workdays       = int(request.form["workdays"])
 
         # --- Algoritme ---
         result = run_user_algorithm(
-            rma_dichtheid,      # <--- vervangen!
-            rma_vaten,
-            kost_vaten,
-            inhoud_vat,
-            kost_ophaling,
-            kost_verwerking,
-            paritair,
-            werkdagen
+            hmw_density,      # <--- vervangen!
+            number_of_barrels,
+            cost_hmw_barrels,
+            volume_barrel,
+            cost_collection,
+            cost_hmw,
+            joint_committee,
+            workdays
         )
 
         # --- Opslaan in DB ---
         calc = Calculation(
-            rma_dichtheid=rma_dichtheid,
-            rma_vaten=rma_vaten,
-            kost_vaten=kost_vaten,
-            inhoud_vat=inhoud_vat,
-            kost_ophaling=kost_ophaling,
+            hmw_density=hmw_density,
+            number_of_barrels=number_of_barrels,
+            cost_hmw_barrels=cost_hmw_barrels,
+            volume_barrel=volume_barrel,
+            cost_hmw=cost_hmw,
             kost_verwerking=kost_verwerking,
-            paritair=paritair,
-            werkdagen=werkdagen,
+            joint_committee=joint_committee,
+            workdays=workdays,
 
-            recommended_machine=result.get("recommended_machine"),
-            new_cost=result.get("new_cost"),
-            payback=result.get("payback"),
+            machine_id=result.get("machine_id"),
+            selling_price=result.get("selling_price"),
+            payback_period=result.get("payback_period"),
             dcf=result.get("dcf"),
         )
         db.session.add(calc)
@@ -116,17 +116,17 @@ def debug_calcs():
     def row_to_dict(r: Calculation):
         return {
             "id": r.id,
-            "rma_dichtheid": r.rma_dichtheid,  # <--- vervangen!
-            "rma_vaten": r.rma_vaten,
-            "kost_vaten": r.kost_vaten,
-            "inhoud_vat": r.inhoud_vat,
-            "kost_ophaling": r.kost_ophaling,
-            "kost_verwerking": r.kost_verwerking,
-            "paritair": r.paritair,
-            "werkdagen": r.werkdagen,
-            "recommended_machine": r.recommended_machine,
-            "new_cost": r.new_cost,
-            "payback": r.payback,
+            "hmw_density": r.hmw_density,  # <--- vervangen!
+            "number_of_barrels": r.number_of_barrels,
+            "cost_hmw_barrels": r.cost_hmw_barrels,
+            "volume_barrel": r.volume_barrel,
+            "cost_collection": r.cost_collection,
+            "cost_hmw": r.cost_hmw,
+            "joint_committee": r.joint_committee,
+            "workdays": r.workdays,
+            "machine_id": r.machine_id,
+            "selling_price": r.selling_price,
+            "payback_period": r.payback_period,
             "dcf": r.dcf,
         }
 

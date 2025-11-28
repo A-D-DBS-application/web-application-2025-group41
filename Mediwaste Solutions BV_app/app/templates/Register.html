@@ -136,20 +136,20 @@
       <p>Maak een account aan om toegang te krijgen tot uw persoonlijk analyseplatform.</p>
 
       <form method="POST">
-        <label for="name">Naam</label>
-        <input type="text" id="name" name="name" placeholder="Uw naam" required>
+        <label for="name_user">Naam</label>
+        <input type="text" id="name_user" name="name_user" placeholder="Uw naam" required>
 
-        <label for="email">E-mailadres</label>
-        <input type="email" id="email" name="email" placeholder="naam@organisatie.be" required>
+        <label for="e-mail">E-mailadres</label>
+        <input type="e-mail" id="e-mail" name="e-mail" placeholder="naam@organisatie.be" required>
 
         <label for="company_number">Ondernemingsnummer</label>
         <input type="text" id="company_number" name="company_number" placeholder="BE0123456789" required>
 
-        <label for="company_name">Naam organisatie</label>
-        <input type="text" id="company_name" name="company_name" placeholder="Naam van uw organisatie" required>
+        <label for="name_organization">Naam organisatie</label>
+        <input type="text" id="name_organization" name="name_organization" placeholder="Naam van uw organisatie" required>
 
-        <label for="organization_type">Soort organisatie</label>
-        <select id="organization_type" name="organization_type" onchange="toggleOtherInput()" required>
+        <label for="type_of_organization">Soort organisatie</label>
+        <select id="type_of_organization" name="type_of_organization" onchange="toggleOtherInput()" required>
             <option value="" disabled selected>Selecteer een optie</option>
             <option value="Ziekenhuis">Ziekenhuis</option>
             <option value="Andere">Andere</option>
@@ -160,8 +160,8 @@
             <input type="text" id="organization_other" name="organization_other" placeholder="Typ type organisatie...">
         </div>
 
-        <label for="job_title">Functie</label>
-        <select id="job_title" name="job_title" onchange="toggleJobInput()" required>
+        <label for="position">Functie</label>
+        <select id="position" name="position" onchange="toggleJobInput()" required>
             <option value="" disabled selected>Selecteer een optie</option>
             <option value="Technisch Directeur">Technisch Directeur</option>
             <option value="Milieucoördinator">Milieucoördinator</option>
@@ -198,7 +198,7 @@
   <script>
       // Functie voor Organisatie veld
       function toggleOtherInput() {
-          const select = document.getElementById('organization_type');
+          const select = document.getElementById('type_of_organization');
           const otherContainer = document.getElementById('other-org-container');
           const otherInput = document.getElementById('organization_other');
 
@@ -214,7 +214,7 @@
 
       // NIEUWE Functie voor Functie veld
       function toggleJobInput() {
-          const select = document.getElementById('job_title');
+          const select = document.getElementById('position');
           const otherContainer = document.getElementById('other-job-container');
           const otherInput = document.getElementById('job_other');
 
