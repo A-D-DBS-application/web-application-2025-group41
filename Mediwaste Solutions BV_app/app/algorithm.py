@@ -7,9 +7,9 @@ def vaten_per_cycle(inhoud_vat_l, machine_cap_l):
     return int(machine_cap_l // inhoud_vat_l)
 
 #aanbevolen machine gebaseerd op volume per cyclus en volledige vaten
-def recommend_machine(rma_dichtheid, rma_vaten, inhoud_vat, werkdagen): #rma_dichtheid hier eig niet nodig
-    total_volume_l= rma_vaten*inhoud_vat #totaal volume rma in liter
-    max_yearly_cycles= values.max_daily_cycles * int(werkdagen) #max cycli per jaar
+def recommend_machine(hmw_density , number_of_barrels, volume_barrel , workdays): #rma_dichtheid hier eig niet nodig
+    total_volume_l= hmw_density*volume_barrel #totaal volume rma in liter
+    max_yearly_cycles= values.max_daily_cycles * int(workdays) #max cycli per jaar
 
     if max_yearly_cycles<= 0:
         return None
@@ -18,10 +18,10 @@ def recommend_machine(rma_dichtheid, rma_vaten, inhoud_vat, werkdagen): #rma_dic
 
     #zoek kleinste machine die hieraan voldoet
     for machine in models.machine_list:
-        passen = vaten_per_cycle(inhoud_vat, machine.capacity_l_per_cycle)
+        passen = vaten_per_cycle(volume_barrel, machine.capacity_l_per_cycle)
         if passen <= 0:
             continue
-        echte_cap = passen * inhoud_vat #effectieve bruikbare liters
+        echte_cap = passen * volume_barrel #effectieve bruikbare liters
         if volume_per_cycle <= echte_cap:
             return machine
     return None
@@ -35,11 +35,11 @@ def annuity(price, months):
     return (price * i) / (1 - (1 + i) ** (-months))
 
 #hoofdfunctie van het algoritme
-def run_user_algorithm(rma_dichtheid, rma_vaten, kost_vaten,
-    inhoud_vat, kost_ophaling, kost_verwerking, paritair, werkdagen,):
+def run_user_algorithm(hmw_density, number_of_barrels, cost_hmw_barrels,
+    volume_barrel, cost_collection, cost_hmw, joint_committee, workdays,):
 
     #machine aanbevelen
-    machine = recommend_machine(rma_dichtheid, rma_vaten, inhoud_vat, werkdagen)
+    machine = recommend_machine(hmw_density, number_of_barrels, volume_barrel, workdays)
     if machine is not None:
         advice_machine = machine.name
         machine_price = machine.price
@@ -54,7 +54,7 @@ def run_user_algorithm(rma_dichtheid, rma_vaten, kost_vaten,
         monthly_cost = None
 
     #output
-    return {"recommended_machine": advice_machine,
-        "new_cost": monthly_cost,
-        "payback": None,
+    return {"machine_id": advice_machine,
+        "selling_price": monthly_cost,
+        "payback_period": None,
         "dcf": None,}
