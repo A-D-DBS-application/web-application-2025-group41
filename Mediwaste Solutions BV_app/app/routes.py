@@ -79,7 +79,7 @@ def new_calc():
             cost_hmw_barrels=cost_hmw_barrels,
             volume_barrel=volume_barrel,
             cost_hmw=cost_hmw,
-            kost_verwerking=kost_verwerking,
+            cost_collection=cost_collection,
             joint_committee=joint_committee,
             workdays=workdays,
 
