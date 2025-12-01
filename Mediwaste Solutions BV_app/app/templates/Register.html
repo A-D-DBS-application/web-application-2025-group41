@@ -148,23 +148,13 @@
         <label for="name_organization">Naam organisatie</label>
         <input type="text" id="name_organization" name="name_organization" placeholder="Naam van uw organisatie" required>
 
-        <label for="type_of_organization">Soort organisatie</label>
-        <select id="type_of_organization" name="type_of_organization" onchange="toggleOtherInput()" required>
-            <option value="" disabled selected>Selecteer een optie</option>
-            <option value="Ziekenhuis">Ziekenhuis</option>
-            <option value="Andere">Andere</option>
-        </select>
-
-        <div id="other-org-container">
-            <label for="organization_other">Specificeer organisatie</label>
-            <input type="text" id="organization_other" name="organization_other" placeholder="Typ type organisatie...">
-        </div>
 
         <label for="position">Functie</label>
         <select id="position" name="position" onchange="toggleJobInput()" required>
             <option value="" disabled selected>Selecteer een optie</option>
-            <option value="Technisch Directeur">Technisch Directeur</option>
+            <option value="Technische Dienst">Technisch Directeur</option>
             <option value="Milieucoördinator">Milieucoördinator</option>
+            <option value="Dienstpreventie">Inkoopverantwoordelijke</option>
             <option value="Andere">Andere</option>
         </select>
 
