@@ -67,6 +67,18 @@ p {
   cursor: pointer;
   margin-bottom: 100px;
 }
+
+.btn2 {  
+  background-color: #2150b6;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  display: block;
+  margin: 30px auto 30px auto;
+}
 .section {
   max-width: 1000px;
   margin: 0 auto 50px;
@@ -75,6 +87,7 @@ p {
 .section h2 {
   text-align: center;
   color: #2150b6;
+  margin-top: 0px;
   margin-bottom: 40px;
 }
 .options {
@@ -164,6 +177,16 @@ description.innerHTML =
   'Vraag vandaag nog uw gratis besparingsanalyse aan.';
 root.appendChild(title);
 root.appendChild(description);
+
+// Extra knop naar register pagina 
+
+const extraButton = document.createElement('button');
+extraButton.className = 'btn2'; // ook in het blauw want register is ook blauw
+extraButton.textContent = 'Vraag hier uw analyse aan';
+extraButton.onclick = () => {
+  window.open('register.html', '_blank'); // opent registratiepagina
+};
+root.appendChild(extraButton);
 
 // Sectie opties
 const section = document.createElement('div');
