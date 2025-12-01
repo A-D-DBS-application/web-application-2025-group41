@@ -173,20 +173,6 @@
           <span class="unit">€</span>
         </div>
 
-
-        <h3>Arbeid</h3>
-
-        <label for="joint_committee">Paritair comité</label>
-        <div class="input-group">
-          <input type="text" id="joint_committee" name="joint_committee" placeholder="Bijv. 330 of anders" required>
-        </div>
- 
-         <label for="workdays">Aantal werkdagen per jaar</label>
-        <div class="input-group">
-          <input type="number" id="workdays" name="workdays" placeholder="Bijv. 300" required>
-          <span class="unit">Dagen</span>
-        </div>
-
          <div class="button-group">
           <button type="button" class="secondary-btn" onclick="window.location.href='Dashboard.html'">Terug naar dashboard</button>
           <button type="submit">Bewaar en bekijk resultaat</button>
@@ -198,5 +184,37 @@
   <footer>
     © 2025 Mediwaste Solutions BV. Alle rechten voorbehouden.
   </footer>
+<script>
+  function opslaan() {
+    const aanvraag = {
+      hmw_density: document.getElementById('hmw_density').value,
+      number_of_barrels: document.getElementById('number_of_barrels').value,
+      cost_hmw_barrels: document.getElementById('cost_hmw_barrels').value,
+      volume_barrel: document.getElementById('volume_barrel').value,
+      cost_collection: document.getElementById('cost_collection').value,
+      cost_hmw: document.getElementById('cost_hmw').value,
+      datum: new Date().toLocaleString()
+    };
+
+    // Haal bestaande aanvragen op
+    const lijst = JSON.parse(localStorage.getItem("aanvragen")) || [];
+
+    // Voeg nieuwe toe
+    lijst.push(aanvraag);
+
+    // Opslaan
+    localStorage.setItem("aanvragen", JSON.stringify(lijst));
+
+    // Ga naar resultaatpagina
+    window.location.href = "Output.html";
+  }
+
+  // Zorg dat "Bewaar en bekijk resultaat" de functie gebruikt
+  document.querySelector("button[type='submit']").addEventListener("click", function(event) {
+    event.preventDefault();  // voorkomt standaard formulaar submit
+    opslaan();
+  });
+</script>
+
 </body>
 </html>
