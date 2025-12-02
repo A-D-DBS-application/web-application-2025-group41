@@ -1,0 +1,81 @@
+/* components.css */
+.logo {
+  width: 400px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.register-btn,
+.login-btn {
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 160px;
+  text-align: center;
+}
+
+.register-btn {
+  background-color: #2150b6;
+  color: white;
+}
+
+.login-btn {
+  background-color: #eded1a;
+  color: white;
+}
+
+.btn {
+  background-color: #2150b6;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-bottom: 100px;
+}
+
+.btn2 {
+  background-color: #2150b6;
+  color: white;
+  border: none;
+  padding: 25px 35px;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  display: block;
+  margin: 30px auto 30px auto;
+}
+
+.options img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  margin-bottom: 10px;
+}
+
+.option {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  width: 300px;
+  box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+  text-align: center;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.option h3 {
+  margin-bottom: 10px;
+  color: #2150b6;
+  font-size: 1.3rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}

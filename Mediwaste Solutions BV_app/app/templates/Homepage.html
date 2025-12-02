@@ -1,161 +1,14 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mediwaste Solutions</title>
-<style>
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  background-color: #FFFFFF;
-  line-height: 1.5;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-header {
-  display: flex;
-  flex-direction: column; /* onder elkaar */
-  align-items: flex-end; /* rechts uitlijnen */
-  padding: 20px;
-  gap: 10px;
-}
-.register-btn, .login-btn {
-  border: none;
-  padding: 10px 20px;
-  font-size: 1rem;
-  border-radius: 6px;
-  cursor: pointer;
-  width: 160px; /* even breed */
-  text-align: center;
-}
-.register-btn {
-  background-color: #2150b6;
-  color: white;
-}
-.login-btn {
-  background-color: #eded1a;
-  color: white;
-}
-#root {
-  text-align: center;
-  max-width: 600px;
-  margin: 100px auto 50px;
-}
-h1 {
-  color: #2150b6;
-  font-size: 3rem;
-  margin-bottom: 20px;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-}  
-
-
-p {
-  font-size: 1.1rem;
-  margin-bottom: 20px;
-}
-.btn {
-  background-color: #2150b6;
-  color: white;
-  border: none;
-  padding: 12px 24px;
-  font-size: 1rem;
-  border-radius: 6px;
-  cursor: pointer;
-  margin-bottom: 100px;
-}
-
-.btn2 {  
-  background-color: #2150b6;
-  color: white;
-  border: none;
-  padding: 12px 24px;
-  font-size: 1rem;
-  border-radius: 6px;
-  cursor: pointer;
-  display: block;
-  margin: 30px auto 30px auto;
-}
-.section {
-  max-width: 1000px;
-  margin: 0 auto 50px;
-  padding: 50px 20px;
-}
-.section h2 {
-  text-align: center;
-  color: #2150b6;
-  margin-top: 0px;
-  margin-bottom: 40px;
-}
-.options {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  flex-wrap: nowrap;
-  align-items: stretch; 
-}
-
-.options img {
-  width: 60px;
-  height: 60px;
-  object-fit: contain;
-  margin-bottom: 10px;
-}
-
-.option {
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 20px;
-  width: 300px;
-  box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
-  text-align: center;
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-}
-.option h3 {
-  margin-bottom: 10px;
-  color: #2150b6;
-  font-size: 1.3rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-footer {
-  margin-top: auto;
-  padding: 20px;
-  display: flex;
-  justify-content: space-between;
-  background-color: #f1f1f1;
-  font-size: 0.9rem;
-}
-header {
-  position: relative; /* belangrijk voor absolute buttons */
-  height: 120px; /* bepaal een vaste hoogte voor de header */
-  text-align: center; /* logo in het midden */
-  padding-top: 20px; /* ruimte boven logo */
-}
-.logo {
-  width: 400px;
-  height: auto;
-  display: block;
-  margin: 0 auto; /* centreer horizontaal */
-}
-.buttons {
-  position: absolute; /* los van logo en flow */
-  top: 20px; /* afstand vanaf bovenkant */
-  right: 20px; /* helemaal rechts */
-  display: flex;
-  flex-direction: column; /* knoppen onder elkaar */
-  gap: 10px; /* ruimte tussen knoppen */
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mediwaste Solutions</title>
+<link rel="stylesheet" href="../static/css/base.css">
+<link rel="stylesheet" href="../static/css/layout.css">
+<link rel="stylesheet" href="../static/css/components.css">
 </head>
+
 <body>
 <header>
   <img src="Logo-Mediwaste-Wit.svg" alt="Mediwaste Solutions logo" class="logo">
@@ -173,8 +26,7 @@ const title = document.createElement('h1');
 title.innerHTML = 'Bespaar op de kosten voor de verwerking van RMA';
 const description = document.createElement('p');
 description.innerHTML = 
-  'Ontdek hoeveel uw organisatie kan besparen met een alternatieve manier van medische afvalverwerking.<br>' +
-  'Vraag vandaag nog uw gratis besparingsanalyse aan.';
+  'Ontdek hoeveel uw organisatie kan besparen met een alternatieve manier van medische afvalverwerking.<br>' ;
 root.appendChild(title);
 root.appendChild(description);
 
