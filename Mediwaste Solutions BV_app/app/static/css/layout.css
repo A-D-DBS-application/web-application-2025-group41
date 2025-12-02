@@ -1,56 +1,52 @@
-/* layout.css */
-header {
-  position: relative; /* belangrijk voor absolute buttons */
-  height: 120px; /* vaste hoogte voor de header */
-  text-align: center; /* logo in het midden */
-  padding-top: 20px;
-  display: flex;
-  flex-direction: column; /* onder elkaar */
-  align-items: flex-end; /* rechts uitlijnen */
-  gap: 10px;
-}
 
-footer {
-  margin-top: auto;
-  padding: 20px;
-  display: flex;
-  justify-content: space-between;
-  background-color: #f1f1f1;
-  font-size: 0.9rem;
-}
 
-#root {
-  text-align: center;
-  max-width: 600px;
-  margin: 100px auto 50px;
-}
-
-.section {
-  max-width: 1000px;
-  margin: 0 auto 50px;
-  padding: 50px 20px;
-}
-
-.section h2 {
-  text-align: center;
-  color: #2150b6;
-  margin-top: 0px;
-  margin-bottom: 40px;
-}
-
-.options {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  flex-wrap: nowrap;
-  align-items: stretch;
-}
-
-.buttons {
-  position: absolute;
-  top: 20px;
-  right: 20px;
+/* 1. NIEUW: Dit zorgt dat de footer altijd onderaan blijft plakken */
+body {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  min-height: 100vh;
 }
+
+/* 2. UPDATE: Dit centreert je witte kaart in het midden van het scherm */
+main, .calc-page, .register-page {
+  flex: 1;                 /* Duwt de footer naar beneden */
+  display: flex;           /* Flexbox aanzetten */
+  justify-content: center; /* Horizontaal centreren */
+  align-items: center;     /* Verticaal centreren */
+  padding: 40px 20px;      /* Zorgt dat het niet tegen de rand plakt op mobiel */
+}
+
+
+.input-group {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.button-group {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+
+
+footer {
+  text-align: center;
+  padding: 20px;
+  background-color: #f1f1f1;
+  color: #666;
+  font-size: 0.9rem;
+  width: 100%;
+}
+
+header {
+  width: 100%;
+  background-color: #2150b6;
+  color: white;
+  padding: 30px 20px;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  box-sizing: border-box; /* Zorgt dat padding de breedte niet verpest */
+} 

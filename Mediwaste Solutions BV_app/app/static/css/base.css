@@ -1,34 +1,74 @@
-/* base.css */
+/* ---------- BASE.CSS ---------- */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
-  background-color: #FFFFFF;
   line-height: 1.5;
-  display: flex;
-  flex-direction: column;
+  background-color: #e6ebf8;
   min-height: 100vh;
+  color: #333;
+}
+
+h1, h2, h3 {
+  color: #2150b6;
 }
 
 h1 {
-  color: #2150b6;
-  font-size: 3rem;
-  margin-bottom: 20px;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
+  font-size: 2.5rem;
+  text-align: center;
 }
 
 p {
-  font-size: 1.1rem;
-  margin-bottom: 20px;
+  font-size: 1rem;
+  color: #333;
 }
 
-h2 {
-  margin-top: 0px;
-  margin-bottom: 40px;
+a {
+  color: #2150b6;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
 }
 
 img {
   max-width: 100%;
   height: auto;
+}
+
+label {
+  display: block;        
+  margin-bottom: 8px;   
+  font-weight: bold;
+  color: #2150b6;       
+}
+
+input, select {
+  width: 100%;
+  padding: 12px;         
+  padding-right: 40px;   
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+input:focus {
+  outline: none;
+  border-color: #2150b6;
+  box-shadow: 0 0 5px rgba(33, 80, 182, 0.3);
+}
+
+button {
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  background-color: #2150b6;
+  color: white;
+}
+
+button:hover {
+  background-color: #183a86;
 }

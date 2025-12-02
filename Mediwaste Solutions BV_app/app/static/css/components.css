@@ -1,23 +1,12 @@
-/* components.css */
-.logo {
-  width: 400px;
-  height: auto;
-  display: block;
-  margin: 0 auto;
-}
+/* ---------- COMPONENTS.CSS ---------- */
 
-.register-btn,
-.login-btn {
-  border: none;
-  padding: 10px 20px;
-  font-size: 1rem;
+/* GENERAL BUTTONS */
+.btn, .btn2, .register-btn, .login-btn {
   border-radius: 6px;
   cursor: pointer;
-  width: 160px;
-  text-align: center;
 }
 
-.register-btn {
+.btn, .register-btn {
   background-color: #2150b6;
   color: white;
 }
@@ -27,36 +16,29 @@
   color: white;
 }
 
-.btn {
-  background-color: #2150b6;
-  color: white;
-  border: none;
-  padding: 12px 24px;
-  font-size: 1rem;
-  border-radius: 6px;
-  cursor: pointer;
-  margin-bottom: 100px;
-}
-
 .btn2 {
-  background-color: #2150b6;
-  color: white;
-  border: none;
   padding: 25px 35px;
-  font-size: 1rem;
-  border-radius: 6px;
-  cursor: pointer;
   display: block;
-  margin: 30px auto 30px auto;
+  margin: 30px auto;
 }
 
-.options img {
-  width: 60px;
-  height: 60px;
-  object-fit: contain;
-  margin-bottom: 10px;
+/* LOGIN / REGISTER / INPUT / CALC BOXES */
+.login-container,
+.register-container,
+.calc-container,
+.dashboard-container,
+.result-box {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1); /* Iets zachtere schaduw */
+  padding: 40px;
+
+  width: 100%;
+  max-width: 500px; 
+  margin: 0 auto;
 }
 
+/* OPTION CARDS (HOMEPAGE) */
 .option {
   border: 1px solid #ccc;
   border-radius: 8px;
@@ -64,18 +46,105 @@
   width: 300px;
   box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
   text-align: center;
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
 }
 
 .option h3 {
   margin-bottom: 10px;
   color: #2150b6;
   font-size: 1.3rem;
-  font-weight: 700;
   text-transform: uppercase;
+  font-weight: 700;
   letter-spacing: 1px;
+}
+
+.options img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+}
+
+/* TABLE (AANVRAGEN) */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+th, td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+}
+
+th {
+  background-color: #2150b6;
+  color: white;
+}
+
+tr:hover {
+  background-color: #f0f4ff;
+}
+
+/* BACK LINKS */
+.back, .btn-back {
+  display: inline-block;
+  color: #2150b6;
+  text-decoration: none;
+  margin-top: 20px;
+}
+
+.btn-back {
+  background-color: #2150b6;
+  padding: 10px 20px;
+  border-radius: 6px;
+}
+
+/* SMALL COMPONENTS */
+.unit {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #666;
+}
+
+/* ----- DASHBOARD SPECIFIEK ----- */
+
+/* De primaire knop (Blauw) */
+.btn {
+  display: block;
+  width: 100%;
+  background-color: #2150b6;
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.btn:hover {
+  background-color: #183a86;
+}
+
+/* De secundaire knop (Geel - zoals in je oude code) */
+.btn-secondary {
+  background-color: #eded1a !important; /* !important zorgt dat blauw wordt overschreven */
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: #ccda10 !important;
+}
+
+/* Link onderaan (Terug naar homepagina) */
+.dashboard-container a {
+  display: block;
+  margin-top: 20px;
+  color: #2150b6;
+  text-align: center;
 }
