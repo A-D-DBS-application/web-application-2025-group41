@@ -142,13 +142,10 @@
         <p>{{ calc.recommended_machine or "—" }}</p>
       </div>
       <div class="result-box">
-        <h3>Terugverdientijd</h3>
-        <p>{{ payback_period  if calc and payback_period  is not none else "—" }}</p>
+        <h3>Terugverdientijd van de investering</h3>
+        <p>{{ payback_period ~ " maanden"  if calc and payback_period  is not none else "—" }}</p>
       </div>
-      <div class="result-box">
-        <h3>Discounted Cashflow</h3>
-        <p>{{ ("%0.2f"|format(calc.dcf)) if calc and calc.dcf is not none else "—" }}</p>
-      </div>
+      
     </div>
 
     <div class="contact">
