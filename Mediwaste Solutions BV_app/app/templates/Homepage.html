@@ -4,18 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mediwaste Solutions</title>
-<link rel="stylesheet" href="../static/css/homepage.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/homepage.css') }}">
+  <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
 
 <body>
 <header>
-  <img src="Logo-Mediwaste-Wit.svg" alt="Mediwaste Solutions logo" class="logo">
+  <img src="{{ url_for('static', filename='Logo-Mediwaste-Wit.svg') }}" alt="Mediwaste Solutions logo" class="logo">
   <div class="buttons">
-    <button class="register-btn" onclick="window.open('register.html', '_blank')">Registreren</button>
-    <button class="login-btn" onclick="window.open('login.html', '_blank')">Login</button>
+    <a class="register-btn" href="{{ url_for('main.register') }}">Registreren</a>
+    <a class="login-btn" href="{{ url_for('main.login') }}">Login</a>
   </div>
 </header>
+
 <div id="root"></div>
+
 <script>
 const root = document.getElementById('root');
 
@@ -23,19 +26,16 @@ const root = document.getElementById('root');
 const title = document.createElement('h1');
 title.innerHTML = 'Bespaar op de kosten voor de verwerking van RMA';
 const description = document.createElement('p');
-description.innerHTML = 
-  'Ontdek hoeveel uw organisatie kan besparen met een alternatieve manier van medische afvalverwerking.'  
+description.innerHTML =
+  'Ontdek hoeveel uw organisatie kan besparen met een alternatieve manier van medische afvalverwerking.';
 root.appendChild(title);
 root.appendChild(description);
 
-// Extra knop naar register pagina 
-
-const extraButton = document.createElement('button');
-extraButton.className = 'btn2'; // ook in het blauw want register is ook blauw
+// Extra knop naar dashboard
+const extraButton = document.createElement('a');
+extraButton.className = 'btn2';
 extraButton.textContent = 'Vraag hier uw analyse aan';
-extraButton.onclick = () => {
-  window.open('register.html', '_blank'); // opent registratiepagina
-};
+extraButton.href = "{{ url_for('main.dashboard') }}";
 root.appendChild(extraButton);
 
 // Sectie opties
@@ -58,21 +58,26 @@ optionsData.forEach(opt => {
   const div = document.createElement('div');
   div.className = 'option';
 
-  // Afbeelding boven de titel toevoegen
   const img = document.createElement('img');
-  img.style.width = '60px';       // grootte aanpassen
-  img.style.marginBottom = '10px'; // ruimte tussen afbeelding en titel
+  img.style.width = '60px';
+  img.style.marginBottom = '10px';
 
   if(opt.title === 'Duurzaam') {
-    img.src = 'greenrecycle.png';
+    img.src = "/static/greenrecycle.png";
     img.alt = 'Duurzaam icoon';
     div.appendChild(img);
+<<<<<<< HEAD
+  } else if(opt.title === 'Toekomstgericht') {
+    img.src = "/static/toekomstgericht.png";
+    img.alt = 'Toekomstgericht icoon';
+=======
   } else if(opt.title === 'Efficiënt') {
     img.src = 'efficiënt.png';
     img.alt = 'Efficiënt icoon';
+>>>>>>> b8c88d4c59b6319f90a1aa00f1e0bfd1ee22b6fa
     div.appendChild(img);
   } else if(opt.title === 'Kostenbesparend') {
-    img.src = 'kostenbesparend.png';
+    img.src = "/static/kostenbesparend.png";
     img.alt = 'Kostenbesparend icoon';
     div.appendChild(img);
   }

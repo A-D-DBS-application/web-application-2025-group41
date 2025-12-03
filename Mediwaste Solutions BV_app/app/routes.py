@@ -1,139 +1,173 @@
-from flask import (
-    Blueprint, render_template, request, redirect,
-    current_app, send_from_directory, abort, jsonify
-)
-from .models import db, Calculation
+from flask import Blueprint, render_template, request, redirect, url_for, session, flash
+from .models import db, User, Request, WasteProfile, MachineSizeCalc1, PaybackPeriodCalc2
 from .algorithm import run_user_algorithm
+import uuid
+from datetime import datetime
 
 main = Blueprint("main", __name__)
 
-# -------------------------------------------------
-# Afbeeldingen in /templates rechtstreeks kunnen openen
-# -------------------------------------------------
-@main.route("/<path:filename>")
-def serve_template_assets(filename: str):
-    allowed = (".png", ".svg", ".jpg", ".jpeg", ".gif", ".webp", ".ico")
-    if filename.lower().endswith(allowed):
-        return send_from_directory(current_app.template_folder, filename)
-    abort(404)
-
-
-# -------------------------------------------------
-# Front-end pagina’s
-# -------------------------------------------------
+# -------------------------
+# 1. Homepage
+# -------------------------
 @main.route("/")
-@main.route("/Homepage.html")
-def home():
-    return render_template("Homepage.html")
+@main.route("/homepage")
+def homepage():
+    return render_template("homepage.html")
 
-@main.route("/login.html")
+# -------------------------
+# 2. Login
+# -------------------------
+@main.route("/login", methods=["GET", "POST"])
 def login():
-    return render_template("Login.html")
+    if request.method == "POST":
+        email = request.form["email"]
+        password = request.form["password"]
 
-@main.route("/register.html", methods=["GET", "POST"])
+        user = User.query.filter_by(email=email).first()
+        if user and user.password == password:  # later vervangen door bcrypt check
+            session["user_id"] = str(user.id)
+            return redirect(url_for("main.homepage"))
+        else:
+            flash("Ongeldige login.")
+            return redirect(url_for("main.login"))
+
+    return render_template("login.html")
+
+# -------------------------
+# 3. Register
+# -------------------------
 @main.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
-        return redirect("login.html")
-    return render_template("Register.html")
+        name_user = request.form["name_user"]
+        email = request.form["email"]
+        company_number = request.form["company_number"]
+        name_organization = request.form["name_organization"]
+        position = request.form["position"]
+        password = request.form["password"]
+        confirm = request.form["confirm"]
 
-@main.route("/Dashboard.html")
-def dashboard():
-    return render_template("Dashboard.html")
+        if password != confirm:
+            flash("Wachtwoorden komen niet overeen.")
+            return redirect(url_for("main.register"))
 
-
-# -------------------------------------------------
-# Nieuwe berekening (input → algoritme → opslaan → output)
-# -------------------------------------------------
-@main.route("/input.html", methods=["GET", "POST"])
-@main.route("/input", methods=["GET", "POST"])
-def new_calc():
-    if request.method == "POST":
-
-        # -- Formvelden exact zoals in Input.html --
-        hmw_density   = float(request.form["hmw_density"])
-        number_of_barrels       = int(request.form["number_of_barrels"])
-        cost_hmw_barrels      = float(request.form["cost_hmw_barrels"])
-        volume_barrel      = float(request.form["volume_barrel"])
-        cost_collection   = float(request.form["cost_collection"])
-        cost_hmw = float(request.form["cost_hmw"])
-        joint_committee        = request.form["joint_committee"]
-        workdays       = int(request.form["workdays"])
-
-        # --- Algoritme ---
-        result = run_user_algorithm(
-            hmw_density,      # <--- vervangen!
-            number_of_barrels,
-            cost_hmw_barrels,
-            volume_barrel,
-            cost_collection,
-            cost_hmw,
-            joint_committee,
-            workdays
+        new_user = User(
+            id=uuid.uuid4(),
+            name_user=name_user,
+            email=email,
+            company_number=company_number,
+            name_organization=name_organization,
+            position=position,
+            password=password,
+            confirm=confirm,
+            is_admin=False
         )
-
-        # --- Opslaan in DB ---
-        calc = Calculation(
-            hmw_density=hmw_density,
-            number_of_barrels=number_of_barrels,
-            cost_hmw_barrels=cost_hmw_barrels,
-            volume_barrel=volume_barrel,
-            cost_hmw=cost_hmw,
-            cost_collection=cost_collection,
-            joint_committee=joint_committee,
-            workdays=workdays,
-
-            machine_id=result.get("machine_id"),
-            selling_price=result.get("selling_price"),
-            payback_period=result.get("payback_period"),
-            dcf=result.get("dcf"),
-        )
-        db.session.add(calc)
+        db.session.add(new_user)
         db.session.commit()
 
-        return redirect("Output.html")
+        session["user_id"] = str(new_user.id)
+        return redirect(url_for("main.homepage"))
 
-    return render_template("Input.html")
+    return render_template("register.html")
 
+# -------------------------
+# 4. Dashboard
+# -------------------------
+@main.route("/dashboard")
+def dashboard():
+    return render_template("dashboard.html")
 
-# -------------------------------------------------
-# Output (nu dynamisch)
-# -------------------------------------------------
-@main.route("/Output.html")
-def output():
-    calc = Calculation.query.order_by(Calculation.id.desc()).first()
-    return render_template("Output.html", calc=calc)
+# -------------------------
+# 5. Aanvragen
+# -------------------------
+@main.route("/aanvragen")
+def aanvragen():
+    user_id = session.get("user_id")
+    if not user_id:
+        return redirect(url_for("main.login"))
 
+    requests = Request.query.filter_by(user_id=user_id).all()
+    return render_template("aanvragen.html", requests=requests)
 
-# -------------------------------------------------
-# Debug JSON endpoint
-# -------------------------------------------------
-@main.route("/debug/calcs")
-def debug_calcs():
+# -------------------------
+# 6. Nieuwe berekening (input)
+# -------------------------
+@main.route("/input", methods=["GET", "POST"])
+def input_page():
+    if request.method == "POST":
+        # Maak nieuwe request
+        new_request = Request(
+            id=uuid.uuid4(),
+            user_id=session.get("user_id"),
+            created_at=datetime.utcnow()
+        )
+        db.session.add(new_request)
+        db.session.flush()
 
-    rows = Calculation.query.order_by(Calculation.id.desc()).all()
+        # Opslaan waste profile
+        waste = WasteProfile(
+            id=uuid.uuid4(),
+            request_id=new_request.id,
+            hmw_total_weight=request.form["hmw_total_weight"],
+            number_of_barrels_1=request.form["number_of_barrels_1"],
+            number_of_barrels_2=request.form["number_of_barrels_2"],
+            number_of_barrels_3=request.form["number_of_barrels_3"],
+            number_of_barrels_4=request.form["number_of_barrels_4"],
+            cost_hmw_barrels_1=request.form["cost_hmw_barrels_1"],
+            cost_hmw_barrels_2=request.form["cost_hmw_barrels_2"],
+            cost_hmw_barrels_3=request.form["cost_hmw_barrels_3"],
+            cost_hmw_barrels_4=request.form["cost_hmw_barrels_4"],
+            volume_barrels_1=request.form["volume_barrel_1"],
+            volume_barrels_2=request.form["volume_barrel_2"],
+            volume_barrels_3=request.form["volume_barrel_3"],
+            volume_barrels_4=request.form["volume_barrel_4"],
+            cost_collection_process=request.form["cost_collection_processing"],
+            steam_generator_needed=bool(int(request.form["steam_generator_needed"]))
+        )
+        db.session.add(waste)
 
-    def row_to_dict(r: Calculation):
-        return {
-            "id": r.id,
-            "hmw_density": r.hmw_density,  # <--- vervangen!
-            "number_of_barrels": r.number_of_barrels,
-            "cost_hmw_barrels": r.cost_hmw_barrels,
-            "volume_barrel": r.volume_barrel,
-            "cost_collection": r.cost_collection,
-            "cost_hmw": r.cost_hmw,
-            "joint_committee": r.joint_committee,
-            "workdays": r.workdays,
-            "machine_id": r.machine_id,
-            "selling_price": r.selling_price,
-            "payback_period": r.payback_period,
-            "dcf": r.dcf,
-        }
+        # Algoritme draaien
+        result = run_user_algorithm(
+            hmw_density=float(request.form["hmw_total_weight"]),
+            number_of_barrels=int(request.form["number_of_barrels_1"]),
+            cost_hmw_barrels=float(request.form["cost_hmw_barrels_1"]),
+            volume_barrel=float(request.form["volume_barrel_1"]),
+            cost_collection=float(request.form["cost_collection_processing"]),
+            cost_hmw=float(request.form["cost_hmw_barrels_1"]),
+            joint_committee=None,
+            workdays=250
+        )
 
-    data = [row_to_dict(r) for r in rows]
-    payload = {
-        "count": len(data),
-        "latest": data[0] if data else None,
-        "sample": data[:10],
-    }
-    return jsonify(payload)
+        machine_calc = MachineSizeCalc1(
+            id=uuid.uuid4(),
+            request_id=new_request.id,
+            recommended_machine_size=result.get("machine_id")
+        )
+        db.session.add(machine_calc)
+
+        payback_calc = PaybackPeriodCalc2(
+            id=uuid.uuid4(),
+            request_id=new_request.id,
+            payback_months=result.get("payback_period")
+        )
+        db.session.add(payback_calc)
+
+        db.session.commit()
+
+        return redirect(url_for("main.output", request_id=new_request.id))
+
+    return render_template("input.html")
+
+# -------------------------
+# 7. Output
+# -------------------------
+@main.route("/output/<uuid:request_id>")
+def output(request_id):
+    machine_calc = MachineSizeCalc1.query.filter_by(request_id=request_id).first()
+    payback_calc = PaybackPeriodCalc2.query.filter_by(request_id=request_id).first()
+
+    return render_template(
+        "output.html",
+        calc=machine_calc,
+        payback_period=payback_calc.payback_months if payback_calc else None
+    )

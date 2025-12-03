@@ -4,7 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Inloggen - Mediwaste Solutions</title>
-  <link rel="stylesheet" href="../static/css/login.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+  <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+  <style>
+    /* Zorg dat alle inputvelden dezelfde grootte hebben */
+    .login-container input {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      box-sizing: border-box;
+      font-size: 16px;
+    }
+  </style>
 </head>
 <body>
   <div class="login-container">
@@ -12,8 +23,8 @@
     <p>Log in om toegang te krijgen tot uw persoonlijke dashboard.</p>
 
     <form id="loginForm">
-      <label for="e-mail">E-mailadres</label>
-      <input type="e-mail" id="e-mail" placeholder="Voer uw e-mailadres in" required>
+      <label for="email">E-mailadres</label>
+      <input type="email" id="email" placeholder="Voer uw e-mailadres in" required>
 
       <label for="password">Wachtwoord</label>
       <input type="password" id="password" placeholder="Voer uw wachtwoord in" required>
@@ -21,7 +32,7 @@
       <button type="submit">Aanmelden bij mijn account</button>
     </form>
 
-    <a href="Homepage.html">← Terug naar homepagina</a>
+    <a href="{{ url_for('main.homepage') }}">← Terug naar homepagina</a>
   </div>
 
   <footer>
@@ -32,18 +43,18 @@
     const form = document.getElementById('loginForm');
 
     form.addEventListener('submit', function(e) {
-      e.preventDefault(); // voorkom dat formulier automatisch verstuurt
+      e.preventDefault();
 
-      const email = document.getElementById('e-mail').value.trim();
+      const email = document.getElementById('email').value.trim();
       const password = document.getElementById('password').value.trim();
 
-      if(e-mail === "" || password === "") {
+      if (email === "" || password === "") {
         alert("Vul zowel e-mailadres als wachtwoord in.");
         return;
       }
 
       // Als beide velden ingevuld zijn, naar dashboard
-      window.location.href = "Dashboard.html";
+      window.location.href = "{{ url_for('main.dashboard') }}";
     });
   </script>
 </body>

@@ -1,49 +1,40 @@
 <!DOCTYPE html>
-
 <html lang="nl">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard - Mediwaste Solutions</title>
-  <link rel="stylesheet" href="../static/css/dashboard.css">
- </head>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+  <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+</head>
 
 <body>
-
   <header>
     Mediwaste Solutions
+<<<<<<< HEAD
+  </header>
+
+  <!-- Uitloggen: terug naar homepage -->
+  <a href="{{ url_for('main.homepage') }}" class="logout-btn">Uitloggen</a>
+=======
     <a href="Homepage.html" class="logout-btn">Uitloggen</a>
   </header> 
+>>>>>>> 916e0d5f8d8f5d3a2d7bd03966085fc15877a8fa
 
   <div class="dashboard-container">
-
     <h1>Welkom terug!</h1>
-
     <p>Start een nieuwe besparingsanalyse of bekijk je eerdere aanvragen.</p>
 
+    <!-- Knoppen verwijzen nu naar de juiste routes -->
+    <a class="btn" href="{{ url_for('main.input_page') }}">Nieuwe berekening</a>
+    <a class="btn btn-secondary" href="{{ url_for('main.aanvragen') }}">Mijn aanvragen</a>
 
-
-    <!-- knop verwijst nu naar input.html -->
-
-    <button class="btn" onclick="window.location.href='input.html'">Nieuwe berekening</button>
-
-    <button class="btn btn-secondary" onclick="window.location.href='Aanvragen.html'">Mijn aanvragen</button>
-
-
-
-    <a href="Homepage.html">← Terug naar homepagina</a>
-
+    <!-- Terug naar homepagina -->
+    <a href="{{ url_for('main.homepage') }}">← Terug naar homepagina</a>
   </div>
 
-
-
   <footer>
-
     © 2025 Mediwaste Solutions. Alle rechten voorbehouden.
-
   </footer>
-
 </body>
-
 </html>
