@@ -173,22 +173,23 @@
 
 
     
-    .logout-btn {     
-      display: inline-block;
+.logout-btn {     
+      position: absolute;
+      right: 20px;
+      
+      /* Dit is de magie: */
+      top: 100%;          /* Zet de knop precies tegen de onderrand van de header aan */
+      margin-top: 10px;   /* Zorgt voor een klein beetje ruimte tussen de blauwe balk en de knop */
       
       background-color: #eded1a;
-      color: white;
+      color: #2150b6;
       
       padding: 10px 18px;
       border-radius: 8px;
       text-decoration: none;
       font-weight: bold;
       font-size: 1rem;
-
-      margin-top: 10px;       /* afstand ONDER de header */
-      margin-right: 20px;     /* afstand van rechterrand */
       
-      float: right;           /* knop rechts */
       transition: background-color 0.3s ease;
     }
 
