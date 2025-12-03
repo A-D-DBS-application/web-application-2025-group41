@@ -25,7 +25,7 @@ def login():
 
         user = User.query.filter_by(email=email).first()
         if user and user.password == password:  # later vervangen door bcrypt check
-            session["user_id"] = str(user.id)
+            session["user_id"] = str(user.id)  # opslaan als string
             return redirect(url_for("main.homepage"))
         else:
             flash("Ongeldige login.")
@@ -86,7 +86,8 @@ def aanvragen():
     if not user_id:
         return redirect(url_for("main.login"))
 
-    requests = Request.query.filter_by(user_id=user_id).all()
+    # converteer naar UUID
+    requests = Request.query.filter_by(user_id=uuid.UUID(user_id)).all()
     return render_template("aanvragen.html", requests=requests)
 
 # -------------------------
@@ -94,11 +95,15 @@ def aanvragen():
 # -------------------------
 @main.route("/input", methods=["GET", "POST"])
 def input_page():
+    user_id = session.get("user_id")
+    if not user_id:
+        return redirect(url_for("main.login"))
+
     if request.method == "POST":
         # Maak nieuwe request
         new_request = Request(
             id=uuid.uuid4(),
-            user_id=session.get("user_id"),
+            user_id=uuid.UUID(user_id),   # <-- fix: cast naar UUID
             created_at=datetime.utcnow()
         )
         db.session.add(new_request)
