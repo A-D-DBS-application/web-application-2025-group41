@@ -13,12 +13,12 @@
 <table id="tabel">
   <tr>
     <th>Datum</th>
-    <th>Dichtheid</th>
+    <th>Tonnage</th>
     <th>Vaten</th>
     <th>Kost vat</th>
     <th>Volume vat</th>
-    <th>Ophaalkost</th>
-    <th>Kost HMW</th>
+    <th>Ophaalkost & verbranding</th>
+    
   </tr>
 </table>
 
@@ -42,12 +42,12 @@
     const row = document.createElement("tr");
     row.innerHTML = `
       <td>${formatDatum(a.datum)}</td>
-      <td>${a.hmw_density}</td>
-      <td>${a.number_of_barrels}</td>
-      <td>${a.cost_hmw_barrels}</td>
-      <td>${a.volume_barrel}</td>
-      <td>${a.cost_collection}</td>
-      <td>${a.cost_hmw}</td>
+      <td>${a.hmw_total_weight}</td>
+      <td>${a.number_of_barrels_1}</td>
+      <td>${a.cost_hmw_barrels_1}</td>
+      <td>${a.volume_barrel_1}</td>
+      <td>${a.cost_collection_processing}</td>
+      
     `;
     tabel.appendChild(row);
   });
