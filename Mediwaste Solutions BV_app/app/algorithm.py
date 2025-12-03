@@ -65,7 +65,7 @@ def run_user_algorithm(hmw_density, number_of_barrels, cost_hmw_barrels,
 # CONSTANTEN – AANNAMES
 # -----------------------------
 ELECTRICITY_PRICE_PER_KWH = 0.25   # € / kWh (placeholder)
-WATER_PRICE_PER_M3 = 0.005           # € / m³ (1000 L) (placeholder)
+WATER_PRICE_PER_L = 0.005           # € / m³ (1000 L) (placeholder)
 VOLUME_REDUCTION_FACTOR = 0.20     # er blijft 40% volume/gewicht over na behandeling
 COLLECTION_REDUCTION_FACTOR = 0.50 # ophaalkost wordt 50% van origineel
 STEAM_GENERATOR_COST = 15_000.0    # extra investering indien geen stoomgenerator (placeholder)
@@ -143,7 +143,7 @@ def run_payback_for_request(request_id) -> dict:
             if n_barrels is not None and cost_per_barrel is not None:
                 barrel_cost_annual += n_barrels * cost_per_barrel
 
-    # Verwerking en ophaling, excl. WIVA-vaten
+    # Verwerking/verbranding en ophaling, excl. WIVA-vaten
     processing_cost_annual = waste.cost_collection_processing or 0.0
 
     # Totale huidige kost zonder machine
@@ -168,10 +168,10 @@ def run_payback_for_request(request_id) -> dict:
     if machine.capacity <= 0:
         raise ValueError("Machine capacity must be > 0")
 
-    cycles_per_year = math.ceil(annual_volume_l / machine.capacity) #niet vol -> max % gevuld?
+    cycles_per_year = math.ceil(annual_volume_l / machine.capacity) #niet vol -> max % gevuld? 95%?
 
     electricity_cost_annual = cycles_per_year * machine.electricity_consumption * ELECTRICITY_PRICE_PER_KWH
-    water_cost_annual = cycles_per_year * machine.water_consumption  * WATER_PRICE_PER_M3
+    water_cost_annual = cycles_per_year * machine.water_consumption  * WATER_PRICE_PER_L
 
 
     # 4. Kosten mét machine
