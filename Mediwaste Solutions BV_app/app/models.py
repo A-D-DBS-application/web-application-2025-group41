@@ -3,10 +3,11 @@ from datetime import datetime
 from sqlalchemy import Column, String, Integer, Numeric, Boolean, ForeignKey, DateTime, Text
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
+from sqlalchemy.sql import quoted_name   # <-- belangrijk
 from . import db
 
 class User(db.Model):
-    __tablename__ = '"USER"'
+    __tablename__ = quoted_name("USER", True)
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     name_user = Column(String, nullable=False)
@@ -22,10 +23,10 @@ class User(db.Model):
 
 
 class Request(db.Model):
-    __tablename__ = '"REQUEST"'
+    __tablename__ = quoted_name("REQUEST", True)
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    user_id = Column(UUID(as_uuid=True), ForeignKey('"USER".id'), nullable=False)
+    user_id = Column(UUID(as_uuid=True), ForeignKey(quoted_name("USER", True) + ".id"), nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow)
 
     user = relationship("User", back_populates="requests")
@@ -35,10 +36,10 @@ class Request(db.Model):
 
 
 class WasteProfile(db.Model):
-    __tablename__ = '"WASTE_PROFILE"'
+    __tablename__ = quoted_name("WASTE_PROFILE", True)
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    request_id = Column(UUID(as_uuid=True), ForeignKey('"REQUEST".id'), nullable=False)
+    request_id = Column(UUID(as_uuid=True), ForeignKey(quoted_name("REQUEST", True) + ".id"), nullable=False)
 
     cost_collection_process = Column(Numeric)
     hmw_total_weight = Column(Numeric)
@@ -65,7 +66,7 @@ class WasteProfile(db.Model):
 
 
 class MachineSpecs(db.Model):
-    __tablename__ = '"MACHINE_SPECS"'
+    __tablename__ = quoted_name("MACHINE_SPECS", True)
 
     id = Column(Integer, primary_key=True)
     size_code = Column(Text)
@@ -76,20 +77,20 @@ class MachineSpecs(db.Model):
 
 
 class MachineSizeCalc1(db.Model):
-    __tablename__ = '"MACHINE_SIZE_CALC1"'
+    __tablename__ = quoted_name("MACHINE_SIZE_CALC1", True)
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    request_id = Column(UUID(as_uuid=True), ForeignKey('"REQUEST".id'), nullable=False)
+    request_id = Column(UUID(as_uuid=True), ForeignKey(quoted_name("REQUEST", True) + ".id"), nullable=False)
     recommended_machine_size = Column(Integer)
 
     request = relationship("Request", back_populates="machine_size_calc")
 
 
 class PaybackPeriodCalc2(db.Model):
-    __tablename__ = '"PAYBACK_PERIOD_CALC2"'
+    __tablename__ = quoted_name("PAYBACK_PERIOD_CALC2", True)
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    request_id = Column(UUID(as_uuid=True), ForeignKey('"REQUEST".id'), nullable=False)
+    request_id = Column(UUID(as_uuid=True), ForeignKey(quoted_name("REQUEST", True) + ".id"), nullable=False)
     payback_months = Column(Numeric)
 
     request = relationship("Request", back_populates="payback_period_calc")
