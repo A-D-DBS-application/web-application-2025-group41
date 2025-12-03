@@ -1,52 +1,53 @@
-
-
-/* 1. NIEUW: Dit zorgt dat de footer altijd onderaan blijft plakken */
-body {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-/* 2. UPDATE: Dit centreert je witte kaart in het midden van het scherm */
-main, .calc-page, .register-page {
-  flex: 1;                 /* Duwt de footer naar beneden */
-  display: flex;           /* Flexbox aanzetten */
-  justify-content: center; /* Horizontaal centreren */
-  align-items: center;     /* Verticaal centreren */
-  padding: 40px 20px;      /* Zorgt dat het niet tegen de rand plakt op mobiel */
-}
-
-
-.input-group {
-  position: relative;
-  margin-bottom: 20px;
-}
-
-.button-group {
-  display: flex;
-  gap: 15px;
-  justify-content: center;
-  margin-top: 30px;
-  flex-wrap: wrap;
-}
-
-
-footer {
-  text-align: center;
-  padding: 20px;
-  background-color: #f1f1f1;
-  color: #666;
-  font-size: 0.9rem;
-  width: 100%;
-}
-
+/* --- Header --- */
 header {
   width: 100%;
-  background-color: #2150b6;
+  background-color: transparent; /* Of var(--color-primary) afhankelijk van pagina */
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+/* Specifiek voor Dashboard header stijl */
+header.header-solid {
+  background-color: var(--color-primary);
   color: white;
-  padding: 30px 20px;
   text-align: center;
-  font-size: 2rem;
-  font-weight: bold;
-  box-sizing: border-box; /* Zorgt dat padding de breedte niet verpest */
-} 
+  justify-content: center;
+}
+
+/* --- Containers --- */
+/* Standaard container voor formulieren/dashboard */
+.container {
+  background-color: var(--color-bg-white);
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  padding: 40px;
+  margin: 40px auto;
+  width: 100%;
+  max-width: 600px; /* Standaard breedte, aanpasbaar met modifiers */
+}
+
+.container-small { max-width: 380px; } /* Voor login/register */
+.container-wide { max-width: 1000px; } /* Voor overzichten */
+
+/* Flexbox wrappers voor centreren van pagina's */
+.page-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Of flex-start afhankelijk van design */
+  padding: 20px;
+}
+
+/* --- Footer --- */
+footer {
+  margin-top: auto;
+  padding: 20px;
+  background-color: #f1f1f1;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  border-top: 1px solid var(--color-border);
+}
