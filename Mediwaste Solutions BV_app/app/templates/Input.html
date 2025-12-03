@@ -4,7 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nieuwe berekening - Mediwaste Solutions</title>
-  <link rel="stylesheet" href="../static/css/input.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/input.css') }}">
+  <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
 <body>
   <div class="calc-page">
@@ -12,7 +13,7 @@
       <h2>Maak een nieuwe berekening</h2>
       <p class="subtitle">Vul de gegevens in voor een besparingsanalyse</p>
 
-      <form method="POST">
+      <form method="POST" action="{{ url_for('main.input_page') }}">
         <h3>Kosten</h3>
 
         <label for="hmw_total_weight">Totaal gewicht RMA</label>
@@ -32,13 +33,11 @@
           <span class="unit">€</span>
         </div>
 
-         
-       <label for="volume_barrel_1">Inhoud per WIVA-vat</label>
+        <label for="volume_barrel_1">Inhoud per WIVA-vat</label>
         <div class="input-group">
           <input type="number" id="volume_barrel_1" name="volume_barrel_1" placeholder="Bijv. 60" required>
           <span class="unit">Liter</span>
         </div>
-
 
         <label for="number_of_barrels_2">Aantal WIVA-vaten 2de type</label>
         <div class="input-group">
@@ -57,7 +56,6 @@
           <span class="unit">Liter</span>
         </div>
 
-
         <label for="number_of_barrels_3">Aantal WIVA-vaten 3de type</label>
         <div class="input-group">
           <input type="number" id="number_of_barrels_3" name="number_of_barrels_3" placeholder="Bijv. 5000" required>
@@ -75,7 +73,6 @@
           <span class="unit">Liter</span>
         </div>
 
-
         <label for="number_of_barrels_4">Aantal WIVA-vaten 4de type</label>
         <div class="input-group">
           <input type="number" id="number_of_barrels_4" name="number_of_barrels_4" placeholder="Bijv. 5000" required>
@@ -87,14 +84,11 @@
           <span class="unit">€</span>
         </div>
 
-
-       <label for="volume_barrel_4">Inhoud per WIVA-vat</label>
+        <label for="volume_barrel_4">Inhoud per WIVA-vat</label>
         <div class="input-group">
           <input type="number" id="volume_barrel_4" name="volume_barrel_4" placeholder="Bijv. 60" required>
           <span class="unit">Liter</span>
         </div>
-
-        
 
         <label for="cost_collection_processing">Huidige kost ophaling & verbranding RMA per jaar (zonder kost WIVA-vaten)</label>
         <div class="input-group">
@@ -102,14 +96,13 @@
           <span class="unit">€</span>
         </div>
 
-        <label for="steam_generator_needed">Stoomgenerator nodig </label>
+        <label for="steam_generator_needed">Stoomgenerator nodig</label>
         <div class="input-group">
           <input type="number" id="steam_generator_needed" name="steam_generator_needed" required>
-          
         </div>
 
-         <div class="button-group">
-          <button type="button" class="secondary-btn" onclick="window.location.href='Dashboard.html'">Terug naar dashboard</button>
+        <div class="button-group">
+          <a href="{{ url_for('main.dashboard') }}" class="secondary-btn">Terug naar dashboard</a>
           <button type="submit">Bewaar en bekijk resultaat</button>
         </div>
       </form>
@@ -119,37 +112,5 @@
   <footer>
     © 2025 Mediwaste Solutions BV. Alle rechten voorbehouden.
   </footer>
-<script>
-  function opslaan() {
-    const aanvraag = {
-      hmw_density: document.getElementById('hmw_density').value,
-      number_of_barrels: document.getElementById('number_of_barrels').value,
-      cost_hmw_barrels: document.getElementById('cost_hmw_barrels').value,
-      volume_barrel: document.getElementById('volume_barrel').value,
-      cost_collection: document.getElementById('cost_collection').value,
-      cost_hmw: document.getElementById('cost_hmw').value,
-      datum: new Date().toLocaleString()
-    };
-
-    // Haal bestaande aanvragen op
-    const lijst = JSON.parse(localStorage.getItem("aanvragen")) || [];
-
-    // Voeg nieuwe toe
-    lijst.push(aanvraag);
-
-    // Opslaan
-    localStorage.setItem("aanvragen", JSON.stringify(lijst));
-
-    // Ga naar resultaatpagina
-    window.location.href = "Output.html";
-  }
-
-  // Zorg dat "Bewaar en bekijk resultaat" de functie gebruikt
-  document.querySelector("button[type='submit']").addEventListener("click", function(event) {
-    event.preventDefault();  // voorkomt standaard formulaar submit
-    opslaan();
-  });
-</script>
-
 </body>
 </html>
