@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nieuwe berekening - Mediwaste Solutions</title>
+  <title>Nieuwe simulatie - Mediwaste Solutions</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/input.css') }}">
   <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
 <body>
   <div class="calc-page">
     <div class="calc-container">
-      <h2>Maak een nieuwe berekening</h2>
+      <h2>Start een nieuwe simulatie</h2>
       <p class="subtitle">Vul de gegevens in voor een besparingsanalyse</p>
 
       <form method="POST" action="{{ url_for('main.input_page') }}">

@@ -13,7 +13,7 @@
   <img src="{{ url_for('static', filename='Logo-Mediwaste-Wit.svg') }}" alt="Mediwaste Solutions logo" class="logo">
   <div class="buttons">
     <a class="register-btn" href="{{ url_for('main.register') }}">Registreren</a>
-    <a class="login-btn" href="{{ url_for('main.login') }}">Login</a>
+    <a class="login-btn" href="{{ url_for('main.login') }}">Inloggen</a>
   </div>
 </header>
 
@@ -70,7 +70,7 @@ optionsData.forEach(opt => {
     img.src = "/static/toekomstgericht.png";
     img.alt = 'Toekomstgericht icoon';
   } else if(opt.title === 'Efficiënt') {
-    img.src = 'efficiënt.png';
+    img.src = '"/static/efficiënt.png';
     img.alt = 'Efficiënt icoon';
     div.appendChild(img);
   } else if(opt.title === 'Kostenbesparend') {

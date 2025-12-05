@@ -16,11 +16,11 @@
 
   <div class="dashboard-container">
     <h1>Welkom terug!</h1>
-    <p>Start een nieuwe besparingsanalyse of bekijk je eerdere aanvragen.</p>
+    <p>Start een nieuwe simulatie of bekijk eerdere simulaties.</p>
 
     <!-- Knoppen verwijzen nu naar de juiste routes -->
-    <a class="btn" href="{{ url_for('main.input_page') }}">Nieuwe berekening</a>
-    <a class="btn btn-secondary" href="{{ url_for('main.aanvragen') }}">Mijn aanvragen</a>
+    <a class="btn" href="{{ url_for('main.input_page') }}">Nieuwe simulatie</a>
+    <a class="btn btn-secondary" href="{{ url_for('main.aanvragen') }}">Mijn simulaties</a>
 
     <!-- Terug naar homepagina -->
     <a href="{{ url_for('main.homepage') }}">← Terug naar homepagina</a>
