@@ -44,6 +44,8 @@ class WasteProfile(db.Model):
     cost_collection_process = Column(Numeric)
     hmw_total_weight = Column(Numeric)
 
+    wiva_types = Column(Integer, nullable=True)
+
     number_of_barrels_1 = Column(Integer)
     number_of_barrels_2 = Column(Integer)
     number_of_barrels_3 = Column(Integer)
