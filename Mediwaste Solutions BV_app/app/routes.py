@@ -6,6 +6,21 @@ from datetime import datetime
 
 main = Blueprint("main", __name__)
 
+def to_null(value):
+    """
+    bij input: 4 types vaten, indien leeg of spaties -> None
+    Converteert lege strings of whitespace naar None.
+    SQLAlchemy zet None automatisch om in NULL in de database.
+    """
+    if value is None:
+        return None
+
+    value = str(value).strip()
+    if value == "":
+        return None
+
+    return value
+
 # -------------------------
 # 1. Homepage
 # -------------------------
@@ -114,18 +129,19 @@ def input_page():
             id=uuid.uuid4(),
             request_id=new_request.id,
             hmw_total_weight=request.form["hmw_total_weight"],
-            number_of_barrels_1=request.form["number_of_barrels_1"],
-            number_of_barrels_2=request.form["number_of_barrels_2"],
-            number_of_barrels_3=request.form["number_of_barrels_3"],
-            number_of_barrels_4=request.form["number_of_barrels_4"],
-            cost_hmw_barrels_1=request.form["cost_hmw_barrels_1"],
-            cost_hmw_barrels_2=request.form["cost_hmw_barrels_2"],
-            cost_hmw_barrels_3=request.form["cost_hmw_barrels_3"],
-            cost_hmw_barrels_4=request.form["cost_hmw_barrels_4"],
-            volume_barrels_1=request.form["volume_barrel_1"],
-            volume_barrels_2=request.form["volume_barrel_2"],
-            volume_barrels_3=request.form["volume_barrel_3"],
-            volume_barrels_4=request.form["volume_barrel_4"],
+            wiva_types = int(request.form["wiva_types"]),
+            number_of_barrels_1=to_null(request.form["number_of_barrels_1"]),
+            number_of_barrels_2=to_null(request.form["number_of_barrels_2"]),
+            number_of_barrels_3=to_null(request.form["number_of_barrels_3"]),
+            number_of_barrels_4=to_null(request.form["number_of_barrels_4"]),
+            cost_hmw_barrels_1=to_null(request.form["cost_hmw_barrels_1"]),
+            cost_hmw_barrels_2=to_null(request.form["cost_hmw_barrels_2"]),
+            cost_hmw_barrels_3=to_null(request.form["cost_hmw_barrels_3"]),
+            cost_hmw_barrels_4=to_null(request.form["cost_hmw_barrels_4"]),
+            volume_barrels_1=to_null(request.form["volume_barrel_1"]),
+            volume_barrels_2=to_null(request.form["volume_barrel_2"]),
+            volume_barrels_3=to_null(request.form["volume_barrel_3"]),
+            volume_barrels_4=to_null(request.form["volume_barrel_4"]),
             cost_collection_process=request.form["cost_collection_processing"],
             steam_generator_needed=bool(int(request.form["steam_generator_needed"]))
         )
