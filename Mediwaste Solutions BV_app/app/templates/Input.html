@@ -22,74 +22,92 @@
           <span class="unit">kg</span>
         </div>
 
-        <label for="number_of_barrels_1">Aantal WIVA-vaten 1ste type</label>
-        <div class="input-group">
-          <input type="number" id="number_of_barrels_1" name="number_of_barrels_1" placeholder="Bijv. 5000" required>
+        <label for="wiva_types">Hoeveel verschillende types WIVA-vaten heeft u?</label>
+        <select id="wiva_types" name="wiva_types" required>
+          <option value="1">1 type</option>
+          <option value="2">2 types</option>
+          <option value="3">3 types</option>
+          <option value="4">4 types</option>
+        </select>
+
+        <div class="wiva-group" data-group="1">
+          <label for="number_of_barrels_1">Aantal WIVA-vaten 1ste type</label>
+          <div class="input-group">
+            <input type="number" id="number_of_barrels_1" name="number_of_barrels_1" placeholder="Bijv. 5000">
+          </div>
+
+          <label for="cost_hmw_barrels_1">Huidige kost WIVA-vaten per jaar</label>
+          <div class="input-group">
+            <input type="number" id="cost_hmw_barrels_1" name="cost_hmw_barrels_1" placeholder="Bijv. 100000">
+            <span class="unit">€</span>
+          </div>
+
+          <label for="volume_barrel_1">Inhoud per WIVA-vat</label>
+          <div class="input-group">
+            <input type="number" id="volume_barrel_1" name="volume_barrel_1" placeholder="Bijv. 60">
+            <span class="unit">Liter</span>
+          </div>
         </div>
 
-        <label for="cost_hmw_barrels_1">Huidige kost WIVA-vaten per jaar</label>
-        <div class="input-group">
-          <input type="number" id="cost_hmw_barrels_1" name="cost_hmw_barrels_1" placeholder="Bijv. 100000" required>
-          <span class="unit">€</span>
-        </div>
+        <div class="wiva-group" data-group="2">
+          <label for="number_of_barrels_2">Aantal WIVA-vaten 2de type</label>
+          <div class="input-group">
+            <input type="number" id="number_of_barrels_2" name="number_of_barrels_2" placeholder="Bijv. 5000">
+          </div>
 
-        <label for="volume_barrel_1">Inhoud per WIVA-vat</label>
-        <div class="input-group">
-          <input type="number" id="volume_barrel_1" name="volume_barrel_1" placeholder="Bijv. 60" required>
-          <span class="unit">Liter</span>
-        </div>
+          <label for="cost_hmw_barrels_2">Huidige kost WIVA-vaten per jaar</label>
+          <div class="input-group">
+            <input type="number" id="cost_hmw_barrels_2" name="cost_hmw_barrels_2" placeholder="Bijv. 100000">
+            <span class="unit">€</span>
+          </div>
 
-        <label for="number_of_barrels_2">Aantal WIVA-vaten 2de type</label>
-        <div class="input-group">
-          <input type="number" id="number_of_barrels_2" name="number_of_barrels_2" placeholder="Bijv. 5000" required>
-        </div>
+          <label for="volume_barrel_2">Inhoud per WIVA-vat</label>
+          <div class="input-group">
+            <input type="number" id="volume_barrel_2" name="volume_barrel_2" placeholder="Bijv. 50">
+            <span class="unit">Liter</span>
+          </div>
+        </div>        
 
-        <label for="cost_hmw_barrels_2">Huidige kost WIVA-vaten per jaar</label>
-        <div class="input-group">
-          <input type="number" id="cost_hmw_barrels_2" name="cost_hmw_barrels_2" placeholder="Bijv. 100000" required>
-          <span class="unit">€</span>
-        </div>
 
-        <label for="volume_barrel_2">Inhoud per WIVA-vat</label>
-        <div class="input-group">
-          <input type="number" id="volume_barrel_2" name="volume_barrel_2" placeholder="Bijv. 60" required>
-          <span class="unit">Liter</span>
-        </div>
+        <div class="wiva-group" data-group="3">
+          <label for="number_of_barrels_3">Aantal WIVA-vaten 3de type</label>
+          <div class="input-group">
+            <input type="number" id="number_of_barrels_3" name="number_of_barrels_3">
+          </div>
 
-        <label for="number_of_barrels_3">Aantal WIVA-vaten 3de type</label>
-        <div class="input-group">
-          <input type="number" id="number_of_barrels_3" name="number_of_barrels_3" placeholder="Bijv. 5000" required>
-        </div>
+          <label for="cost_hmw_barrels_3">Huidige kost WIVA-vaten per jaar</label>
+          <div class="input-group">
+            <input type="number" id="cost_hmw_barrels_3" name="cost_hmw_barrels_3">
+            <span class="unit">€</span>
+          </div>
 
-        <label for="cost_hmw_barrels_3">Huidige kost WIVA-vaten per jaar</label>
-        <div class="input-group">
-          <input type="number" id="cost_hmw_barrels_3" name="cost_hmw_barrels_3" placeholder="Bijv. 100000" required>
-          <span class="unit">€</span>
-        </div>
+          <label for="volume_barrel_3">Inhoud per WIVA-vat</label>
+          <div class="input-group">
+            <input type="number" id="volume_barrel_3" name="volume_barrel_3">
+            <span class="unit">Liter</span>
+          </div>
+        </div>   
+        
+        
+        <div class="wiva-group" data-group="4">
+          <label for="number_of_barrels_4">Aantal WIVA-vaten 4de type</label>
+          <div class="input-group">
+            <input type="number" id="number_of_barrels_4" name="number_of_barrels_4" >
+          </div>
 
-        <label for="volume_barrel_3">Inhoud per WIVA-vat</label>
-        <div class="input-group">
-          <input type="number" id="volume_barrel_3" name="volume_barrel_3" placeholder="Bijv. 60" required>
-          <span class="unit">Liter</span>
-        </div>
+          <label for="cost_hmw_barrels_4">Huidige kost WIVA-vaten per jaar</label>
+          <div class="input-group">
+            <input type="number" id="cost_hmw_barrels_4" name="cost_hmw_barrels_4">
+            <span class="unit">€</span>
+          </div>
 
-        <label for="number_of_barrels_4">Aantal WIVA-vaten 4de type</label>
-        <div class="input-group">
-          <input type="number" id="number_of_barrels_4" name="number_of_barrels_4" placeholder="Bijv. 5000" required>
-        </div>
-
-        <label for="cost_hmw_barrels_4">Huidige kost WIVA-vaten per jaar</label>
-        <div class="input-group">
-          <input type="number" id="cost_hmw_barrels_4" name="cost_hmw_barrels_4" placeholder="Bijv. 100000" required>
-          <span class="unit">€</span>
-        </div>
-
-        <label for="volume_barrel_4">Inhoud per WIVA-vat</label>
-        <div class="input-group">
-          <input type="number" id="volume_barrel_4" name="volume_barrel_4" placeholder="Bijv. 60" required>
-          <span class="unit">Liter</span>
-        </div>
-
+          <label for="volume_barrel_4">Inhoud per WIVA-vat</label>
+          <div class="input-group">
+            <input type="number" id="volume_barrel_4" name="volume_barrel_4" >
+            <span class="unit">Liter</span>
+          </div>
+        </div>     
+        
         <label for="cost_collection_processing">Huidige kost ophaling & verbranding RMA per jaar (zonder kost WIVA-vaten)</label>
         <div class="input-group">
           <input type="number" id="cost_collection_processing" name="cost_collection_processing" placeholder="Bijv. 5000" required>
@@ -112,5 +130,41 @@
   <footer>
     © 2025 Mediwaste Solutions BV. Alle rechten voorbehouden.
   </footer>
+
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const selector = document.getElementById("wiva_types");
+    const groups = document.querySelectorAll(".wiva-group");
+
+    function updateVisibility() {
+        const selected = parseInt(selector.value);
+
+        groups.forEach(group => {
+            const groupNum = parseInt(group.dataset.group);
+
+            if (groupNum <= selected) {
+                group.style.display = "block";
+                // zet required aan
+                group.querySelectorAll("input").forEach(inp => inp.required = true);
+            } else {
+                group.style.display = "none";
+                // maak velden leeg zodat Supabase niets krijgt
+                group.querySelectorAll("input").forEach(inp => {
+                    inp.required = false;
+                    inp.value = "";
+                });
+            }
+        });
+    }
+
+    selector.addEventListener("change", updateVisibility);
+
+    // run bij eerste load
+    updateVisibility();
+});
+</script>
+
 </body>
 </html>
