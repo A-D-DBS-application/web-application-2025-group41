@@ -143,7 +143,7 @@ def input_page():
             volume_barrels_3=to_null(request.form["volume_barrel_3"]),
             volume_barrels_4=to_null(request.form["volume_barrel_4"]),
             cost_collection_process=request.form["cost_collection_processing"],
-            steam_generator_needed=bool(int(request.form["steam_generator_needed"]))
+            steam_generator_needed=request.form["steam_generator_needed"] == "true"
         )
         db.session.add(waste)
 
