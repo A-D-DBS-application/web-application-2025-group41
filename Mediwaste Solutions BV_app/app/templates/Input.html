@@ -18,16 +18,16 @@
 
         <label for="hmw_total_weight">{{ "Totaal gewicht RMA" | t }}</label>
         <div class="input-group">
-          <input type="number" id="hmw_total_weight" name="hmw_total_weight" placeholder="Bijv. 1.2" required>
+          <input type="number" id="hmw_total_weight" name="hmw_total_weight" placeholder="Bijv. 160000" required>
           <span class="unit">kg</span>
         </div>
 
         <label for="wiva_types">{{ "Hoeveel verschillende types WIVA-vaten heeft u?" | t }}</label>
         <select id="wiva_types" name="wiva_types" required>
-          <option value="1">1{{ "type" | t }}</option>
-          <option value="2">2{{ "types" | t }}</option>
-          <option value="3">3{{ "types" | t }}</option>
-          <option value="4">4{{ "types" | t }}</option>
+          <option value="1">1 {{ "type" | t }}</option>
+          <option value="2">2 {{ "types" | t }}</option>
+          <option value="3">3 {{ "types" | t }}</option>
+          <option value="4">4 {{ "types" | t }}</option>
         </select>
 
         <div class="wiva-group" data-group="1">
@@ -114,7 +114,7 @@
           <span class="unit">€</span>
         </div>
 
-        <label for="steam_generator_needed">{{ "Stoomgenerator nodig" | t }}g</label>
+        <label for="steam_generator_needed">{{ "Stoomgenerator nodig" | t }}</label>
         <div class="input-group">
           <select id="steam_generator_needed" name="steam_generator_needed" required>
               <option value="true">{{ "Ja" | t }}</option>
