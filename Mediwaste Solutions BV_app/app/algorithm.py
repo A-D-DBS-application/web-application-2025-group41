@@ -8,7 +8,12 @@ ELECTRICITY_PRICE_PER_KWH = 0.25   # € / kWh (placeholder)
 WATER_PRICE_PER_L = 0.005           # € / m³ (1000 L) (placeholder)
 VOLUME_REDUCTION_FACTOR = 0.20     # er blijft 40% volume/gewicht over na behandeling
 COLLECTION_REDUCTION_FACTOR = 0.50 # ophaalkost wordt 50% van origineel
-STEAM_GENERATOR_COST = 15_000.0    # extra investering indien geen stoomgenerator (placeholder)
+STEAM_GENERATOR_COSTS = {
+    "T100": 10164,
+    "T150": 10164,
+    "T300": 27588,
+    "T700": 35574,
+}
 MAX_PAYBACK_YEARS = 15             # zoek max 15 jaar
 WORKDAYS_PER_YEAR = 300          # aangenomen aantal werkdagen
 MAX_DAILY_CYCLES = 8
@@ -244,8 +249,15 @@ def run_payback_for_request(request_id) -> dict:
     # 5. Totale investering
     # -----------------------------
     investment = machine.selling_price
+
     if waste.steam_generator_needed:
-        investment += STEAM_GENERATOR_COST
+        extra_steam_cost = STEAM_GENERATOR_COSTS.get(machine.size_code)
+
+        if extra_steam_cost is None:
+            # hard fail als we de code niet kennen
+            raise ValueError(f"No steam generator cost configured for machine {machine.size_code}")
+
+        investment += extra_steam_cost
 
 
     # 6. Terugverdientijd (in maanden)
