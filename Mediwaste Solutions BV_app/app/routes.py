@@ -152,7 +152,7 @@ def input_page():
             volume_barrels_2=to_null(request.form["volume_barrel_2"]),
             volume_barrels_3=to_null(request.form["volume_barrel_3"]),
             volume_barrels_4=to_null(request.form["volume_barrel_4"]),
-            cost_collection_process=request.form["cost_collection_processing"],
+            cost_collection_processing=request.form["cost_collection_processing"],
             steam_generator_needed=request.form["steam_generator_needed"] == "true"
         )
         db.session.add(waste)
@@ -163,7 +163,7 @@ def input_page():
             number_of_barrels=int(request.form["number_of_barrels_1"]),
             cost_hmw_barrels=float(request.form["cost_hmw_barrels_1"]),
             volume_barrel=float(request.form["volume_barrel_1"]),
-            cost_collection=float(request.form["cost_collection_processing"]),
+            cost_collection_processing=float(request.form["cost_collection_processing"]),
             cost_hmw=float(request.form["cost_hmw_barrels_1"]),
             joint_committee=None,
             workdays=250

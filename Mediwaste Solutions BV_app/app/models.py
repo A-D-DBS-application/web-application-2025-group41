@@ -41,7 +41,7 @@ class WasteProfile(db.Model):
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     request_id = Column(UUID(as_uuid=True), ForeignKey(quoted_name("REQUEST", True) + ".id"), nullable=False)
 
-    cost_collection_process = Column(Numeric)
+    cost_collection_processing = Column(Numeric)
     hmw_total_weight = Column(Numeric)
 
     wiva_types = Column(Integer, nullable=True)
