@@ -6,6 +6,8 @@ from datetime import datetime
 
 main = Blueprint("main", __name__)
 
+
+
 def to_null(value):
     """
     bij input: 4 types vaten, indien leeg of spaties -> None
@@ -20,6 +22,14 @@ def to_null(value):
         return None
 
     return value
+
+@main.before_app_request
+def set_lang():
+    lang = request.args.get("lang")
+    if lang in ["nl", "fr"]:
+        session["lang"] = lang
+    if "lang" not in session:
+        session["lang"] = "nl"
 
 # -------------------------
 # 1. Homepage

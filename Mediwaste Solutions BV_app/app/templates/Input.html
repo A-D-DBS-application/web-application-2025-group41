@@ -3,135 +3,135 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nieuwe simulatie - Mediwaste Solutions</title>
+  <title>{{ "Nieuwe simulatie" | t }} - Mediwaste Solutions</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/input.css') }}">
   <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
 <body>
   <div class="calc-page">
     <div class="calc-container">
-      <h2>Start een nieuwe simulatie</h2>
-      <p class="subtitle">Vul de gegevens in voor een besparingsanalyse</p>
+      <h2>{{ "Start een nieuwe simulatie" | t }}</h2>
+      <p class="subtitle">{{ "Vul de gegevens in voor een besparingsanalyse" | t }}</p>
 
       <form method="POST" action="{{ url_for('main.input_page') }}">
-        <h3>Kosten</h3>
+        <h3>{{ "Kosten" | t }}</h3>
 
-        <label for="hmw_total_weight">Totaal gewicht RMA</label>
+        <label for="hmw_total_weight">{{ "Totaal gewicht RMA" | t }}</label>
         <div class="input-group">
           <input type="number" id="hmw_total_weight" name="hmw_total_weight" placeholder="Bijv. 1.2" required>
           <span class="unit">kg</span>
         </div>
 
-        <label for="wiva_types">Hoeveel verschillende types WIVA-vaten heeft u?</label>
+        <label for="wiva_types">{{ "Hoeveel verschillende types WIVA-vaten heeft u?" | t }}</label>
         <select id="wiva_types" name="wiva_types" required>
-          <option value="1">1 type</option>
-          <option value="2">2 types</option>
-          <option value="3">3 types</option>
-          <option value="4">4 types</option>
+          <option value="1">1{{ "type" | t }}</option>
+          <option value="2">2{{ "types" | t }}</option>
+          <option value="3">3{{ "types" | t }}</option>
+          <option value="4">4{{ "types" | t }}</option>
         </select>
 
         <div class="wiva-group" data-group="1">
-          <label for="number_of_barrels_1">Aantal WIVA-vaten 1ste type</label>
+          <label for="number_of_barrels_1">{{ "Aantal WIVA-vaten " | t }} </label>
           <div class="input-group">
             <input type="number" id="number_of_barrels_1" name="number_of_barrels_1" placeholder="Bijv. 5000">
           </div>
 
-          <label for="cost_hmw_barrels_1">Huidige kost WIVA-vaten per jaar</label>
+          <label for="cost_hmw_barrels_1">{{ "Huidige kost WIVA-vaten per jaar" | t }}</label>
           <div class="input-group">
             <input type="number" id="cost_hmw_barrels_1" name="cost_hmw_barrels_1" placeholder="Bijv. 100000">
             <span class="unit">€</span>
           </div>
 
-          <label for="volume_barrel_1">Inhoud per WIVA-vat</label>
+          <label for="volume_barrel_1">{{ "Inhoud per WIVA-vat" | t }}</label>
           <div class="input-group">
             <input type="number" id="volume_barrel_1" name="volume_barrel_1" placeholder="Bijv. 60">
-            <span class="unit">Liter</span>
+            <span class="unit">{{ 'Liter' | t }}</span>
           </div>
         </div>
 
         <div class="wiva-group" data-group="2">
-          <label for="number_of_barrels_2">Aantal WIVA-vaten 2de type</label>
+          <label for="number_of_barrels_2">{{ "Aantal WIVA-vaten " | t }}</label>
           <div class="input-group">
             <input type="number" id="number_of_barrels_2" name="number_of_barrels_2" placeholder="Bijv. 5000">
           </div>
 
-          <label for="cost_hmw_barrels_2">Huidige kost WIVA-vaten per jaar</label>
+          <label for="cost_hmw_barrels_2">{{ "Huidige kost WIVA-vaten per jaar" | t }}</label>
           <div class="input-group">
             <input type="number" id="cost_hmw_barrels_2" name="cost_hmw_barrels_2" placeholder="Bijv. 100000">
             <span class="unit">€</span>
           </div>
 
-          <label for="volume_barrel_2">Inhoud per WIVA-vat</label>
+          <label for="volume_barrel_2">{{ "Inhoud per WIVA-vat" | t }}</label>
           <div class="input-group">
             <input type="number" id="volume_barrel_2" name="volume_barrel_2" placeholder="Bijv. 50">
-            <span class="unit">Liter</span>
+            <span class="unit">{{ 'Liter' | t }}</span>
           </div>
         </div>        
 
 
         <div class="wiva-group" data-group="3">
-          <label for="number_of_barrels_3">Aantal WIVA-vaten 3de type</label>
+          <label for="number_of_barrels_3">{{ "Aantal WIVA-vaten " | t }}</label>
           <div class="input-group">
             <input type="number" id="number_of_barrels_3" name="number_of_barrels_3">
           </div>
 
-          <label for="cost_hmw_barrels_3">Huidige kost WIVA-vaten per jaar</label>
+          <label for="cost_hmw_barrels_3">{{ "Huidige kost WIVA-vaten per jaar" | t }}</label>
           <div class="input-group">
             <input type="number" id="cost_hmw_barrels_3" name="cost_hmw_barrels_3">
             <span class="unit">€</span>
           </div>
 
-          <label for="volume_barrel_3">Inhoud per WIVA-vat</label>
+          <label for="volume_barrel_3">{{ "Inhoud per WIVA-vat" | t }}</label>
           <div class="input-group">
             <input type="number" id="volume_barrel_3" name="volume_barrel_3">
-            <span class="unit">Liter</span>
+            <span class="unit">{{ 'Liter' | t }}</span>
           </div>
         </div>   
         
         
         <div class="wiva-group" data-group="4">
-          <label for="number_of_barrels_4">Aantal WIVA-vaten 4de type</label>
+          <label for="number_of_barrels_4">{{ "Aantal WIVA-vaten " | t }}</label>
           <div class="input-group">
             <input type="number" id="number_of_barrels_4" name="number_of_barrels_4" >
           </div>
 
-          <label for="cost_hmw_barrels_4">Huidige kost WIVA-vaten per jaar</label>
+          <label for="cost_hmw_barrels_4">{{ "Huidige kost WIVA-vaten per jaar" | t }}</label>
           <div class="input-group">
             <input type="number" id="cost_hmw_barrels_4" name="cost_hmw_barrels_4">
             <span class="unit">€</span>
           </div>
 
-          <label for="volume_barrel_4">Inhoud per WIVA-vat</label>
+          <label for="volume_barrel_4">{{ "Inhoud per WIVA-vat" | t }}</label>
           <div class="input-group">
             <input type="number" id="volume_barrel_4" name="volume_barrel_4" >
-            <span class="unit">Liter</span>
+            <span class="unit">{{ 'Liter' | t }}</span>
           </div>
         </div>     
         
-        <label for="cost_collection_processing">Huidige kost ophaling & verbranding RMA per jaar (zonder kost WIVA-vaten)</label>
+        <label for="cost_collection_processing">{{ "Huidige kost ophaling & verbranding RMA per jaar (zonder kost WIVA-vaten)" | t }}</label>
         <div class="input-group">
           <input type="number" id="cost_collection_processing" name="cost_collection_processing" placeholder="Bijv. 5000" required>
           <span class="unit">€</span>
         </div>
 
-        <label for="steam_generator_needed">Stoomgenerator nodig</label>
+        <label for="steam_generator_needed">{{ "Stoomgenerator nodig" | t }}g</label>
         <div class="input-group">
           <select id="steam_generator_needed" name="steam_generator_needed" required>
-              <option value="true">Ja</option>
-              <option value="false">Nee</option>
+              <option value="true">{{ "Ja" | t }}</option>
+              <option value="false">{{ "Nee" | t }}</option>
           </select>        
         </div>
 
         <div class="button-group">
-          <a href="{{ url_for('main.dashboard') }}" class="secondary-btn">Terug naar dashboard</a>
-          <button type="submit">Bewaar en bekijk resultaat</button>
+          <a href="{{ url_for('main.dashboard') }}" class="secondary-btn">{{ "Terug naar dashboard" | t }}</a>
+          <button type="submit">{{ "Bewaar en bekijk resultaat" | t }}</button>
         </div>
       </form>
     </div>
   </div>
 
   <footer>
-    © 2025 Mediwaste Solutions BV. Alle rechten voorbehouden.
+    © 2025 Mediwaste Solutions BV.  {{ "Alle rechten voorbehouden" | t }}.
   </footer>
 
 

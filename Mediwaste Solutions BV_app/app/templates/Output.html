@@ -3,40 +3,36 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Resultaat besparingsanalyse - Mediwaste Solutions</title>
+  <title>{{ "Resultaat besparingsanalyse" | t }} - Mediwaste Solutions</title>
   <link rel="stylesheet" href="../static/css/output.css">
 </head>
 <body>
 
   <main>
-    <h1>Resultaat besparingsanalyse</h1>
+    <h1>{{ "Resultaat besparingsanalyse" | t }}</h1>
 
     <div class="results">
       <div class="result-box">
-        <h3>Aanbevolen machinetype</h3>
+        <h3>{{ "Aanbevolen machinetype" | t }}</h3>
         <p>{{ calc.recommended_machine or "—" }}</p>
       </div>
       <div class="result-box">
-        <h3>Terugverdientijd van de investering</h3>
-        <p>{{ payback_period ~ " maanden"  if calc and payback_period  is not none else "—" }}</p>
+        <h3>{{ "Terugverdientijd van de investering (in maanden)" | t }}</h3>
+        <p>{{ payback_period ~ "{{'maanden' | t }}"  if calc and payback_period  is not none else "—" }}</p>
       </div>
       
     </div>
 
-    <div class="contact">
-      Bent u geïnteresserd? Vraag hier een gedetaileerd rapport aan.
-    </div>
-
     <div class="action-bar">
       <a href="Dashboard.html" class="btn-back">
-        <span>←</span> Terug naar dashboard
+        <span>←</span> {{ "Terug naar dashboard" | t }}
       </a>
     </div>
   </main>
 
   <footer>
     <div>Mediwaste Solutions</div>
-    <div>© 2025 Mediwaste Solutions BV. Alle rechten voorbehouden.</div>
+    <div>© 2025 Mediwaste Solutions BV. {{ "Alle rechten voorbehouden" | t }}.</div>
   </footer>
 
 </body>

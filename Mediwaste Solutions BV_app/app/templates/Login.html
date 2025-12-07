@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Inloggen - Mediwaste Solutions</title>
+  <title>{{ "Inloggen" | t }} - Mediwaste Solutions</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
   <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
   <style>
@@ -19,24 +19,25 @@
 </head>
 <body>
   <div class="login-container">
-    <h1>Welkom terug</h1>
-    <p>Log in om toegang te krijgen tot uw persoonlijk analyseplatform.</p>
+    <h1>{{ "Welkom terug" | t }}</h1>
+    <p>{{ "Log in om toegang te krijgen tot uw persoonlijk dashboard." | t }}</p>
 
     <form id="loginForm">
-      <label for="email">E-mailadres</label>
-      <input type="email" id="email" placeholder="Voer uw e-mailadres in" required>
+      <label for="email">{{ "E-mailadres" | t }}</label>
+      <input type="email" id="email" placeholder="{{ 'E-mailadres' | t }}" required>
 
-      <label for="password">Wachtwoord</label>
-      <input type="password" id="password" placeholder="Voer uw wachtwoord in" required>
 
-      <button type="submit">Aanmelden bij mijn account</button>
+       <label for="password">{{ "Wachtwoord" | t }}</label>
+      <input type="password" id="password" placeholder="{{ 'Wachtwoord' | t }}" required>
+
+      <button type="submit">{{ "Aanmelden bij mijn account" | t }}</button>
     </form>
 
-    <a href="{{ url_for('main.homepage') }}">← Terug naar homepagina</a>
+     <a href="{{ url_for('main.homepage') }}">← {{ "Terug naar homepagina" | t }}</a>
   </div>
 
   <footer>
-    © 2025 Mediwaste Solutions. Alle rechten voorbehouden.
+    © 2025 Mediwaste Solutions. {{ "Alle rechten voorbehouden" | t }}.
   </footer>
 
   <script>
@@ -49,7 +50,7 @@
       const password = document.getElementById('password').value.trim();
 
       if (email === "" || password === "") {
-        alert("Vul zowel e-mailadres als wachtwoord in.");
+        alert("{{ 'Vul zowel e-mailadres als wachtwoord in' | t }}.");
         return;
       }
 

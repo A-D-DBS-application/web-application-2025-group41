@@ -3,26 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mijn Aanvragen</title>
+  <title>{{ "Mijn aanvragen" | t }}</title>
   <link rel="stylesheet" href="../static/css/aanvragen.css">
 </head>
 <body>
 
-<h1>Overzicht van uw aanvragen</h1>
+<h1>{{ "Overzicht van uw aanvragen" | t }}</h1>
 
 <table id="tabel">
   <tr>
-    <th>Datum</th>
-    <th>Tonnage</th>
-    <th>Vaten</th>
-    <th>Kost vat</th>
-    <th>Volume vat</th>
-    <th>Ophaalkost & verbranding</th>
+    <th>{{ "Datum" | t }}</th>
+    <th>{{ "Totaal gewicht RMA" | t }}</th>
+    <th>{{ "Aantal WIVA-vaten " | t }}</th>
+    <th>{{ "Huidige kost WIVA-vaten per jaar" | t }}</th>
+    <th>{{ "Inhoud per WIVA-vat" | t }}</th>
+    <th>{{ "Huidige kost ophaling & verbranding RMA per jaar (zonder kost WIVA-vaten)" | t }}</th>
     
   </tr>
 </table>
 
-<a class="back" href="dashboard.html">← Terug naar dashboard</a>
+<a class="back" href="dashboard.html">← {{ "Terug naar dashboard" | t }}</a>
 
 <script>
 

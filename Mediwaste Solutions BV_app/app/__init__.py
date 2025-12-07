@@ -1,9 +1,10 @@
-from flask import Flask
+from flask import Flask, request, session
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_bcrypt import Bcrypt
 from supabase import create_client
 from .config import Config
+from .translations import translations
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -27,11 +28,18 @@ def create_app():
     from .routes import main
     app.register_blueprint(main)
 
+   
+
+    @app.template_filter('t')
+    def translate(text):
+        lang = session.get("lang", "nl")  # gebruik de sessie-taal
+        return translations.get(lang, {}).get(text, text)
+
+    
     # (optioneel) Supabase client – past bij jullie config
     # Supabase is optioneel: alleen aanmaken als keys bestaan in Config
     url = getattr(Config, "SUPABASE_URL", None)
     key = getattr(Config, "SUPABASE_KEY", None)
     app.supabase = create_client(url, key) if url and key else None
-
 
     return app
