@@ -19,7 +19,7 @@
     <p>{{ "Start een nieuwe simulatie of bekijk eerdere simulaties." | t }}</p>
 
     <!-- Knoppen verwijzen nu naar de juiste routes -->
-    class="btn" href="{{ url_for('main.input_page') }}">{{ "Nieuwe simulatie" | t }}</a>
+    <a class="btn" href="{{ url_for('main.input_page') }}">{{ "Nieuwe simulatie" | t }}</a>
     <a class="btn btn-secondary" href="{{ url_for('main.aanvragen') }}">{{ "Mijn simulaties" | t }}</a>
 
     <!-- Terug naar homepagina -->
