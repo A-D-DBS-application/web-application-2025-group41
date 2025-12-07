@@ -2,32 +2,60 @@ from app.algorithm_settings import values, models
 import math
 from .models import db, WasteProfile, MachineSizeCalc1, MachineSpecs, PaybackPeriodCalc2
 
-#hoeveel vaten passen in een machine -> bruikbaar volume machine = veelvoud van inhoud vaten (=inhoud zakken)
-def vaten_per_cycle(inhoud_vat_l, machine_cap_l):
-    if inhoud_vat_l<= 0:
-        return 0
-    return int(machine_cap_l // inhoud_vat_l)
+# CONSTANTEN – AANNAMES
+# -----------------------------
+ELECTRICITY_PRICE_PER_KWH = 0.25   # € / kWh (placeholder)
+WATER_PRICE_PER_L = 0.005           # € / m³ (1000 L) (placeholder)
+VOLUME_REDUCTION_FACTOR = 0.20     # er blijft 40% volume/gewicht over na behandeling
+COLLECTION_REDUCTION_FACTOR = 0.50 # ophaalkost wordt 50% van origineel
+STEAM_GENERATOR_COST = 15_000.0    # extra investering indien geen stoomgenerator (placeholder)
+MAX_PAYBACK_YEARS = 15             # zoek max 15 jaar
+WORKDAYS_PER_YEAR = 300          # aangenomen aantal werkdagen
+MAX_DAILY_CYCLES = 8
+EFFECTIVE_CAPACITY_FACTOR = 0.9   # slechts 90% van machinecapaciteit wordt effectief gebruikt
 
-#aanbevolen machine gebaseerd op volume per cyclus en volledige vaten
-def recommend_machine(hmw_density , number_of_barrels, volume_barrel , workdays): #rma_dichtheid hier eig niet nodig
-    total_volume_l= hmw_density*volume_barrel #totaal volume rma in liter
-    max_yearly_cycles= values.max_daily_cycles * int(workdays) #max cycli per jaar
 
-    if max_yearly_cycles<= 0:
+def recommend_machine(request_id):
+    """
+    Aanbevolen machine op basis van:
+    - Jaarvolume afval (uit 1 tot 4 vattypes)
+    - MAX_DAILY_CYCLES (uit constant bovenaan)
+    - WORKDAYS_PER_YEAR (uit constant bovenaan)
+    - 90% van machinecapaciteit is effectief bruikbaar
+    """
+
+    waste = WasteProfile.query.filter_by(request_id=request_id).first()
+    if waste is None:
         return None
 
-    volume_per_cycle= total_volume_l / max_yearly_cycles #volume dat per cyclus verwerkt moet worden
+    # 1. Jaarvolume berekenen
+    annual_volume_l = 0
+    barrel_streams = [
+        (waste.number_of_barrels_1, waste.volume_barrels_1),
+        (waste.number_of_barrels_2, waste.volume_barrels_2),
+        (waste.number_of_barrels_3, waste.volume_barrels_3),
+        (waste.number_of_barrels_4, waste.volume_barrels_4),
+    ]
 
-    #zoek kleinste machine die hieraan voldoet
-    for machine in models.machine_list:
-        passen = vaten_per_cycle(volume_barrel, machine.capacity_l_per_cycle)
-        if passen <= 0:
-            continue
-        echte_cap = passen * volume_barrel #effectieve bruikbare liters
-        if volume_per_cycle <= echte_cap:
-            return machine
-    return None
+    for n, vol in barrel_streams:
+        if n and vol:
+            annual_volume_l += n * vol
 
+    # 2. Max cycli per jaar
+    max_yearly_cycles = MAX_DAILY_CYCLES * WORKDAYS_PER_YEAR
+
+    if max_yearly_cycles <= 0:
+        return None
+
+    # 3. Vereist volume per cyclus
+    required_volume_per_cycle = annual_volume_l / max_yearly_cycles
+
+    # 4. Machines ophalen en sorteren
+    machines = MachineSpecs.query.order_by(MachineSpecs.capacity.asc()).all()
+
+    # 5. Kies kleinste machine met effectieve capaciteit >= required
+    for machine in machines:
+        effective_capacity = machine.capacity * EFFECTIVE_CAPACITY_FACTOR
 
 #annuiteit berekenen voor aankoop prijs machine
 def annuity(price, months):
@@ -63,19 +91,6 @@ def run_user_algorithm(hmw_density, number_of_barrels, cost_hmw_barrels,
 
 
 #CALC2
-
-# CONSTANTEN – AANNAMES
-# -----------------------------
-ELECTRICITY_PRICE_PER_KWH = 0.25   # € / kWh (placeholder)
-WATER_PRICE_PER_L = 0.005           # € / m³ (1000 L) (placeholder)
-VOLUME_REDUCTION_FACTOR = 0.20     # er blijft 40% volume/gewicht over na behandeling
-COLLECTION_REDUCTION_FACTOR = 0.50 # ophaalkost wordt 50% van origineel
-STEAM_GENERATOR_COST = 15_000.0    # extra investering indien geen stoomgenerator (placeholder)
-MAX_PAYBACK_YEARS = 15             # zoek max 15 jaar
-WORKDAYS_PER_YEAR = 300          # aangenomen aantal werkdagen
-
-
-
 # HULPFUNCTIE: payback in maanden (discounted)
 # -----------------------------
 
@@ -124,6 +139,7 @@ def run_payback_for_request(request_id) -> dict:
         (waste.number_of_barrels_1, waste.volume_barrels_1),
         (waste.number_of_barrels_2, waste.volume_barrels_2),
         (waste.number_of_barrels_3, waste.volume_barrels_3),
+        (waste.number_of_barrels_4, waste.volume_barrels_4)
     ]
 
     for n_barrels, vol_per_barrel in barrel_streams:
@@ -140,6 +156,7 @@ def run_payback_for_request(request_id) -> dict:
             (waste.number_of_barrels_1, waste.cost_hmw_barrels_1),
             (waste.number_of_barrels_2, waste.cost_hmw_barrels_2),
             (waste.number_of_barrels_3, waste.cost_hmw_barrels_3),
+            (waste.number_of_barrels_4, waste.cost_hmw_barrels_4)
         ]
         for n_barrels, cost_per_barrel in cost_streams:
             if n_barrels is not None and cost_per_barrel is not None:
@@ -154,7 +171,7 @@ def run_payback_for_request(request_id) -> dict:
 
     # 2. Machinekeuze ophalen
     # -----------------------------
-    msize = MachineSizeCalc.query.filter_by(request_id=request_id).first()
+    msize = MachineSizeCalc1.query.filter_by(request_id=request_id).first()
     if msize is None:
         raise ValueError(f"MACHINE_SIZE_CALC not found for request_id={request_id}")
 
