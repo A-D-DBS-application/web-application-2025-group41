@@ -124,6 +124,7 @@ def run_payback_for_request(request_id) -> dict:
         (waste.number_of_barrels_1, waste.volume_barrels_1),
         (waste.number_of_barrels_2, waste.volume_barrels_2),
         (waste.number_of_barrels_3, waste.volume_barrels_3),
+        (waste.number_of_barrels_4, waste.volume_barrels_4)
     ]
 
     for n_barrels, vol_per_barrel in barrel_streams:
@@ -140,6 +141,7 @@ def run_payback_for_request(request_id) -> dict:
             (waste.number_of_barrels_1, waste.cost_hmw_barrels_1),
             (waste.number_of_barrels_2, waste.cost_hmw_barrels_2),
             (waste.number_of_barrels_3, waste.cost_hmw_barrels_3),
+            (waste.number_of_barrels_4, waste.cost_hmw_barrels_4)
         ]
         for n_barrels, cost_per_barrel in cost_streams:
             if n_barrels is not None and cost_per_barrel is not None:
@@ -154,7 +156,7 @@ def run_payback_for_request(request_id) -> dict:
 
     # 2. Machinekeuze ophalen
     # -----------------------------
-    msize = MachineSizeCalc.query.filter_by(request_id=request_id).first()
+    msize = MachineSizeCalc1.query.filter_by(request_id=request_id).first()
     if msize is None:
         raise ValueError(f"MACHINE_SIZE_CALC not found for request_id={request_id}")
 
