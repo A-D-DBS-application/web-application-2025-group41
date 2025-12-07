@@ -220,10 +220,11 @@ def run_payback_for_request(request_id) -> dict:
 
     # 3. Cycli per jaar + gebruikskosten
     # -----------------------------
+    effective_capacity = machine.capacity * EFFECTIVE_CAPACITY_FACTOR
     if machine.capacity <= 0:
         raise ValueError("Machine capacity must be > 0")
 
-    cycles_per_year = math.ceil(annual_volume_l / machine.capacity) #niet vol -> max % gevuld? 95%?
+    cycles_per_year = math.ceil(annual_volume_l / effective_capacity) 
 
     electricity_cost_annual = cycles_per_year * machine.electricity_consumption * ELECTRICITY_PRICE_PER_KWH
     water_cost_annual = cycles_per_year * machine.water_consumption  * WATER_PRICE_PER_L
