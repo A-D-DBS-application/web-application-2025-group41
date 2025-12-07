@@ -16,19 +16,11 @@ EFFECTIVE_CAPACITY_FACTOR = 0.9   # slechts 90% van machinecapaciteit wordt effe
 
 
 def recommend_machine(request_id):
-    """
-    Aanbevolen machine op basis van:
-    - Jaarvolume afval (uit 1 tot 4 vattypes)
-    - MAX_DAILY_CYCLES (uit constant bovenaan)
-    - WORKDAYS_PER_YEAR (uit constant bovenaan)
-    - 90% van machinecapaciteit is effectief bruikbaar
-    """
-
     waste = WasteProfile.query.filter_by(request_id=request_id).first()
     if waste is None:
         return None
 
-    # 1. Jaarvolume berekenen
+    # Jaarvolume berekenen
     annual_volume_l = 0
     barrel_streams = [
         (waste.number_of_barrels_1, waste.volume_barrels_1),
@@ -41,21 +33,25 @@ def recommend_machine(request_id):
         if n and vol:
             annual_volume_l += n * vol
 
-    # 2. Max cycli per jaar
-    max_yearly_cycles = MAX_DAILY_CYCLES * WORKDAYS_PER_YEAR
-
-    if max_yearly_cycles <= 0:
+    # ❗ BELANGRIJKE CHECK — deze was verdwenen
+    if annual_volume_l == 0:
         return None
 
-    # 3. Vereist volume per cyclus
+    max_yearly_cycles = MAX_DAILY_CYCLES * WORKDAYS_PER_YEAR
+    if max_yearly_cycles <= 0:
+        return None
+    
     required_volume_per_cycle = annual_volume_l / max_yearly_cycles
 
-    # 4. Machines ophalen en sorteren
     machines = MachineSpecs.query.order_by(MachineSpecs.capacity.asc()).all()
 
-    # 5. Kies kleinste machine met effectieve capaciteit >= required
     for machine in machines:
         effective_capacity = machine.capacity * EFFECTIVE_CAPACITY_FACTOR
+
+        if effective_capacity >= required_volume_per_cycle:
+            return machine
+
+    return None
 
 #annuiteit berekenen voor aankoop prijs machine
 def annuity(price, months):
@@ -65,27 +61,61 @@ def annuity(price, months):
     return (price * i) / (1 - (1 + i) ** (-months))
 
 #hoofdfunctie van het algoritme
-def run_user_algorithm(hmw_density, number_of_barrels, cost_hmw_barrels,
-    volume_barrel, cost_collection, cost_hmw, joint_committee, workdays,):
+def run_user_algorithm(
+    hmw_density=None,
+    number_of_barrels=None,
+    cost_hmw_barrels=None,
+    volume_barrel=None,
+    cost_collection=None,
+    cost_hmw=None,
+    joint_committee=None,
+    workdays=None,
+    request_id=None):
 
-    #machine aanbevelen
-    machine = recommend_machine(hmw_density, number_of_barrels, volume_barrel, workdays)
-    if machine is not None:
-        advice_machine = machine.name
-        machine_price = machine.price
+    """
+    Backwards-compatible machine recommendation function.
+
+    - Routes.py blijft werken omdat alle oude parameters behouden blijven.
+    - Nieuwe logica werkt correct omdat we WASTE_PROFILE uit de database gebruiken.
+    - request_id kan optioneel worden meegegeven, maar als dat niet gebeurt,
+      halen we het automatisch op via de laatst aangemaakte WasteProfile.
+    """
+    
+
+    # 1. request_id bepalen
+    if request_id is None:
+        # routes.py geeft request_id niet door; we pakken de meest recente WasteProfile
+        waste = WasteProfile.query.order_by(WasteProfile.id.desc()).first()
+        if waste is None:
+            raise ValueError("Geen WASTE_PROFILE gevonden voor run_user_algorithm() zonder request_id.")
+        request_id = waste.request_id
+
+    # 2. Machine aanbevelen
+    machine = recommend_machine(request_id)
+
+    if machine is None:
+        recommended_machine_id = None
     else:
-        advice_machine = None
-        machine_price = None
+        recommended_machine_id = machine.id
 
-    #maandelijkse annuiteit berekenen
-    if machine_price is not None:
-        monthly_cost = annuity(machine_price, 120)
+    # 3. Machine opslaan in MACHINE_SIZE_CALC1
+    existing = MachineSizeCalc1.query.filter_by(request_id=request_id).first()
+
+    if existing is None:
+        new_calc = MachineSizeCalc1(
+            request_id=request_id,
+            recommended_machine_id=recommended_machine_id
+        )
+        db.session.add(new_calc)
     else:
-        monthly_cost = None
+        existing.recommended_machine_id = recommended_machine_id
 
-    #output
-    return {"machine_id": advice_machine,
-        "selling_price": monthly_cost,
+    db.session.commit()
+
+    # 4. Outputstructuur blijft identiek voor routes + templates
+    return {
+        "machine_id": recommended_machine_id,
+        "selling_price": None,
         "payback_period": None,
         "dcf": None,}
 
@@ -175,10 +205,10 @@ def run_payback_for_request(request_id) -> dict:
     if msize is None:
         raise ValueError(f"MACHINE_SIZE_CALC not found for request_id={request_id}")
 
-    machine = MachineSpecs.query.filter_by(size_code=msize.recommended_machine_id).first()
+    machine = MachineSpecs.query.filter_by(id=msize.recommended_machine_id).first()
     if machine is None:
         raise ValueError(
-            f"MACHINE_SPECS not found for size_code={msize.recommended_machine_id}"
+            f"MACHINE_SPECS not found for id={msize.recommended_machine_id}"
         )
 
 
