@@ -12,6 +12,8 @@ STEAM_GENERATOR_COST = 15_000.0    # extra investering indien geen stoomgenerato
 MAX_PAYBACK_YEARS = 15             # zoek max 15 jaar
 WORKDAYS_PER_YEAR = 300          # aangenomen aantal werkdagen
 MAX_DAILY_CYCLES = 8
+EFFECTIVE_CAPACITY_FACTOR = 0.9   # slechts 90% van machinecapaciteit wordt effectief gebruikt
+
 
 def recommend_machine(request_id):
     """
@@ -53,7 +55,7 @@ def recommend_machine(request_id):
 
     # 5. Kies kleinste machine met effectieve capaciteit >= required
     for machine in machines:
-        effective_capacity = machine.capacity * 0.9  # 90% regel
+        effective_capacity = machine.capacity * EFFECTIVE_CAPACITY_FACTOR
 
 #annuiteit berekenen voor aankoop prijs machine
 def annuity(price, months):
