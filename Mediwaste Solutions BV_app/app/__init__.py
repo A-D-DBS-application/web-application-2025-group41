@@ -32,8 +32,10 @@ def create_app():
 
     @app.template_filter('t')
     def translate(text):
-        lang = session.get("lang", "nl")  # gebruik de sessie-taal
-        return translations.get(lang, {}).get(text, text)
+        lang = session.get("lang", "nl")
+        if lang == "fr":
+            return translations.get(text, text)
+        return text
 
     
     # (optioneel) Supabase client – past bij jullie config

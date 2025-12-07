@@ -1,7 +1,7 @@
 translations = {
     "Registreren": "S'inscrire",
     "Inloggen": "Se connecter",
-    "Bespaar op de kosten voor de verwerking van RMA.": "Économisez sur les coûts de traitement des DASRI.",
+    "Bespaar op de kosten voor de verwerking van RMA": "Économisez sur les coûts de traitement des DASRI",
     "Ontdek hoeveel uw organisatie kan besparen met een alternatieve manier van medische afvalverwerking.": "Découvrez combien votre organisation peut économiser grâce à une méthode alternative de traitement des DASRI.",
     "Vraag hier uw analyse aan": "Demandez votre analyse ici",
     "Waarom kiezen voor onze oplossing?": "Pourquoi choisir notre solution?",
