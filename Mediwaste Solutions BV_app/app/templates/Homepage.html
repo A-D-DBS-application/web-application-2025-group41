@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="nl">
 <head>
@@ -57,7 +58,7 @@ optionsContainer.className = 'options';
 
 const optionsData = [
   { title: "{{'Kostenbesparend' | t }}" , text: "{{'Ontdek directe besparingen op uw huidige afvalbeheerkosten met onze geavanceerde analyse.' | t }}" },
-  { title: "{{Toekomstgericht' | t }}", text: "{{'Voorbereid op strengere regelgeving: ons systeem helpt u voldoen aan toekomstige milieunormen.' | t}}"},
+  { title: "{{'Toekomstgericht' | t }}", text: "{{'Voorbereid op strengere regelgeving: ons systeem helpt u voldoen aan toekomstige milieunormen.' | t}}"},
   { title: "{{'Duurzaam' | t }}", text: "{{'Geen WIVA-vaten meer: minder single-use plastics, minder polypropyleen en meer focus op recyclage.' | t}}"},
   { title: "{{'Efficiënt' | t }}", text: "{{'Minder transport, minder uitstoot: ons systeem helpt uw afvalbeheer efficiënter te organiseren.' | t }}"} 
 ];
@@ -105,7 +106,7 @@ const footer = document.createElement('footer');
 const leftText = document.createElement('div');
 leftText.textContent = 'Mediwaste Solutions';
 const rightText = document.createElement('div');
-rightText.textContent = '© 2025 "{{Mediwaste Solutions BV | t }}". "{{Alle rechten voorbehouden | t }}".';
+rightText.textContent = "© 2025 {{ 'Mediwaste Solutions BV' | t }}. {{ 'Alle rechten voorbehouden' | t }}.";
 footer.appendChild(leftText);
 footer.appendChild(rightText);
 document.body.appendChild(footer);
