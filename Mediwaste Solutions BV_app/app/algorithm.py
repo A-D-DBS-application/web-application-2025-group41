@@ -19,14 +19,14 @@ WORKDAYS_PER_YEAR = 300          # aangenomen aantal werkdagen
 MAX_DAILY_CYCLES = 8
 EFFECTIVE_CAPACITY_FACTOR = 0.9   # slechts 90% van machinecapaciteit wordt effectief gebruikt
 
+#gedeelde hulpfunctie voor volume
+def compute_annual_volume_l(waste) -> float:
+    """
+    Berekent het totale jaarlijkse afvalvolume in liter,
+    op basis van de aantallen vaten en hun volumes.
+    """
+    annual_volume_l = 0.0
 
-def recommend_machine(request_id):
-    waste = WasteProfile.query.filter_by(request_id=request_id).first()
-    if waste is None:
-        return None
-
-    # Jaarvolume berekenen
-    annual_volume_l = 0
     barrel_streams = [
         (waste.number_of_barrels_1, waste.volume_barrels_1),
         (waste.number_of_barrels_2, waste.volume_barrels_2),
@@ -34,9 +34,21 @@ def recommend_machine(request_id):
         (waste.number_of_barrels_4, waste.volume_barrels_4),
     ]
 
-    for n, vol in barrel_streams:
-        if n and vol:
-            annual_volume_l += n * vol
+    for n_barrels, vol_per_barrel in barrel_streams:
+        # expliciet op None testen, zodat 0 ook geldig is
+        if n_barrels is not None and vol_per_barrel is not None:
+            annual_volume_l += n_barrels * vol_per_barrel
+
+    return annual_volume_l
+
+
+def recommend_machine(request_id):
+    waste = WasteProfile.query.filter_by(request_id=request_id).first()
+    if waste is None:
+        return None
+
+    # Jaarvolume berekenen met gedeelde hulpfunctie
+    annual_volume_l = compute_annual_volume_l(waste)
 
     # ❗ BELANGRIJKE CHECK — deze was verdwenen
     if annual_volume_l == 0:
@@ -167,19 +179,8 @@ def run_payback_for_request(request_id) -> dict:
     waste = WasteProfile.query.filter_by(request_id=request_id).first()
     if waste is None:
         raise ValueError(f"WASTE_PROFILE not found for request_id={request_id}")
-
-    annual_volume_l = 0.0
-
-    barrel_streams = [
-        (waste.number_of_barrels_1, waste.volume_barrels_1),
-        (waste.number_of_barrels_2, waste.volume_barrels_2),
-        (waste.number_of_barrels_3, waste.volume_barrels_3),
-        (waste.number_of_barrels_4, waste.volume_barrels_4)
-    ]
-
-    for n_barrels, vol_per_barrel in barrel_streams:
-        if n_barrels is not None and vol_per_barrel is not None:
-            annual_volume_l += n_barrels * vol_per_barrel
+    
+    annual_volume_l = compute_annual_volume_l(waste)
 
     if waste.total_cost_hmw_barrels is not None:
         # Supabase heeft al de totale vatkost berekend
@@ -250,14 +251,14 @@ def run_payback_for_request(request_id) -> dict:
     # -----------------------------
     investment = machine.selling_price
 
-    if waste.steam_generator_needed:
+    if not waste.steam_generator_needed:
         extra_steam_cost = STEAM_GENERATOR_COSTS.get(machine.size_code)
 
         if extra_steam_cost is None:
             # hard fail als we de code niet kennen
             raise ValueError(f"No steam generator cost configured for machine {machine.size_code}")
 
-        investment += extra_steam_cost
+        investment -= extra_steam_cost
 
 
     # 6. Terugverdientijd (in maanden)
