@@ -4,20 +4,32 @@ from .models import db, WasteProfile, MachineSizeCalc1, MachineSpecs, PaybackPer
 
 # CONSTANTEN – AANNAMES
 # -----------------------------
-ELECTRICITY_PRICE_PER_KWH = 0.25   # € / kWh (placeholder)
-WATER_PRICE_PER_L = 0.005           # € / m³ (1000 L) (placeholder)
-VOLUME_REDUCTION_FACTOR = 0.20     # er blijft 40% volume/gewicht over na behandeling
-COLLECTION_REDUCTION_FACTOR = 0.50 # ophaalkost wordt 50% van origineel
+# MACHINE OPERATION CONSTANTS
+WORKDAYS_PER_YEAR = 300
+MAX_DAILY_CYCLES = 8
+EFFECTIVE_CAPACITY_FACTOR = 0.9   # machine never filled to 100%
+# WASTE REDUCTION / PROCESSING FACTORS
+VOLUME_REDUCTION_FACTOR = 0.20
+COLLECTION_REDUCTION_FACTOR = 0.50
+# VARIABLE OPERATING COST PRICES
+ELECTRICITY_PRICE_PER_KWH = 0.25
+WATER_PRICE_PER_L = 0.005
+# MACHINE-DEPENDENT FIXED COSTS
 STEAM_GENERATOR_COSTS = {
     "T100": 10164,
     "T150": 10164,
     "T300": 27588,
     "T700": 35574,
 }
-MAX_PAYBACK_YEARS = 15             # zoek max 15 jaar
-WORKDAYS_PER_YEAR = 300          # aangenomen aantal werkdagen
-MAX_DAILY_CYCLES = 8
-EFFECTIVE_CAPACITY_FACTOR = 0.9   # slechts 90% van machinecapaciteit wordt effectief gebruikt
+MAINTENANCE_COSTS = {
+    "T100": 14500,
+    "T150": 19000,
+    "T300": 30000,
+    "T700": 42000,
+}
+# FINANCIAL MODEL SETTINGS
+MAX_PAYBACK_YEARS = 15
+
 
 #gedeelde hulpfunctie voor volume
 def compute_annual_volume_l(waste) -> float:
@@ -234,12 +246,19 @@ def run_payback_for_request(request_id) -> dict:
     # -----------------------------
     processing_cost_with_machine = processing_cost_annual * COLLECTION_REDUCTION_FACTOR
 
-    # geen WIVA-vaten meer nodig met machine?
+    maintenance_cost = MAINTENANCE_COSTS.get(machine.size_code)
+    if maintenance_cost is None:
+        raise ValueError(f"No maintenance cost configured for machine {machine.size_code}")
+
+    # geen WIVA-vaten meer nodig met machine? wel zakken, prijs?
     barrel_cost_with_machine = 0.0
+    cost_bags_for_machine = 0 # placeholder, implement later
 
     annual_cost_with_machine = (
         processing_cost_with_machine
+        + maintenance_cost
         + barrel_cost_with_machine
+        + cost_bags_for_machine
         + electricity_cost_annual
         + water_cost_annual
     )
