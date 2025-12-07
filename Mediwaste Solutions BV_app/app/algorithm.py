@@ -1,6 +1,6 @@
 from app.algorithm_settings import values, models
 import math
-from .models import db, WasteProfile, MachineSizeCalc, MachineSpecs, PaybackPeriodCalc2
+from .models import db, WasteProfile, MachineSizeCalc1, MachineSpecs, PaybackPeriodCalc2
 
 #hoeveel vaten passen in een machine -> bruikbaar volume machine = veelvoud van inhoud vaten (=inhoud zakken)
 def vaten_per_cycle(inhoud_vat_l, machine_cap_l):
@@ -61,6 +61,8 @@ def run_user_algorithm(hmw_density, number_of_barrels, cost_hmw_barrels,
         "payback_period": None,
         "dcf": None,}
 
+
+#CALC2
 
 # CONSTANTEN – AANNAMES
 # -----------------------------
