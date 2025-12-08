@@ -11,43 +11,38 @@
 <h1>{{ "Overzicht van uw aanvragen" | t }}</h1>
 
 <table id="tabel">
-  <tr>
-    <th>{{ "Datum" | t }}</th>
-    <th>{{ "Totaal gewicht RMA" | t }}</th>
-    <th>{{ "Aantal WIVA-vaten" | t }}</th>
-    <th>{{ "Huidige kost WIVA-vaten per jaar" | t }}</th>
-    <th>{{ "Inhoud per WIVA-vat" | t }}</th>
-    <th>{{ "Huidige kost ophaling en verbranding RMA per jaar (zonder kost WIVA-vaten)" | t }}</th>
-  </tr>
+  <thead>
+    <tr>
+      <th>{{ "Datum" | t }}</th>
+      <th>{{ "Totaal gewicht RMA" | t }}</th>
+      <th>{{ "Aantal WIVA-vaten" | t }}</th>
+      <th>{{ "Huidige kost WIVA-vaten per jaar" | t }}</th>
+      <th>{{ "Inhoud per WIVA-vat" | t }}</th>
+      <th>{{ "Huidige kost ophaling en verbranding RMA per jaar" | t }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for req in requests %}
+      {% if req.waste_profile %}
+      <tr>
+        <td>{{ req.created_at.strftime('%d/%m/%Y') }}</td>
+        
+        <td>{{ req.waste_profile.hmw_total_weight }}</td>
+        <td>{{ req.waste_profile.number_of_barrels_1 }}</td>
+        <td>{{ req.waste_profile.cost_hmw_barrels_1 }}</td>
+        <td>{{ req.waste_profile.volume_barrels_1 }}</td>
+        <td>{{ req.waste_profile.cost_collection_processing }}</td>
+      </tr>
+      {% endif %}
+    {% else %}
+      <tr>
+        <td colspan="6" style="text-align:center;">{{ "Geen aanvragen gevonden." | t }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
 </table>
 
 <a class="back" href="{{ url_for('main.dashboard') }}">← {{ "Terug naar dashboard" | t }}</a>
-
-<script>
-function formatDatum(d) {
-    const datum = new Date(d);
-    const dag = String(datum.getDate()).padStart(2, "0");
-    const maand = String(datum.getMonth() + 1).padStart(2, "0");
-    const jaar = datum.getFullYear();
-    return `${maand}/${dag}/${jaar}`;
-}
-
-const tabel = document.getElementById("tabel");
-const aanvragen = JSON.parse(localStorage.getItem("aanvragen")) || [];
-
-aanvragen.forEach(a => {
-  const row = document.createElement("tr");
-  row.innerHTML = `
-    <td>${formatDatum(a.datum)}</td>
-    <td>${a.hmw_total_weight}</td>
-    <td>${a.number_of_barrels_1}</td>
-    <td>${a.cost_hmw_barrels_1}</td>
-    <td>${a.volume_barrel_1}</td>
-    <td>${a.cost_collection_processing}</td>
-  `;
-  tabel.appendChild(row);
-});
-</script>
 
 </body>
 </html>
