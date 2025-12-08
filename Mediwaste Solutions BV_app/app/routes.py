@@ -182,7 +182,7 @@ def input_page():
         machine_calc = MachineSizeCalc1(
             id=uuid.uuid4(),
             request_id=new_request.id,
-            recommended_machine_size=result.get("machine_id")
+            recommended_machine_id=result.get("machine_id")
         )
         db.session.add(machine_calc)
 

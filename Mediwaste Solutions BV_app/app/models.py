@@ -83,9 +83,10 @@ class MachineSizeCalc1(db.Model):
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     request_id = Column(UUID(as_uuid=True), ForeignKey(quoted_name("REQUEST", True) + ".id"), nullable=False)
-    recommended_machine_size = Column(Integer)
+    recommended_machine_id = Column(Integer)  # <- aangepast naar de naam in de database
 
     request = relationship("Request", back_populates="machine_size_calc")
+
 
 
 class PaybackPeriodCalc2(db.Model):
