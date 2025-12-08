@@ -239,12 +239,12 @@ def run_payback_for_request(request_id) -> dict:
 
     cycles_per_year = math.ceil(annual_volume_l / effective_capacity) 
 
-    electricity_cost_annual = cycles_per_year * machine.electricity_consumption * ELECTRICITY_PRICE_PER_KWH
-    water_cost_annual = cycles_per_year * machine.water_consumption  * WATER_PRICE_PER_L
-
 
     # 4. Kosten mét machine
     # -----------------------------
+    electricity_cost_annual = cycles_per_year * machine.electricity_consumption * ELECTRICITY_PRICE_PER_KWH
+    water_cost_annual = cycles_per_year * machine.water_consumption  * WATER_PRICE_PER_L
+
     processing_cost_with_machine = processing_cost_annual * COLLECTION_REDUCTION_FACTOR
 
     maintenance_cost = MAINTENANCE_COSTS.get(machine.size_code)
@@ -253,7 +253,8 @@ def run_payback_for_request(request_id) -> dict:
 
     # geen WIVA-vaten meer nodig met machine? wel zakken, prijs?
     barrel_cost_with_machine = 0.0
-    cost_bags_for_machine =  COST_PE_ZAKKEN_MACHINE * math.ceil(annual_volume_l / 60)
+    reduced_volume = annual_volume_l * 0.20 
+    cost_bags_for_machine =  COST_PE_ZAKKEN_MACHINE * math.ceil(reduced_volume / 60)
 
     total_interest = (
         120 * (
