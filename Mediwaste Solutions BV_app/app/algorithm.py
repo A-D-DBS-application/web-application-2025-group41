@@ -12,8 +12,9 @@ EFFECTIVE_CAPACITY_FACTOR = 0.9   # machine never filled to 100%
 VOLUME_REDUCTION_FACTOR = 0.20
 COLLECTION_REDUCTION_FACTOR = 0.50
 # VARIABLE OPERATING COST PRICES
-ELECTRICITY_PRICE_PER_KWH = 0.25
-WATER_PRICE_PER_L = 0.005
+ELECTRICITY_PRICE_PER_KWH = 0.18 # AZMM
+WATER_PRICE_PER_L = 0.0044 # AZMM
+COST_PE_ZAKKEN_MACHINE = 0.42 # AZMM, zak voor 60L
 # MACHINE-DEPENDENT FIXED COSTS
 STEAM_GENERATOR_COSTS = {
     "T100": 10164,
@@ -191,8 +192,6 @@ def run_payback_for_request(request_id) -> dict:
     waste = WasteProfile.query.filter_by(request_id=request_id).first()
     if waste is None:
         raise ValueError(f"WASTE_PROFILE not found for request_id={request_id}")
-    
-    annual_volume_l = compute_annual_volume_l(waste)
 
     barrel_cost_annual = 0.0
     cost_streams = [
@@ -235,6 +234,8 @@ def run_payback_for_request(request_id) -> dict:
     effective_capacity = machine.capacity * EFFECTIVE_CAPACITY_FACTOR
     if machine.capacity <= 0:
         raise ValueError("Machine capacity must be > 0")
+    
+    annual_volume_l = compute_annual_volume_l(waste)
 
     cycles_per_year = math.ceil(annual_volume_l / effective_capacity) 
 
@@ -252,7 +253,7 @@ def run_payback_for_request(request_id) -> dict:
 
     # geen WIVA-vaten meer nodig met machine? wel zakken, prijs?
     barrel_cost_with_machine = 0.0
-    cost_bags_for_machine = 0 # placeholder, implement later
+    cost_bags_for_machine =  COST_PE_ZAKKEN_MACHINE * math.ceil(annual_volume_l / 60)
 
     annual_cost_with_machine = (
         processing_cost_with_machine
