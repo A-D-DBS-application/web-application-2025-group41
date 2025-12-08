@@ -10,7 +10,7 @@ MAX_DAILY_CYCLES = 8
 EFFECTIVE_CAPACITY_FACTOR = 0.9   # machine never filled to 100%
 # WASTE REDUCTION / PROCESSING FACTORS
 VOLUME_REDUCTION_FACTOR = 0.20
-COLLECTION_REDUCTION_FACTOR = 0.50
+COLLECTION_REDUCTION_FACTOR = 0.40
 # VARIABLE OPERATING COST PRICES
 ELECTRICITY_PRICE_PER_KWH = 0.18 # AZMM
 WATER_PRICE_PER_L = 0.0044 # AZMM
@@ -154,7 +154,7 @@ def run_user_algorithm(
 # HULPFUNCTIE: payback in maanden (discounted)
 # -----------------------------
 
-def _payback_period_months(investment: float, annual_savings: float) -> int | None:
+def payback_period_months(investment: float, annual_savings: float) -> int | None:
     #Discounted payback in maanden.
     if annual_savings <= 0 or investment <= 0:
         return None
@@ -172,6 +172,11 @@ def _payback_period_months(investment: float, annual_savings: float) -> int | No
             return month
 
     return None
+
+def simple_payback_months(investment: float, annual_savings: float) -> int | None:
+    if annual_savings <= 0 or investment <= 0:
+        return None
+    return math.ceil((investment / annual_savings) * 12)
 
 
 # HOOFDFUNCTIE: run payback voor een request
@@ -295,7 +300,8 @@ def run_payback_for_request(request_id) -> dict:
 
     # 6. Terugverdientijd (in maanden)
     # -----------------------------
-    months = _payback_period_months(investment, annual_savings)
+    months = payback_period_months(investment, annual_savings)
+    simple_months = simple_payback_months(investment, annual_savings)
 
     payback_value_to_store = float(months) if months is not None else None
 
@@ -324,6 +330,7 @@ def run_payback_for_request(request_id) -> dict:
         "annual_savings": annual_savings,
         "investment": investment,
         "payback_months": months,
+        "simple_payback_months": simple_months,
         "machine_id": machine.size_code,
         "cycles_per_year": cycles_per_year,
     }
