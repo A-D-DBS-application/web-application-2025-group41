@@ -49,14 +49,24 @@ def login():
         password = request.form["password"]
 
         user = User.query.filter_by(email=email).first()
-        if user and user.password == password:  # later vervangen door bcrypt check
-            session["user_id"] = str(user.id)  # opslaan als string
-            return redirect(url_for("main.homepage"))
+
+        # Succesvolle login
+        if user and user.password == password:
+            session["user_id"] = str(user.id)
+            session["is_admin"] = user.is_admin
+
+            if user.is_admin:
+                return redirect(url_for("main.admin_dashboard"))
+            else:
+                return redirect(url_for("main.homepage"))
+
+        # Foute login
         else:
             flash("Ongeldige login.")
             return redirect(url_for("main.login"))
 
     return render_template("login.html")
+
 
 # -------------------------
 # 3. Register
@@ -201,4 +211,26 @@ def output(request_id):
         "output.html",
         calc=machine_calc,
         payback_period=payback_calc.payback_months if payback_calc else None
+    )
+
+@main.route("/admin")
+def admin_dashboard():
+    if not session.get("is_admin"):
+        return redirect(url_for("main.homepage"))
+
+    users = User.query.all()
+    requests = Request.query.all()
+
+    # join input/output tables
+    waste_profiles = WasteProfile.query.all()
+    machine_calcs = MachineSizeCalc1.query.all()
+    payback_calcs = PaybackPeriodCalc2.query.all()
+
+    return render_template(
+        "admin_dashboard.html",
+        users=users,
+        requests=requests,
+        wastes=waste_profiles,
+        machines=machine_calcs,
+        paybacks=payback_calcs
     )
