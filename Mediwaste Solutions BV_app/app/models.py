@@ -3,7 +3,7 @@ from datetime import datetime
 from sqlalchemy import Column, String, Integer, Numeric, Boolean, ForeignKey, DateTime, Text
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
-from sqlalchemy.sql import quoted_name   # <-- belangrijk
+from sqlalchemy.sql import quoted_name  # <-- belangrijk
 from . import db
 
 class User(db.Model):
@@ -83,7 +83,7 @@ class MachineSizeCalc1(db.Model):
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     request_id = Column(UUID(as_uuid=True), ForeignKey(quoted_name("REQUEST", True) + ".id"), nullable=False)
-    recommended_machine_id = Column(Integer)  # <- aangepast naar de naam in de database
+    recommended_machine_id = Column(Integer)  # <- aangepast naar de naam in de database
 
     request = relationship("Request", back_populates="machine_size_calc")
 
