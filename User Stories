@@ -1,0 +1,12 @@
+As a <user>         I want to <action>      So that <benefit>                                    Priority
+
+user                register & login        I can do and view my simulaions                         1
+user                insert waste data       I can get a calculation of my potential savings         2
+                                            when I purchase a machine     
+
+user                run a simulation        I can view the recommended machine,                     3
+                                            payback time   
+
+admin               login                   I can view the data 
+admin               view all requests       I can see the requests of all the users                 1  
+admin               view all users          I can monitor activity                                  2   
