@@ -1,7 +1,8 @@
+# translations.py
 translations = {
     "Registreren": "S'inscrire",
     "Inloggen": "Se connecter",
-    "Bespaar op de kosten voor de verwerking van RMA": "Économisez sur les coûts de traitement des DASRI",
+    "Bespaar op de kosten voor de verwerking van RMA.": "Économisez sur les coûts de traitement des DASRI.",
     "Ontdek hoeveel uw organisatie kan besparen met een alternatieve manier van medische afvalverwerking.": "Découvrez combien votre organisation peut économiser grâce à une méthode alternative de traitement des DASRI.",
     "Vraag hier uw analyse aan": "Demandez votre analyse ici",
     "Waarom kiezen voor onze oplossing?": "Pourquoi choisir notre solution?",
@@ -44,8 +45,6 @@ translations = {
     "Kosten": "Coûts",
     "Totaal gewicht RMA": "Poids total DASRI",
     "Aantal WIVA-vaten": "Nombre de fûts WIVA",
-    "type": "type",
-    "types": "types",
     "Huidige kost WIVA-vaten per jaar": "Coût actuel des fûts WIVA par an",
     "Inhoud per WIVA-vat": "Contenu par fût WIVA",
     "Huidige kost ophaling en verbranding RMA per jaar (zonder kost WIVA-vaten)": "Coût actuel de collecte et d’incinération des DASRI par an (sans coût des fûts WIVA)",
@@ -55,10 +54,8 @@ translations = {
     "Resultaat besparingsanalyse": "Résultat de l’analyse d’économies",
     "Aanbevolen machinetype": "Type de machine recommandé",
     "Terugverdientijd van de investering (in maanden)": "Délai de récupération de l'investissement (en mois)",
-    "maanden" : "mois",
     "Verdisconteerde kasstroom": "Flux de trésorerie actualisé",
     "Mijn aanvragen": "Mes demandes",
     "Overzicht van uw aanvragen": "Aperçu de vos demandes",
     "Datum": "Date",
-    "Hoeveel verschillende types WIVA-vaten heeft u?": "Combien de types différents de fûts WIVA avez-vous?" 
-    }
+}

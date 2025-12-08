@@ -1,6 +1,7 @@
 
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="{{ session.get('lang', 'nl') }}">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -57,7 +58,7 @@ const optionsContainer = document.createElement('div');
 optionsContainer.className = 'options';
 
 const optionsData = [
-  { title: "{{'Kostenbesparend' | t }}" , text: "{{'Ontdek directe besparingen op uw huidige afvalbeheerkosten met onze geavanceerde analyse.' | t }}" }, 
+  { title: "{{'Kostenbesparend' | t }}" , text: "{{'Ontdek directe besparingen op uw huidige afvalbeheerskosten met onze geavanceerde analyse.' | t }}" }, 
   { title: "{{'Duurzaam' | t }}", text: "{{'Geen WIVA-vaten meer: minder single-use plastics, minder polypropyleen en meer focus op recyclage.' | t}}"},
   { title: "{{'Efficiënt' | t }}", text: "{{'Minder transport, minder uitstoot: ons systeem helpt uw afvalbeheer efficiënter te organiseren.' | t }}"} 
 ];
