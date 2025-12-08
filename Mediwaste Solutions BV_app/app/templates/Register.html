@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="{{ session.get('lang', 'nl') }}">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ "Registreren" | t }} - Mediwaste Solutions</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-  <link rel="stylesheet" href="../static/css/register.css">
-  
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}">
 </head>
 <body>
   <div class="register-page">
@@ -15,7 +14,6 @@
       <p>{{ "Maak een account aan om toegang te krijgen tot uw persoonlijk analyseplatform." | t }}</p>
 
       <form method="POST">
-
         <label for="name_user">{{ "Naam" | t }}</label>
         <input type="text" id="name_user" name="name_user" placeholder="{{ 'Naam' | t }}" required>
 
@@ -30,8 +28,7 @@
 
         <label for="position">{{ "Functie" | t }}</label>
         <select id="position" name="position" onchange="toggleJobInput()" required>
-            <option value="" disabled selected>{{ "Selecteer een optie" }}</option>
-
+            <option value="" disabled selected>{{ "Selecteer een optie" | t }}</option>
             <option value="Technisch directeur">{{ "Technisch directeur" | t }}</option>
             <option value="Milieucoördinator">{{ "Milieucoördinator" | t }}</option>
             <option value="Preventieadviseur">{{ "Preventieadviseur" | t }}</option>
@@ -53,12 +50,11 @@
         <button type="submit">{{ "Account aanmaken" | t }}</button>
       </form>
 
-
       <div class="alt-action">
         {{ "Al een account? Log hier in." | t }}
       </div>
 
-      <a href="Homepage.html" class="back-home">← {{ "Terug naar homepagina" | t }}</a>
+      <a href="{{ url_for('main.homepage') }}" class="back-home">← {{ "Terug naar homepagina" | t }}</a>
     </div>
   </div>
 
@@ -67,23 +63,6 @@
   </footer>
 
   <script>
-      // Functie voor Organisatie veld
-      function toggleOtherInput() {
-          const select = document.getElementById('type_of_organization');
-          const otherContainer = document.getElementById('other-org-container');
-          const otherInput = document.getElementById('organization_other');
-
-          if (select.value === 'Andere') {
-              otherContainer.style.display = 'block';
-              otherInput.required = true;
-          } else {
-              otherContainer.style.display = 'none';
-              otherInput.required = false;
-              otherInput.value = '';
-          }
-      }
-
-      // NIEUWE Functie voor Functie veld
       function toggleJobInput() {
           const select = document.getElementById('position');
           const otherContainer = document.getElementById('other-job-container');

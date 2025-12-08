@@ -13,7 +13,7 @@ bcrypt = Bcrypt()
 def create_app():
     app = Flask(__name__, template_folder="templates", static_folder="static")
 
-    # Config met hardcoded keys (zoals jullie prof wil)
+    # Config
     app.config.from_object(Config)
 
     # Init extensions
@@ -28,20 +28,13 @@ def create_app():
     from .routes import main
     app.register_blueprint(main)
 
-   
-
-    #@app.template_filter('t')
-    #def translate(text):
-        #lang = session.get("lang", "nl")
-        #if lang == "fr":
-            #return translations.get(text, text)
-        #return text
-
+    # Template filter voor vertalingen
     @app.template_filter('t')
     def translate(text):
         lang = session.get("lang", "nl")
-        return translations_dict.get(lang, {}).get(text, text)
+        return translations_dict.get(text, {}).get(lang, text)
     
+    # Taal instellen vóór elke request
     @app.before_request
     def set_lang():
         lang = request.args.get("lang")
@@ -49,9 +42,8 @@ def create_app():
             session["lang"] = lang
         if "lang" not in session:
             session["lang"] = "nl"
-    
-    # (optioneel) Supabase client – past bij jullie config
-    # Supabase is optioneel: alleen aanmaken als keys bestaan in Config
+
+    # Optioneel: Supabase client
     url = getattr(Config, "SUPABASE_URL", None)
     key = getattr(Config, "SUPABASE_KEY", None)
     app.supabase = create_client(url, key) if url and key else None
