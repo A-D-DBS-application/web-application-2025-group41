@@ -194,21 +194,21 @@ def run_payback_for_request(request_id) -> dict:
     
     annual_volume_l = compute_annual_volume_l(waste)
 
-    if waste.total_cost_hmw_barrels is not None:
-        # Supabase heeft al de totale vatkost berekend
-        barrel_cost_annual = waste.total_cost_hmw_barrels
-    else:
-        # Zelf uitrekenen als fallback
-        barrel_cost_annual = 0.0
-        cost_streams = [
-            (waste.number_of_barrels_1, waste.cost_hmw_barrels_1),
-            (waste.number_of_barrels_2, waste.cost_hmw_barrels_2),
-            (waste.number_of_barrels_3, waste.cost_hmw_barrels_3),
-            (waste.number_of_barrels_4, waste.cost_hmw_barrels_4)
+    barrel_cost_annual = 0.0
+    cost_streams = [
+        (waste.number_of_barrels_1, waste.cost_hmw_barrels_1),
+        (waste.number_of_barrels_2, waste.cost_hmw_barrels_2),
+        (waste.number_of_barrels_3, waste.cost_hmw_barrels_3),
+        (waste.number_of_barrels_4, waste.cost_hmw_barrels_4),
         ]
-        for n_barrels, cost_per_barrel in cost_streams:
-            if n_barrels is not None and cost_per_barrel is not None:
-                barrel_cost_annual += n_barrels * cost_per_barrel
+
+    for n_barrels, cost_per_barrel in cost_streams:
+        # expliciet op None testen zodat 0 ook als geldige input kan
+        if n_barrels is not None and cost_per_barrel is not None:
+            barrel_cost_annual += n_barrels * cost_per_barrel
+
+    # berekende vatkost wegschrijven in het model
+    waste.total_cost_hmw_barrels = barrel_cost_annual
 
     # Verwerking/verbranding en ophaling, excl. WIVA-vaten
     processing_cost_annual = waste.cost_collection_processing or 0.0
