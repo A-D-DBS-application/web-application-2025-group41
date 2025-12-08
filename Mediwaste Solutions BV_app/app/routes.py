@@ -23,13 +23,13 @@ def to_null(value):
 
     return value
 
-@main.before_app_request
-def set_lang():
-    lang = request.args.get("lang")
-    if lang in ["nl", "fr"]:
-        session["lang"] = lang
-    if "lang" not in session:
-        session["lang"] = "nl"
+#@main.before_app_request
+#def set_lang():
+    #lang = request.args.get("lang")
+    #if lang in ["nl", "fr"]:
+        #session["lang"] = lang
+    #if "lang" not in session:
+        #session["lang"] = "nl"
 
 # -------------------------
 # 1. Homepage

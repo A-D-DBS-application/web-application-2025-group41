@@ -4,7 +4,7 @@ from flask_migrate import Migrate
 from flask_bcrypt import Bcrypt
 from supabase import create_client
 from .config import Config
-from .translations import translations
+from .translations import translations_dict
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -30,13 +30,25 @@ def create_app():
 
    
 
+    #@app.template_filter('t')
+    #def translate(text):
+        #lang = session.get("lang", "nl")
+        #if lang == "fr":
+            #return translations.get(text, text)
+        #return text
+
     @app.template_filter('t')
     def translate(text):
         lang = session.get("lang", "nl")
-        if lang == "fr":
-            return translations.get(text, text)
-        return text
-
+        return translations_dict.get(lang, {}).get(text, text)
+    
+    @app.before_request
+    def set_lang():
+        lang = request.args.get("lang")
+        if lang in ["nl", "fr"]:
+            session["lang"] = lang
+        if "lang" not in session:
+            session["lang"] = "nl"
     
     # (optioneel) Supabase client – past bij jullie config
     # Supabase is optioneel: alleen aanmaken als keys bestaan in Config
