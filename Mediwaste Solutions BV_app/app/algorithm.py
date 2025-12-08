@@ -95,7 +95,7 @@ def run_user_algorithm(
     number_of_barrels=None,
     cost_hmw_barrels=None,
     volume_barrel=None,
-    cost_collection=None,
+    cost_collection_processing=None,
     cost_hmw=None,
     joint_committee=None,
     workdays=None,
