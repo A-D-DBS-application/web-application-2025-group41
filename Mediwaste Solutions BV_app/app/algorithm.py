@@ -255,11 +255,21 @@ def run_payback_for_request(request_id) -> dict:
     barrel_cost_with_machine = 0.0
     cost_bags_for_machine =  COST_PE_ZAKKEN_MACHINE * math.ceil(annual_volume_l / 60)
 
+    total_interest = (
+        120 * (
+           (machine.selling_price * (values.yearly_interest / 12)) /
+           (1 - (1 + values.yearly_interest / 12) ** -120)
+        )
+    ) - machine.selling_price
+
+    annual_interest_cost = total_interest / 10
+
     annual_cost_with_machine = (
         processing_cost_with_machine
         + maintenance_cost
         + barrel_cost_with_machine
         + cost_bags_for_machine
+        + annual_interest_cost
         + electricity_cost_annual
         + water_cost_annual
     )
