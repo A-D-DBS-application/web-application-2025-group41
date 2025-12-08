@@ -6,30 +6,28 @@ from datetime import datetime
 
 main = Blueprint("main", __name__)
 
-
+# --- Taalfunctie (set_language) moet nog steeds in dit bestand staan om te werken ---
+@main.route('/set-language/<lang_code>')
+def set_language(lang_code):
+    if lang_code in ['nl', 'fr']:
+        session['lang'] = lang_code
+        session.modified = True
+        print(f"DEBUG: Taal ingesteld op {lang_code}. Sessie nu: {session.get('lang')}")
+    return redirect(request.referrer or url_for('main.homepage'))
+# ---------------------------------------------------------------------------------
 
 def to_null(value):
     """
-    bij input: 4 types vaten, indien leeg of spaties -> None
     Converteert lege strings of whitespace naar None.
     SQLAlchemy zet None automatisch om in NULL in de database.
     """
     if value is None:
         return None
-
     value = str(value).strip()
     if value == "":
         return None
-
     return value
 
-#@main.before_app_request
-#def set_lang():
-    #lang = request.args.get("lang")
-    #if lang in ["nl", "fr"]:
-        #session["lang"] = lang
-    #if "lang" not in session:
-        #session["lang"] = "nl"
 
 # -------------------------
 # 1. Homepage
@@ -40,7 +38,7 @@ def homepage():
     return render_template("homepage.html")
 
 # -------------------------
-# 2. Login
+# 2. Login (Aangepast)
 # -------------------------
 @main.route("/login", methods=["GET", "POST"])
 def login():
@@ -58,7 +56,8 @@ def login():
             if user.is_admin:
                 return redirect(url_for("main.admin_dashboard"))
             else:
-                return redirect(url_for("main.homepage"))
+                # PAS HIER AAN: Stuur reguliere gebruiker naar Dashboard
+                return redirect(url_for("main.dashboard")) 
 
         # Foute login
         else:
@@ -69,7 +68,7 @@ def login():
 
 
 # -------------------------
-# 3. Register
+# 3. Register (Aangepast)
 # -------------------------
 @main.route("/register", methods=["GET", "POST"])
 def register():
@@ -101,7 +100,8 @@ def register():
         db.session.commit()
 
         session["user_id"] = str(new_user.id)
-        return redirect(url_for("main.homepage"))
+        # PAS HIER AAN: Stuur nieuwe gebruiker naar Dashboard
+        return redirect(url_for("main.dashboard")) 
 
     return render_template("register.html")
 
@@ -110,6 +110,10 @@ def register():
 # -------------------------
 @main.route("/dashboard")
 def dashboard():
+    user_id = session.get("user_id")
+    if not user_id:
+        # Als niet ingelogd, stuur naar login (Belangrijke beveiligingscheck)
+        return redirect(url_for("main.login")) 
     return render_template("dashboard.html")
 
 # -------------------------
@@ -138,7 +142,7 @@ def input_page():
         # Maak nieuwe request
         new_request = Request(
             id=uuid.uuid4(),
-            user_id=uuid.UUID(user_id),   # <-- fix: cast naar UUID
+            user_id=uuid.UUID(user_id), 
             created_at=datetime.utcnow()
         )
         db.session.add(new_request)
@@ -213,6 +217,9 @@ def output(request_id):
         payback_period=payback_calc.payback_months if payback_calc else None
     )
 
+# -------------------------
+# 8. Admin Dashboard
+# -------------------------
 @main.route("/admin")
 def admin_dashboard():
     if not session.get("is_admin"):
