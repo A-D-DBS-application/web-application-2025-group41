@@ -58,9 +58,9 @@ const optionsContainer = document.createElement('div');
 optionsContainer.className = 'options';
 
 const optionsData = [
-  { key: "kosten", title: "{{'Kostenbesparend' | t }}" , text: "{{'Ontdek directe besparingen op uw huidige afvalbeheerskosten met onze geavanceerde analyse.' | t }}" }, 
-  { key: "duurzaam", title: "{{'Duurzaam' | t }}", text: "{{'Geen WIVA-vaten meer: minder single-use plastics, minder polypropyleen en meer focus op recyclage.' | t}}"},
-  { key: "efficiënt", title: "{{'Efficiënt' | t }}", text: "{{'Minder transport, minder uitstoot: ons systeem helpt uw afvalbeheer efficiënter te organiseren.' | t }}"} 
+  { title: "{{'Kostenbesparend' | t }}" , text: "{{'Ontdek directe besparingen op uw huidige afvalbeheerskosten met onze geavanceerde analyse.' | t }}" }, 
+  { title: "{{'Duurzaam' | t }}", text: "{{'Geen WIVA-vaten meer: minder single-use plastics, minder polypropyleen en meer focus op recyclage.' | t}}"},
+  { title: "{{'Efficiënt' | t }}", text: "{{'Minder transport, minder uitstoot: ons systeem helpt uw afvalbeheer efficiënter te organiseren.' | t }}"} 
 ];
 
 optionsData.forEach(opt => {
@@ -71,16 +71,16 @@ optionsData.forEach(opt => {
   img.style.width = '60px';
   img.style.marginBottom = '10px';
 
-  if(opt.title === 'duurzaam') {
+  if(opt.title === 'Duurzaam') {
     img.src = "/static/greenrecycle.png";
     img.alt = 'Duurzaam icoon';
     div.appendChild(img);
   
-  } else if(opt.title === 'efficiënt') {
+  } else if(opt.title === 'Efficiënt') {
     img.src = "/static/efficiënt.png";
     img.alt = 'Efficiënt icoon';
     div.appendChild(img);
-  } else if(opt.title === 'Kosten') {
+  } else if(opt.title === 'Kostenbesparend') {
     img.src = "/static/kostenbesparend.png";
     img.alt = 'Kostenbesparend icoon';
     div.appendChild(img);
