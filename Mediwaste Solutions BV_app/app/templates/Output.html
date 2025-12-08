@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="{{ session.get('lang', 'nl') }}">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ "Resultaat besparingsanalyse" | t }} - Mediwaste Solutions</title>
-  <link rel="stylesheet" href="../static/css/output.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/output.css') }}">
 </head>
 <body>
 
@@ -18,15 +18,14 @@
       </div>
       <div class="result-box">
         <h3>{{ "Terugverdientijd van de investering (in maanden)" | t }}</h3>
-        <p>{{ payback_period ~ "{{'maanden' | t }}"  if calc and payback_period  is not none else "—" }}</p>
+        <p>
+          {{ payback_period ~ " {{'maanden' | t}}" if calc and payback_period is not none else "—" }}
+        </p>
       </div>
-      
     </div>
 
     <div class="action-bar">
-      <a href="Dashboard.html" class="btn-back">
-        <span>←</span> {{ "Terug naar dashboard" | t }}
-      </a>
+      <a href="{{ url_for('main.dashboard') }}" class="btn-back">← {{ "Terug naar dashboard" | t }}</a>
     </div>
   </main>
 

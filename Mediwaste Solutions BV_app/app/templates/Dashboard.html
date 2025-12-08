@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="{{ session.get('lang', 'nl') }}">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +11,7 @@
 <body>
   <header>
     Mediwaste Solutions
-    <a href="Homepage.html" class="logout-btn">{{ "Uitloggen" | t }}</a>
+    <a href="{{ url_for('main.homepage') }}" class="logout-btn">{{ "Uitloggen" | t }}</a>
   </header> 
 
   <div class="dashboard-container">
