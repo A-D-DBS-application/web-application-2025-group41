@@ -14,7 +14,7 @@
     <div class="results">
       <div class="result-box">
         <h3>Aanbevolen machinetype</h3>
-        <p>{{ calc.recommended_machine_id or "—" }}</p>
+        <p>{{ machine.size_code if machine else "—" }}</p>
       </div>
       <div class="result-box">
         <h3>Terugverdientijd van de investering (in maanden)</h3>
