@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ "Dashboard" | t }} - Mediwaste Solutions</title>
+  <title>Dashboard - Mediwaste Solutions</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
   <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
@@ -11,23 +11,23 @@
 <body>
   <header>
     Mediwaste Solutions
-    <a href="{{ url_for('main.homepage') }}" class="logout-btn">{{ "Uitloggen" | t }}</a>
+    <a href="{{ url_for('main.homepage') }}" class="logout-btn">Uitloggen</a>
   </header> 
 
   <div class="dashboard-container">
-    <h1>{{ "Welkom terug" | t }}!</h1>
-    <p>{{ "Start een nieuwe simulatie of bekijk eerdere simulaties." | t }}</p>
+    <h1>Welkom terug!</h1>
+    <p>Start een nieuwe simulatie of bekijk eerdere simulaties.</p>
 
     <!-- Knoppen verwijzen nu naar de juiste routes -->
-    <a class="btn" href="{{ url_for('main.input_page') }}">{{ "Nieuwe simulatie" | t }}</a>
-    <a class="btn btn-secondary" href="{{ url_for('main.aanvragen') }}">{{ "Mijn simulaties" | t }}</a>
+    <a class="btn" href="{{ url_for('main.input_page') }}">Nieuwe simulatie</a>
+    <a class="btn btn-secondary" href="{{ url_for('main.aanvragen') }}">Mijn simulaties</a>
 
     <!-- Terug naar homepagina -->
-    <a href="{{ url_for('main.homepage') }}">← {{ "Terug naar homepagina" | t }}</a>
+    <a href="{{ url_for('main.homepage') }}">← Terug naar homepagina</a>
   </div>
 
   <footer>
-    © 2025 Mediwaste Solutions. {{ "Alle rechten voorbehouden" | t }}.
+    © 2025 Mediwaste Solutions. Alle rechten voorbehouden.
   </footer>
 </body>
 </html>

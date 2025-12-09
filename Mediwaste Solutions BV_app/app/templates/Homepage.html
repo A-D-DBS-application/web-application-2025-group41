@@ -4,14 +4,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ "Mediwaste Solutions" | t }}</title>
+  <title>Mediwaste Solutions</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/homepage.css') }}">
   <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
 
 <body>
 <header>
-  <img src="{{ url_for('static', filename='Logo-Mediwaste-Wit.svg') }}" alt="{{ 'Mediwaste Solutions' | t }}" class="logo">
+  <img src="{{ url_for('static', filename='Logo-Mediwaste-Wit.svg') }}" alt="Mediwaste Solutions" class="logo">
   
   <div class="language-selector" style="position:absolute; top:10px; left:10px; display:flex; gap:5px;">
     <a class="btn2-small" href="{{ url_for('main.homepage', lang='nl') }}">NL</a>
@@ -19,8 +19,8 @@
   </div>
 
   <div class="buttons">
-    <a class="register-btn" href="{{ url_for('main.register') }}">{{ "Registreren" | t }}</a>
-    <a class="login-btn" href="{{ url_for('main.login') }}">{{ "Inloggen" | t }}</a>
+    <a class="register-btn" href="{{ url_for('main.register') }}">Registreren</a>
+    <a class="login-btn" href="{{ url_for('main.login') }}">Inloggen</a>
   </div>
 </header>
 
@@ -31,16 +31,16 @@ const root = document.getElementById('root');
 
 // Titel en beschrijving
 const title = document.createElement('h1');
-title.textContent = "{{ 'Bespaar op de kosten voor de verwerking van RMA' | t }}";
+title.textContent = "Bespaar op de kosten voor de verwerking van RMA";
 const description = document.createElement('p');
-description.textContent = "{{ 'Ontdek hoeveel uw organisatie kan besparen met een alternatieve manier van medische afvalverwerking.' | t }}";
+description.textContent = "Ontdek hoeveel uw organisatie kan besparen met een alternatieve manier van medische afvalverwerking.";
 root.appendChild(title);
 root.appendChild(description);
 
 // Extra knop naar dashboard
 const extraButton = document.createElement('a');
 extraButton.className = 'btn2';
-extraButton.textContent = "{{ 'Vraag hier uw analyse aan' | t }}";
+extraButton.textContent = "Vraag hier uw analyse aan";
 extraButton.href = "{{ url_for('main.dashboard') }}";
 root.appendChild(extraButton);
 
@@ -48,16 +48,16 @@ root.appendChild(extraButton);
 const section = document.createElement('div');
 section.className = 'section';
 const sectionTitle = document.createElement('h2');
-sectionTitle.textContent = "{{ 'Waarom kiezen voor onze oplossing?' | t }}";
+sectionTitle.textContent = "Waarom kiezen voor onze oplossing?";
 section.appendChild(sectionTitle);
 
 const optionsContainer = document.createElement('div');
 optionsContainer.className = 'options';
 
 const optionsData = [
-  { title: "{{ 'Kostenbesparend' | t }}", text: "{{ 'Ontdek directe besparingen op uw huidige afvalbeheerskosten met onze geavanceerde analyse.' | t }}" },
-  { title: "{{ 'Duurzaam' | t }}", text: "{{ 'Geen WIVA-vaten meer: minder single-use plastics, minder polypropyleen en meer focus op recyclage.' | t }}" },
-  { title: "{{ 'Efficiënt' | t }}", text: "{{ 'Minder transport, minder uitstoot: ons systeem helpt uw afvalbeheer efficiënter te organiseren.' | t }}" }
+  { title: "Kostenbesparend", text: "Ontdek directe besparingen op uw huidige afvalbeheerskosten met onze geavanceerde analyse." },
+  { title: "Duurzaam", text: "Geen WIVA-vaten meer: minder single-use plastics, minder polypropyleen en meer focus op recyclage." },
+  { title: "Efficiënt", text: "Minder transport, minder uitstoot: ons systeem helpt uw afvalbeheer efficiënter te organiseren." }
 ];
 
 optionsData.forEach(opt => {
@@ -69,13 +69,13 @@ optionsData.forEach(opt => {
   img.style.marginBottom = '10px';
 
   // Dynamisch icoon op basis van titel
-  if(opt.title === "{{ 'Duurzaam' | t }}") {
+  if(opt.title === "Duurzaam") {
     img.src = "/static/greenrecycle.png";
     img.alt = opt.title;
-  } else if(opt.title === "{{ 'Efficiënt' | t }}") {
+  } else if(opt.title === "Efficiënt") {
     img.src = "/static/efficiënt.png";
     img.alt = opt.title;
-  } else if(opt.title === "{{ 'Kostenbesparend' | t }}") {
+  } else if(opt.title === "Kostenbesparend") {
     img.src = "/static/kostenbesparend.png";
     img.alt = opt.title;
   }
@@ -99,7 +99,7 @@ const footer = document.createElement('footer');
 const leftText = document.createElement('div');
 leftText.textContent = "Mediwaste Solutions";
 const rightText = document.createElement('div');
-rightText.textContent = "© 2025 {{ 'Mediwaste Solutions BV' | t }}. {{ 'Alle rechten voorbehouden' | t }}.";
+rightText.textContent = "© 2025 Mediwaste Solutions BV. Alle rechten voorbehouden.";
 footer.appendChild(leftText);
 footer.appendChild(rightText);
 document.body.appendChild(footer);

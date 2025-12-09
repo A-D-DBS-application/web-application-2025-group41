@@ -3,63 +3,63 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ "Registreren" | t }} - Mediwaste Solutions</title>
+  <title>Registreren - Mediwaste Solutions</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}">
 </head>
 <body>
   <div class="register-page">
     <div class="register-container">
-      <h2>{{ "Registreren" | t }}</h2>
-      <p>{{ "Maak een account aan om toegang te krijgen tot uw persoonlijk analyseplatform." | t }}</p>
+      <h2>Registreren</h2>
+      <p>Maak een account aan om toegang te krijgen tot uw persoonlijk analyseplatform.</p>
 
       <form method="POST">
-        <label for="name_user">{{ "Naam" | t }}</label>
-        <input type="text" id="name_user" name="name_user" placeholder="{{ 'Naam' | t }}" required>
+        <label for="name_user">Naam</label>
+        <input type="text" id="name_user" name="name_user" placeholder="Naam" required>
 
-        <label for="email">{{ "E-mailadres" | t }}</label>
-        <input type="email" id="email" name="email" placeholder="{{ 'E-mailadres' | t }}" required>
+        <label for="email">E-mailadres</label>
+        <input type="email" id="email" name="email" placeholder="E-mailadres" required>
 
-        <label for="company_number">{{ "Ondernemingsnummer" | t }}</label>
-        <input type="text" id="company_number" name="company_number" placeholder="{{ 'Ondernemingsnummer' | t }}" required>
+        <label for="company_number">Ondernemingsnummer</label>
+        <input type="text" id="company_number" name="company_number" placeholder="Ondernemingsnummer" required>
 
-        <label for="name_organization">{{ "Naam organisatie" | t }}</label>
-        <input type="text" id="name_organization" name="name_organization" placeholder="{{ 'Naam organisatie' | t }}" required>
+        <label for="name_organization">Naam organisatie</label>
+        <input type="text" id="name_organization" name="name_organization" placeholder="Naam organisatie" required>
 
-        <label for="position">{{ "Functie" | t }}</label>
+        <label for="position">Functie</label>
         <select id="position" name="position" onchange="toggleJobInput()" required>
-            <option value="" disabled selected>{{ "Selecteer een optie" | t }}</option>
-            <option value="Technisch directeur">{{ "Technisch directeur" | t }}</option>
-            <option value="Milieucoördinator">{{ "Milieucoördinator" | t }}</option>
-            <option value="Preventieadviseur">{{ "Preventieadviseur" | t }}</option>
-            <option value="Hygiënist">{{ "Hygiënist" | t }}</option>
-            <option value="Andere">{{ "Andere" | t }}</option>
+            <option value="" disabled selected>Selecteer een optie</option>
+            <option value="Technisch directeur">Technisch directeur</option>
+            <option value="Milieucoördinator">Milieucoördinator</option>
+            <option value="Preventieadviseur">Preventieadviseur</option>
+            <option value="Hygiënist">Hygiënist</option>
+            <option value="Andere">Andere</option>
         </select>
 
         <div id="other-job-container">
-            <label for="job_other">{{ "Specifieer functie" | t }}</label>
-            <input type="text" id="job_other" name="job_other" placeholder="{{ 'Specifieer functie' | t }}">
+            <label for="job_other">Specifieer functie</label>
+            <input type="text" id="job_other" name="job_other" placeholder="Specifieer functie">
         </div>
 
-        <label for="password">{{ "Wachtwoord" | t }}</label>
+        <label for="password">Wachtwoord</label>
         <input type="password" id="password" name="password" placeholder="••••••••" required>
 
-        <label for="confirm">{{ "Bevestig wachtwoord" | t }}</label>
+        <label for="confirm">Bevestig wachtwoord</label>
         <input type="password" id="confirm" name="confirm" placeholder="••••••••" required>
 
-        <button type="submit">{{ "Account aanmaken" | t }}</button>
+        <button type="submit">Account aanmaken</button>
       </form>
 
       <div class="alt-action">
-        {{ "Al een account? Log hier in." | t }}
+        Al een account? Log hier in.
       </div>
 
-      <a href="{{ url_for('main.homepage') }}" class="back-home">← {{ "Terug naar homepagina" | t }}</a>
+      <a href="{{ url_for('main.homepage') }}" class="back-home">← Terug naar homepagina</a>
     </div>
   </div>
 
   <footer>
-    © 2025 Mediwaste Solutions BV. {{ "Alle rechten voorbehouden" | t }}.
+    © 2025 Mediwaste Solutions BV. Alle rechten voorbehouden.
   </footer>
 
   <script>

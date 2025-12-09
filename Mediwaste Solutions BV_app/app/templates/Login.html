@@ -3,30 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ "Inloggen" | t }} - Mediwaste Solutions</title>
+  <title>Inloggen - Mediwaste Solutions</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
   <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
 <body>
   <div class="login-container">
-    <h1>{{ "Welkom terug" | t }}</h1>
-    <p>{{ "Log in om toegang te krijgen tot uw persoonlijk dashboard." | t }}</p>
+    <h1>Welkom terug</h1>
+    <p>Log in om toegang te krijgen tot uw persoonlijk dashboard.</p>
 
     <form method="POST" action="{{ url_for('main.login') }}">
-      <label for="email">{{ "E-mailadres" | t }}</label>
-      <input type="email" id="email" name="email" placeholder="{{ 'E-mailadres' | t }}" required>
+      <label for="email">E-mailadres</label>
+      <input type="email" id="email" name="email" placeholder="E-mailadres" required>
 
-      <label for="password">{{ "Wachtwoord" | t }}</label>
-      <input type="password" id="password" name="password" placeholder="{{ 'Wachtwoord' | t }}" required>
+      <label for="password">Wachtwoord</label>
+      <input type="password" id="password" name="password" placeholder="Wachtwoord" required>
 
-      <button type="submit">{{ "Aanmelden bij mijn account" | t }}</button>
+      <button type="submit">Aanmelden bij mijn account</button>
     </form>
 
-    <a href="{{ url_for('main.homepage') }}">← {{ "Terug naar homepagina" | t }}</a>
+    <a href="{{ url_for('main.homepage') }}">← Terug naar homepagina</a>
   </div>
 
   <footer>
-    © 2025 Mediwaste Solutions. {{ "Alle rechten voorbehouden" | t }}.
+    © 2025 Mediwaste Solutions. Alle rechten voorbehouden.
   </footer>
 </body>
 </html>
+
