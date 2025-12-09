@@ -4,6 +4,7 @@ from sqlalchemy import Column, String, Integer, Numeric, Boolean, ForeignKey, Da
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import quoted_name # <-- belangrijk
+from sqlalchemy import Computed #nodig voor total cost hmw barrels
 from . import db
 
 class User(db.Model):
@@ -61,7 +62,9 @@ class WasteProfile(db.Model):
     cost_hmw_barrels_3 = Column(Numeric)
     cost_hmw_barrels_4 = Column(Numeric)
 
-    total_cost_hmw_barrels = Column(Numeric)
+
+
+    total_cost_hmw_barrels = Column( Numeric, Computed("NULL"), nullable=True)
     steam_generator_needed = Column(Boolean)
 
     request = relationship("Request", back_populates="waste_profile")
