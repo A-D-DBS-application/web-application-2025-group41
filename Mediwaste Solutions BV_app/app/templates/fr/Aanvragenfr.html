@@ -3,22 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ "Mijn aanvragen" | t }}</title>
+  <title>Mijn aanvragen</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/aanvragen.css') }}">
 </head>
 <body>
 
-<h1>{{ "Overzicht van uw aanvragen" | t }}</h1>
+<h1>Aperçu de vos demandes</h1>
 
 <table id="tabel">
   <thead>
     <tr>
-      <th>{{ "Datum" | t }}</th>
-      <th>{{ "Totaal gewicht RMA" | t }}</th>
-      <th>{{ "Aantal WIVA-vaten" | t }}</th>
-      <th>{{ "Huidige kost WIVA-vaten per jaar" | t }}</th>
-      <th>{{ "Inhoud per WIVA-vat" | t }}</th>
-      <th>{{ "Huidige kost ophaling en verbranding RMA per jaar" | t }}</th>
+      <th>Date</th>
+      <th>Poids total DASRI</th>
+      <th>Nombre de fûts WIVA</th>
+      <th>Coût actuel des fûts WIVA par an</th>
+      <th>Contenu par fût WIVA</th>
+      <th>Coût actuel de collecte et d'incinération des DASRI par an (sans coût des fûts WIVA)</th>
     </tr>
   </thead>
   <tbody>
@@ -36,13 +36,13 @@
       {% endif %}
     {% else %}
       <tr>
-        <td colspan="6" style="text-align:center;">{{ "Geen aanvragen gevonden." | t }}</td>
+        <td colspan="6" style="text-align:center;">Aucune demande trouvée.</td>
       </tr>
     {% endfor %}
   </tbody>
 </table>
 
-<a class="back" href="{{ url_for('main.dashboard') }}">← {{ "Terug naar dashboard" | t }}</a>
+<a class="back" href="{{ url_for('main.dashboard') }}">← Retour au tableau de bord</a>
 
 </body>
 </html>

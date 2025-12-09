@@ -1,0 +1,79 @@
+<h1>Admin Dashboard</h1>
+
+<h2>Gebruikers</h2>
+<table border="1">
+    <tr>
+        <th>Naam</th>
+        <th>Email</th>
+        <th>Bedrijf</th>
+    </tr>
+    {% for u in users %}
+    <tr>
+        <td>{{ u.name_user }}</td>
+        <td>{{ u.email }}</td>
+        <td>{{ u.name_organization }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<h2>Aanvragen (Requests)</h2>
+<table border="1">
+    <tr>
+        <th>Request ID</th>
+        <th>User</th>
+        <th>Datum</th>
+    </tr>
+    {% for r in requests %}
+    <tr>
+        <td>{{ r.id }}</td>
+        <td>{{ r.user_id }}</td>
+        <td>{{ r.created_at }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<h2>Input (Waste Profiles)</h2>
+<table border="1">
+    <tr>
+        <th>Request</th>
+        <th>Gewicht</th>
+        <th>Barrels</th>
+        <th>Kost verwerking</th>
+    </tr>
+    {% for w in wastes %}
+    <tr>
+        <td>{{ w.request_id }}</td>
+        <td>{{ w.hmw_total_weight }}</td>
+        <td>{{ w.number_of_barrels_1 }}</td>
+        <td>{{ w.cost_collection_processing }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<h2>Output (Machine)</h2>
+<table border="1">
+    <tr>
+        <th>Request</th>
+        <th>Recommended Machine</th>
+    </tr>
+    {% for m in machines %}
+    <tr>
+        <td>{{ m.request_id }}</td>
+        <td>{{ m.recommended_machine_id }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<h2>Output (Payback)</h2>
+<table border="1">
+    <tr>
+        <th>Request</th>
+        <th>Payback (maanden)</th>
+    </tr>
+    {% for p in paybacks %}
+    <tr>
+        <td>{{ p.request_id }}</td>
+        <td>{{ p.payback_months }}</td>
+    </tr>
+    {% endfor %}
+</table>
