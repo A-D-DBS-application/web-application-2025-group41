@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash
 from .models import db, User, Request, WasteProfile, MachineSizeCalc1, PaybackPeriodCalc2
 from .algorithm import run_user_algorithm
+from .algorithm import run_payback_for_request
 import uuid
 from datetime import datetime
 
@@ -187,6 +188,9 @@ def input_page():
             payback_months=result.get("payback_period")
         )
         db.session.add(payback_calc)"""
+
+        # Payback apart uitvoeren (want run_user_algorithm doet dit niet)
+        run_payback_for_request(new_request.id)
 
         db.session.commit()
 

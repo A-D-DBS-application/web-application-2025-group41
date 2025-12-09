@@ -1,6 +1,8 @@
 from app.algorithm_settings import values, models
 import math
 from .models import db, WasteProfile, MachineSizeCalc1, MachineSpecs, PaybackPeriodCalc2
+from decimal import Decimal
+
 
 # CONSTANTEN – AANNAMES
 # -----------------------------
@@ -198,7 +200,8 @@ def run_payback_for_request(request_id) -> dict:
     if waste is None:
         raise ValueError(f"WASTE_PROFILE not found for request_id={request_id}")
 
-    barrel_cost_annual = 0.0
+    barrel_cost_annual = Decimal("0") #zonder dit werd in de loop hieronder bij barrel_c_annual += total_cost ...
+    # ... een float opgeteld bij een decimal wat niet werkte
     cost_streams = [
         (waste.number_of_barrels_1, waste.cost_hmw_barrels_1),
         (waste.number_of_barrels_2, waste.cost_hmw_barrels_2),
@@ -211,7 +214,7 @@ def run_payback_for_request(request_id) -> dict:
             barrel_cost_annual += total_cost
 
     # Verwerking/verbranding en ophaling, excl. WIVA-vaten
-    processing_cost_annual = waste.cost_collection_processing or 0.0
+    processing_cost_annual = Decimal(str(waste.cost_collection_processing or "0"))
 
     # Totale huidige kost zonder machine
     baseline_annual_cost = barrel_cost_annual + processing_cost_annual
@@ -266,6 +269,15 @@ def run_payback_for_request(request_id) -> dict:
 
     annual_interest_cost = total_interest / 10
 
+    #Alles naar hetzelfde formaat brengen om de komende som uit te kunnen voeren
+    processing_cost_with_machine = Decimal(processing_cost_with_machine)
+    maintenance_cost = Decimal(maintenance_cost)
+    barrel_cost_with_machine = Decimal(barrel_cost_with_machine)
+    cost_bags_for_machine = Decimal(cost_bags_for_machine)
+    annual_interest_cost = Decimal(annual_interest_cost)
+    electricity_cost_annual = Decimal(electricity_cost_annual)
+    water_cost_annual = Decimal(water_cost_annual)
+
     annual_cost_with_machine = (
         processing_cost_with_machine
         + maintenance_cost
@@ -276,13 +288,13 @@ def run_payback_for_request(request_id) -> dict:
         + water_cost_annual
     )
 
-
+    baseline_annual_cost = Decimal(baseline_annual_cost)
     annual_savings = baseline_annual_cost - annual_cost_with_machine
 
 
     # 5. Totale investering
     # -----------------------------
-    investment = machine.selling_price
+    investment = Decimal(machine.selling_price)
 
     if not waste.steam_generator_needed:
         extra_steam_cost = STEAM_GENERATOR_COSTS.get(machine.size_code)
@@ -291,7 +303,7 @@ def run_payback_for_request(request_id) -> dict:
             # hard fail als we de code niet kennen
             raise ValueError(f"No steam generator cost configured for machine {machine.size_code}")
 
-        investment -= extra_steam_cost
+        investment -= Decimal(extra_steam_cost)
 
 
     # 6. Terugverdientijd (in maanden)
