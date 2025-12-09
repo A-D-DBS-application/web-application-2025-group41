@@ -19,8 +19,8 @@
   </div>
 
   <div class="buttons">
-    <a class="register-btn" href="{{ url_for('main.register') }}">Registreren</a>
-    <a class="login-btn" href="{{ url_for('main.login') }}">Inloggen</a>
+    <a class="register-btn" href="{{ url_for('main.register') }}">S'inscrire</a>
+    <a class="login-btn" href="{{ url_for('main.login') }}">Se connecter</a>
   </div>
 </header>
 
@@ -31,16 +31,16 @@ const root = document.getElementById('root');
 
 // Titel en beschrijving
 const title = document.createElement('h1');
-title.textContent = "Bespaar op de kosten voor de verwerking van RMA";
+title.textContent = "Économisez sur les coûts de traitement des DASRI";
 const description = document.createElement('p');
-description.textContent = "Ontdek hoeveel uw organisatie kan besparen met een alternatieve manier van medische afvalverwerking.";
+description.textContent = "Découvrez combien votre organisation peut économiser grâce à une méthode alternative de traitement des DASRI.";
 root.appendChild(title);
 root.appendChild(description);
 
 // Extra knop naar dashboard
 const extraButton = document.createElement('a');
 extraButton.className = 'btn2';
-extraButton.textContent = "Vraag hier uw analyse aan";
+extraButton.textContent = "Demandez votre analyse ici";
 extraButton.href = "{{ url_for('main.dashboard') }}";
 root.appendChild(extraButton);
 
@@ -48,16 +48,16 @@ root.appendChild(extraButton);
 const section = document.createElement('div');
 section.className = 'section';
 const sectionTitle = document.createElement('h2');
-sectionTitle.textContent = "Waarom kiezen voor onze oplossing?";
+sectionTitle.textContent = "Pourquoi choisir notre solution?";
 section.appendChild(sectionTitle);
 
 const optionsContainer = document.createElement('div');
 optionsContainer.className = 'options';
 
 const optionsData = [
-  { title: "Kostenbesparend", text: "Ontdek directe besparingen op uw huidige afvalbeheerskosten met onze geavanceerde analyse." },
-  { title: "Duurzaam", text: "Geen WIVA-vaten meer: minder single-use plastics, minder polypropyleen en meer focus op recyclage." },
-  { title: "Efficiënt", text: "Minder transport, minder uitstoot: ons systeem helpt uw afvalbeheer efficiënter te organiseren." }
+  { title: "Réduction des coûts", text: "Découvrez des économies directes sur vos coûts actuels de gestion des déchets grâce à notre analyse avancée." },
+  { title: "Durable", text: "Plus de fûts WIVA : moins de plastique à usage unique, moins de polypropylène et plus d'importance au recyclage." },
+  { title: "Efficace", text: "Moins de transport, moins d'émission : notre système aide à organiser votre gestion des déchets plus efficacement." }
 ];
 
 optionsData.forEach(opt => {
@@ -69,13 +69,13 @@ optionsData.forEach(opt => {
   img.style.marginBottom = '10px';
 
   // Dynamisch icoon op basis van titel
-  if(opt.title === "Duurzaam") {
+  if(opt.title === "Durable") {
     img.src = "/static/greenrecycle.png";
     img.alt = opt.title;
-  } else if(opt.title === "Efficiënt") {
+  } else if(opt.title === "Efficace") {
     img.src = "/static/efficiënt.png";
     img.alt = opt.title;
-  } else if(opt.title === "Kostenbesparend") {
+  } else if(opt.title === "Réduction des coûts") {
     img.src = "/static/kostenbesparend.png";
     img.alt = opt.title;
   }
@@ -99,7 +99,7 @@ const footer = document.createElement('footer');
 const leftText = document.createElement('div');
 leftText.textContent = "Mediwaste Solutions";
 const rightText = document.createElement('div');
-rightText.textContent = "© 2025 Mediwaste Solutions BV. Alle rechten voorbehouden.";
+rightText.textContent = "© 2025 Mediwaste Solutions BV. Tous droits réservés.";
 footer.appendChild(leftText);
 footer.appendChild(rightText);
 document.body.appendChild(footer);

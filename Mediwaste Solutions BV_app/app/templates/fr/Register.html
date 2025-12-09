@@ -10,56 +10,56 @@
 <body>
   <div class="register-page">
     <div class="register-container">
-      <h2>Registreren</h2>
-      <p>Maak een account aan om toegang te krijgen tot uw persoonlijk analyseplatform.</p>
+      <h2>S'inscrire</h2>
+      <p>Créez un compte pour accéder à votre plateforme d'analyse personnelle.</p>
 
       <form method="POST">
-        <label for="name_user">Naam</label>
+        <label for="name_user">Nom</label>
         <input type="text" id="name_user" name="name_user" placeholder="Naam" required>
 
-        <label for="email">E-mailadres</label>
+        <label for="email">Adresse e-mail</label>
         <input type="email" id="email" name="email" placeholder="E-mailadres" required>
 
-        <label for="company_number">Ondernemingsnummer</label>
+        <label for="company_number">Numéro d'entreprise</label>
         <input type="text" id="company_number" name="company_number" placeholder="Ondernemingsnummer" required>
 
-        <label for="name_organization">Naam organisatie</label>
+        <label for="name_organization">Nom de l'organisation</label>
         <input type="text" id="name_organization" name="name_organization" placeholder="Naam organisatie" required>
 
-        <label for="position">Functie</label>
+        <label for="position">Fonction</label>
         <select id="position" name="position" onchange="toggleJobInput()" required>
-            <option value="" disabled selected>Selecteer een optie</option>
-            <option value="Technisch directeur">Technisch directeur</option>
-            <option value="Milieucoördinator">Milieucoördinator</option>
-            <option value="Preventieadviseur">Preventieadviseur</option>
-            <option value="Hygiënist">Hygiënist</option>
-            <option value="Andere">Andere</option>
+            <option value="" disabled selected>Chosissez une option</option>
+            <option value="Technisch directeur">Directeur technique</option>
+            <option value="Milieucoördinator">Coordonnateur environnemental</option>
+            <option value="Preventieadviseur">Conseiller en prévention</option>
+            <option value="Hygiënist">Hygiéniste</option>
+            <option value="Andere">Autre</option>
         </select>
 
         <div id="other-job-container">
-            <label for="job_other">Specifieer functie</label>
+            <label for="job_other"> Précisez la fonction</label>
             <input type="text" id="job_other" name="job_other" placeholder="Specifieer functie">
         </div>
 
-        <label for="password">Wachtwoord</label>
+        <label for="password">Mot de passe</label>
         <input type="password" id="password" name="password" placeholder="••••••••" required>
 
-        <label for="confirm">Bevestig wachtwoord</label>
+        <label for="confirm">Confirmer le mot de passe</label>
         <input type="password" id="confirm" name="confirm" placeholder="••••••••" required>
 
-        <button type="submit">Account aanmaken</button>
+        <button type="submit">Créer un compte</button>
       </form>
 
       <div class="alt-action">
-        Al een account? Log hier in.
+        Déjà un compte ? Connectez-vous ici.
       </div>
 
-      <a href="{{ url_for('main.homepage') }}" class="back-home">← Terug naar homepagina</a>
+      <a href="{{ url_for('main.homepage') }}" class="back-home">← Retour à la page d'accueil</a>
     </div>
   </div>
 
   <footer>
-    © 2025 Mediwaste Solutions BV. Alle rechten voorbehouden.
+    © 2025 Mediwaste Solutions BV. Tous droits réservés.
   </footer>
 
   <script>

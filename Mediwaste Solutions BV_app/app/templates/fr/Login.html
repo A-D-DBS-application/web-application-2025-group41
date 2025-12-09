@@ -3,30 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Inloggen - Mediwaste Solutions</title>
+  <title>Se connecter - Mediwaste Solutions</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
   <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
 <body>
   <div class="login-container">
-    <h1>Welkom terug</h1>
-    <p>Log in om toegang te krijgen tot uw persoonlijk dashboard.</p>
+    <h1>Bienvenue à nouveau</h1>
+    <p>Connectez-vous pour accéder à votre tableau de bord personnel.</p>
 
     <form method="POST" action="{{ url_for('main.login') }}">
-      <label for="email">E-mailadres</label>
+      <label for="email">Adresse e-mail</label>
       <input type="email" id="email" name="email" placeholder="E-mailadres" required>
 
-      <label for="password">Wachtwoord</label>
+      <label for="password">Mot de passe</label>
       <input type="password" id="password" name="password" placeholder="Wachtwoord" required>
 
-      <button type="submit">Aanmelden bij mijn account</button>
+      <button type="submit">Se connecter à mon compte</button>
     </form>
 
-    <a href="{{ url_for('main.homepage') }}">← Terug naar homepagina</a>
+    <a href="{{ url_for('main.homepage') }}">← Retour à la page d'accueil</a>
   </div>
 
   <footer>
-    © 2025 Mediwaste Solutions. Alle rechten voorbehouden.
+    © 2025 Mediwaste Solutions. Tous droits réservés.
   </footer>
 </body>
 </html>

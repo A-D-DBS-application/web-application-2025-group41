@@ -3,26 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nieuwe simulatie - Mediwaste Solutions</title>
+  <title>Nouvelle simulation - Mediwaste Solutions</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/input.css') }}">
   <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
 <body>
   <div class="calc-page">
     <div class="calc-container">
-      <h2>Start een nieuwe simulatie</h2>
-      <p class="subtitle">Vul de gegevens in voor een besparingsanalyse</p>
+      <h2>Démarrer une nouvelle simulation</h2>
+      <p class="subtitle">Complétez les données pour une analyse d'économies</p>
 
       <form method="POST" action="{{ url_for('main.input_page') }}">
-        <h3>Kosten</h3>
+        <h3>Coûts</h3>
 
-        <label for="hmw_total_weight">Totaal gewicht RMA</label>
+        <label for="hmw_total_weight">Poids total DASRI</label>
         <div class="input-group">
           <input type="number" id="hmw_total_weight" name="hmw_total_weight" placeholder="Bijv. 160000" required>
           <span class="unit">kg</span>
         </div>
 
-        <label for="wiva_types">Hoeveel verschillende types WIVA-vaten heeft u?</label>
+        <label for="wiva_types">Combien de types de fûts WIVA avez-vous?</label>
         <select id="wiva_types" name="wiva_types" required>
           <option value="1">1 type</option>
           <option value="2">2 types</option>
@@ -31,18 +31,18 @@
         </select>
 
         <div class="wiva-group" data-group="1">
-          <label for="number_of_barrels_1">Aantal WIVA-vaten type 1</label>
+          <label for="number_of_barrels_1">Nombre de fûts WIVA type 1</label>
           <div class="input-group">
             <input type="number" id="number_of_barrels_1" name="number_of_barrels_1" placeholder="Bijv. 5000">
           </div>
 
-          <label for="cost_hmw_barrels_1">Huidige kost WIVA-vaten per jaar type 1</label>
+          <label for="cost_hmw_barrels_1">Coût actuel des fûts WIVA par an type 1</label>
           <div class="input-group">
             <input type="number" id="cost_hmw_barrels_1" name="cost_hmw_barrels_1" placeholder="Bijv. 100000">
             <span class="unit">€</span>
           </div>
 
-          <label for="volume_barrel_1">Inhoud per WIVA-vat type 1</label>
+          <label for="volume_barrel_1">Contenu par fût WIVA type 1</label>
           <div class="input-group">
             <input type="number" id="volume_barrel_1" name="volume_barrel_1" placeholder="Bijv. 60">
             <span class="unit">Liter</span>
@@ -50,18 +50,18 @@
         </div>
 
         <div class="wiva-group" data-group="2">
-          <label for="number_of_barrels_2">Aantal WIVA-vaten type 2</label>
+          <label for="number_of_barrels_2">Nombre de fûts WIVA type 2</label>
           <div class="input-group">
             <input type="number" id="number_of_barrels_2" name="number_of_barrels_2" placeholder="Bijv. 5000">
           </div>
 
-          <label for="cost_hmw_barrels_2">Huidige kost WIVA-vaten per jaar type 2</label>
+          <label for="cost_hmw_barrels_2">Coût actuel des fûts WIVA par an type 2</label>
           <div class="input-group">
             <input type="number" id="cost_hmw_barrels_2" name="cost_hmw_barrels_2" placeholder="Bijv. 100000">
             <span class="unit">€</span>
           </div>
 
-          <label for="volume_barrel_2">Inhoud per WIVA-vat type 2</label>
+          <label for="volume_barrel_2">Contenu par fût WIVA type 2</label>
           <div class="input-group">
             <input type="number" id="volume_barrel_2" name="volume_barrel_2" placeholder="Bijv. 50">
             <span class="unit">Liter</span>
@@ -69,18 +69,18 @@
         </div>
 
         <div class="wiva-group" data-group="3">
-          <label for="number_of_barrels_3">Aantal WIVA-vaten type 3</label>
+          <label for="number_of_barrels_3">Nombre de fûts WIVA type 3</label>
           <div class="input-group">
             <input type="number" id="number_of_barrels_3" name="number_of_barrels_3">
           </div>
 
-          <label for="cost_hmw_barrels_3">Huidige kost WIVA-vaten per jaar type 3</label>
+          <label for="cost_hmw_barrels_3">Coût actuel des fûts WIVA par an type 3</label>
           <div class="input-group">
             <input type="number" id="cost_hmw_barrels_3" name="cost_hmw_barrels_3">
             <span class="unit">€</span>
           </div>
 
-          <label for="volume_barrel_3">Inhoud per WIVA-vat type 3</label>
+          <label for="volume_barrel_3">Contenu par fût WIVA type 3</label>
           <div class="input-group">
             <input type="number" id="volume_barrel_3" name="volume_barrel_3">
             <span class="unit">Liter</span>
@@ -88,31 +88,31 @@
         </div>
 
         <div class="wiva-group" data-group="4">
-          <label for="number_of_barrels_4">Aantal WIVA-vaten type 4</label>
+          <label for="number_of_barrels_4">Nombre de fûts WIVA type 4</label>
           <div class="input-group">
             <input type="number" id="number_of_barrels_4" name="number_of_barrels_4">
           </div>
 
-          <label for="cost_hmw_barrels_4">Huidige kost WIVA-vaten per jaar type 4</label>
+          <label for="cost_hmw_barrels_4">Coût actuel des fûts WIVA par an type 4</label>
           <div class="input-group">
             <input type="number" id="cost_hmw_barrels_4" name="cost_hmw_barrels_4">
             <span class="unit">€</span>
           </div>
 
-          <label for="volume_barrel_4">Inhoud per WIVA-vat type 4</label>
+          <label for="volume_barrel_4">Contenu par fût WIVA type 4</label>
           <div class="input-group">
             <input type="number" id="volume_barrel_4" name="volume_barrel_4">
             <span class="unit">Liter</span>
           </div>
         </div>
 
-        <label for="cost_collection_processing">Huidige kost ophaling & verbranding RMA per jaar (zonder kost WIVA-vaten)</label>
+        <label for="cost_collection_processing">Coût actuel de collecte et d'incinération des DASRI par an (sans coût des fûts WIVA)</label>
         <div class="input-group">
           <input type="number" id="cost_collection_processing" name="cost_collection_processing" placeholder="Bijv. 5000" required>
           <span class="unit">€</span>
         </div>
 
-        <label for="steam_generator_needed">Stoomgenerator nodig</label>
+        <label for="steam_generator_needed">Générateur de vapeur nécessaire?</label>
         <div class="input-group">
           <select id="steam_generator_needed" name="steam_generator_needed" required>
               <option value="true">Ja</option>
