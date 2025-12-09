@@ -173,14 +173,7 @@ def input_page():
 
         # Algoritme draaien
         result = run_user_algorithm(
-            hmw_density=float(request.form["hmw_total_weight"]),
-            number_of_barrels=int(request.form["number_of_barrels_1"]),
-            cost_hmw_barrels=float(request.form["cost_hmw_barrels_1"]),
-            volume_barrel=float(request.form["volume_barrel_1"]),
-            cost_collection_processing=float(request.form["cost_collection_processing"]),
-            cost_hmw=float(request.form["cost_hmw_barrels_1"]),
-            joint_committee=None,
-            workdays=250
+  
         )
 
         machine_calc = MachineSizeCalc1(
