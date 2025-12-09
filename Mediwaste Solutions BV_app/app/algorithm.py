@@ -9,26 +9,26 @@ from decimal import Decimal
 # MACHINE OPERATION CONSTANTS
 WORKDAYS_PER_YEAR = 300
 MAX_DAILY_CYCLES = 8
-EFFECTIVE_CAPACITY_FACTOR = 0.94  # machine never filled to 100%
+EFFECTIVE_CAPACITY_FACTOR = Decimal("0.94")  # machine never filled to 100%
 # WASTE REDUCTION / PROCESSING FACTORS
-VOLUME_REDUCTION_FACTOR = 0.20
-COLLECTION_REDUCTION_FACTOR = 0.40
+VOLUME_REDUCTION_FACTOR = Decimal("0.20")
+COLLECTION_REDUCTION_FACTOR = Decimal("0.40")
 # VARIABLE OPERATING COST PRICES
-ELECTRICITY_PRICE_PER_KWH = 0.18 # AZMM
-WATER_PRICE_PER_L = 0.0044 # AZMM
-COST_PE_ZAKKEN_MACHINE = 0.42 # AZMM, zak voor 60L
+ELECTRICITY_PRICE_PER_KWH = Decimal("0.18") # AZMM
+WATER_PRICE_PER_L = Decimal("0.0044") # AZMM
+COST_PE_ZAKKEN_MACHINE = Decimal("0.42") # AZMM, zak voor 60L
 # MACHINE-DEPENDENT FIXED COSTS
 STEAM_GENERATOR_COSTS = {
-    "T100": 10164,
-    "T150": 10164,
-    "T300": 27588,
-    "T700": 35574,
+    "T100": Decimal("10164"),
+    "T150": Decimal("10164"),
+    "T300": Decimal("27588"),
+    "T700": Decimal("35574"),
 }
 MAINTENANCE_COSTS = {
-    "T100": 14500,
-    "T150": 19000,
-    "T300": 30000,
-    "T700": 42000,
+    "T100": Decimal("14500"),
+    "T150": Decimal("19000"),
+    "T300": Decimal("30000"),
+    "T700": Decimal("42000"),
 }
 # FINANCIAL MODEL SETTINGS
 MAX_PAYBACK_YEARS = 15
@@ -40,7 +40,7 @@ def compute_annual_volume_l(waste) -> float:
     Berekent het totale jaarlijkse afvalvolume in liter,
     op basis van de aantallen vaten en hun volumes.
     """
-    annual_volume_l = 0.0
+    annual_volume_l = Decimal("0")
 
     barrel_streams = [
         (waste.number_of_barrels_1, waste.volume_barrels_1),
@@ -52,8 +52,7 @@ def compute_annual_volume_l(waste) -> float:
     for n_barrels, vol_per_barrel in barrel_streams:
         # expliciet op None testen, zodat 0 ook geldig is
         if n_barrels is not None and vol_per_barrel is not None:
-            annual_volume_l += float(n_barrels) * float(vol_per_barrel) #de variabelen komen binnen als string, zonder conversie geen vermenigvuldiging mogelijk.
-
+            annual_volume_l += Decimal(str(n_barrels)) * Decimal(str(vol_per_barrel)) 
     return annual_volume_l
 
 
@@ -67,22 +66,40 @@ def recommend_machine(request_id):
 
     # ❗ BELANGRIJKE CHECK — deze was verdwenen
     if annual_volume_l == 0:
+        print("DEBUG: annual_volume_l == 0 → geen machine")
         return None
 
     max_yearly_cycles = MAX_DAILY_CYCLES * WORKDAYS_PER_YEAR
     if max_yearly_cycles <= 0:
+        print("DEBUG: max_yearly_cycles <= 0 → geen machine")
         return None
     
-    required_volume_per_cycle = annual_volume_l / max_yearly_cycles
+    required_volume_per_cycle = Decimal(annual_volume_l) / Decimal(max_yearly_cycles)
+
+    # DEBUG PRINTS
+    print("\n======================")
+    print(" RECOMMEND MACHINE DEBUG")
+    print("======================")
+    print("annual_volume_l:", annual_volume_l)
+    print("max_yearly_cycles:", max_yearly_cycles)
+    print("required_volume_per_cycle:", required_volume_per_cycle)
+    print("----------------------")
 
     machines = MachineSpecs.query.order_by(MachineSpecs.capacity.asc()).all()
 
     for machine in machines:
-        effective_capacity = machine.capacity * EFFECTIVE_CAPACITY_FACTOR
-
-        if effective_capacity >= required_volume_per_cycle:
+        effective_capacity = Decimal(machine.capacity) * EFFECTIVE_CAPACITY_FACTOR
+        print(f"Machine {machine.size_code}: "
+            f"capacity={machine.capacity}, "
+            f"effective_capacity={effective_capacity}")
+        
+        if effective_capacity >= Decimal(required_volume_per_cycle):
+            print(f"SELECTED MACHINE → {machine.size_code}")
+            print("======================\n")
             return machine
 
+    print("NO MACHINE SELECTED")
+    print("======================\n")
     return None
 
 #annuiteit berekenen voor aankoop prijs machine
@@ -156,26 +173,26 @@ def run_user_algorithm(
 # HULPFUNCTIE: payback in maanden (discounted)
 # -----------------------------
 
-def payback_period_months(investment: float, annual_savings: float) -> int | None:
+def payback_period_months(investment, annual_savings):
     #Discounted payback in maanden.
     if annual_savings <= 0 or investment <= 0:
         return None
 
-    monthly_savings = annual_savings / 12.0
-    monthly_rate = values.yearly_interest / 12.0
+    monthly_savings = annual_savings / Decimal("12.0")
+    monthly_rate = Decimal(str(values.yearly_interest)) / Decimal("12")
 
-    cumulative_saved = 0.0
+    cumulative_saved = Decimal("0")
     max_months = MAX_PAYBACK_YEARS * 12
 
     for month in range(1, max_months + 1):
-        discounted_cf = monthly_savings / ((1 + monthly_rate) ** month)
+        discounted_cf = monthly_savings / ((Decimal("1") + monthly_rate) ** month)
         cumulative_saved += discounted_cf
         if cumulative_saved >= investment:
             return month
 
     return None
 
-def simple_payback_months(investment: float, annual_savings: float) -> int | None:
+def simple_payback_months(investment, annual_savings):
     if annual_savings <= 0 or investment <= 0:
         return None
     return math.ceil((investment / annual_savings) * 12)
@@ -184,7 +201,7 @@ def simple_payback_months(investment: float, annual_savings: float) -> int | Non
 # HOOFDFUNCTIE: run payback voor een request
 # -----------------------------
 
-def run_payback_for_request(request_id) -> dict:
+def run_payback_for_request(request_id):
     """
     Hoofdalgoritme.
     - Haalt gegevens uit WASTE_PROFILE, MACHINE_SIZE_CALC, MACHINE_SPECS
@@ -234,19 +251,19 @@ def run_payback_for_request(request_id) -> dict:
 
     # 3. Cycli per jaar + gebruikskosten
     # -----------------------------
-    effective_capacity = machine.capacity * EFFECTIVE_CAPACITY_FACTOR
+    effective_capacity = Decimal(machine.capacity) * EFFECTIVE_CAPACITY_FACTOR
     if machine.capacity <= 0:
         raise ValueError("Machine capacity must be > 0")
     
     annual_volume_l = compute_annual_volume_l(waste)
 
-    cycles_per_year = math.ceil(annual_volume_l / effective_capacity) 
+    cycles_per_year = math.ceil(Decimal(annual_volume_l) / effective_capacity)
 
 
     # 4. Kosten mét machine
     # -----------------------------
-    electricity_cost_annual = Decimal(cycles_per_year) * Decimal(machine.electricity_consumption) * Decimal(str(ELECTRICITY_PRICE_PER_KWH))
-    water_cost_annual = Decimal(cycles_per_year) * Decimal(machine.water_consumption)  * Decimal(str(WATER_PRICE_PER_L))
+    electricity_cost_annual = Decimal(cycles_per_year) * Decimal(machine.electricity_consumption) * ELECTRICITY_PRICE_PER_KWH
+    water_cost_annual = Decimal(cycles_per_year) * Decimal(machine.water_consumption)  * WATER_PRICE_PER_L
 
     processing_cost_with_machine = processing_cost_annual * COLLECTION_REDUCTION_FACTOR
 
@@ -256,17 +273,22 @@ def run_payback_for_request(request_id) -> dict:
 
     # geen WIVA-vaten meer nodig met machine? wel zakken, prijs?
     barrel_cost_with_machine = 0.0
-    reduced_volume = annual_volume_l * VOLUME_REDUCTION_FACTOR 
-    cost_bags_for_machine =  COST_PE_ZAKKEN_MACHINE * math.ceil(reduced_volume / 60)
+    reduced_volume = Decimal(annual_volume_l) * VOLUME_REDUCTION_FACTOR 
+    bags = (reduced_volume / Decimal("60")).to_integral_value(rounding="ROUND_CEILING")
+    cost_bags_for_machine = COST_PE_ZAKKEN_MACHINE * bags
 
-    total_interest = (
-        120 * (
-           (machine.selling_price * (values.yearly_interest / 12)) /
-           (1 - (1 + values.yearly_interest / 12) ** -120)
-        )
-    ) - machine.selling_price
+    # Zorg dat alles Decimals worden
+    selling_price = Decimal(machine.selling_price)
+    monthly_rate = Decimal(str(values.yearly_interest)) / Decimal("12")
 
-    annual_interest_cost = total_interest / 10
+    # (1 + r) ** -120  → Decimal power werkt NIET met floats of negatieve exponenten
+    # oplossing: gebruik Decimal ** int  (negatieve exponent kan wél)
+    discount_factor = (Decimal("1") + monthly_rate) ** Decimal("-120")
+
+    # Annuity interest component
+    total_interest = (Decimal("120") * ((selling_price * monthly_rate) / (Decimal("1") - discount_factor))) - selling_price
+
+    annual_interest_cost = total_interest / Decimal("10")
 
     #Alles naar hetzelfde formaat brengen om de komende som uit te kunnen voeren
     processing_cost_with_machine = Decimal(processing_cost_with_machine)
@@ -287,9 +309,7 @@ def run_payback_for_request(request_id) -> dict:
         + water_cost_annual
     )
 
-    baseline_annual_cost = Decimal(baseline_annual_cost)
-    annual_savings = baseline_annual_cost - annual_cost_with_machine
-
+    annual_savings = Decimal(baseline_annual_cost) - Decimal(annual_cost_with_machine)
 
     # 5. Totale investering
     # -----------------------------
@@ -310,7 +330,15 @@ def run_payback_for_request(request_id) -> dict:
     months = payback_period_months(investment, annual_savings)
     simple_months = simple_payback_months(investment, annual_savings)
 
-    payback_value_to_store = float(months) if months is not None else None
+    if months is None:
+        payback_value_to_store = None
+    else:
+        try:
+            payback_value_to_store = float(months)
+        except:
+            # fallback: forceer conversie via str → float
+            payback_value_to_store = float(str(months))
+        # werkt voor int, decimal, float en none
 
 
     # 7. Resultaat wegschrijven naar PAYBACK_PERIOD_CALC2
