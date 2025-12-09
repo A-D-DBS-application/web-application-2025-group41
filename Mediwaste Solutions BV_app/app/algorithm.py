@@ -50,7 +50,7 @@ def compute_annual_volume_l(waste) -> float:
     for n_barrels, vol_per_barrel in barrel_streams:
         # expliciet op None testen, zodat 0 ook geldig is
         if n_barrels is not None and vol_per_barrel is not None:
-            annual_volume_l += n_barrels * vol_per_barrel
+            annual_volume_l += float(n_barrels) * float(vol_per_barrel) #de variabelen komen binnen als string, zonder conversie geen vermenigvuldiging mogelijk.
 
     return annual_volume_l
 
@@ -254,7 +254,7 @@ def run_payback_for_request(request_id) -> dict:
 
     # geen WIVA-vaten meer nodig met machine? wel zakken, prijs?
     barrel_cost_with_machine = 0.0
-    reduced_volume = annual_volume_l * 0.20 
+    reduced_volume = annual_volume_l * VOLUME_REDUCTION_FACTOR 
     cost_bags_for_machine =  COST_PE_ZAKKEN_MACHINE * math.ceil(reduced_volume / 60)
 
     total_interest = (
