@@ -172,11 +172,9 @@ def input_page():
         db.session.add(waste)
 
         # Algoritme draaien
-        result = run_user_algorithm(
-  
-        )
+        result = run_user_algorithm()
 
-        machine_calc = MachineSizeCalc1(
+        """machine_calc = MachineSizeCalc1(
             id=uuid.uuid4(),
             request_id=new_request.id,
             recommended_machine_id=result.get("machine_id")
@@ -188,7 +186,7 @@ def input_page():
             request_id=new_request.id,
             payback_months=result.get("payback_period")
         )
-        db.session.add(payback_calc)
+        db.session.add(payback_calc)"""
 
         db.session.commit()
 
