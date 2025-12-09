@@ -1,9 +1,13 @@
 import logging
 from logging.config import fileConfig
+import os
+from dotenv import load_dotenv  # <--- Belangrijke toevoeging
 
 from flask import current_app
-
 from alembic import context
+
+# 1. Laad .env expliciet om zeker te zijn dat de Pooler URL wordt gepakt
+load_dotenv()
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -79,6 +83,13 @@ def run_migrations_online():
     and associate a connection with the context.
 
     """
+    
+    # <--- DEBUG: Print de URL (zonder wachtwoord) om te checken of het werkt
+    engine_url = get_engine_url()
+    # Maskeer wachtwoord voor veiligheid in de logs
+    safe_url = engine_url.split('@')[-1] if '@' in engine_url else engine_url
+    print(f"DEBUG: Alembic verbindt met host: {safe_url}")
+    # ---------------------------------------------------------------------
 
     # this callback is used to prevent an auto-migration from being generated
     # when there are no changes to the schema
