@@ -69,6 +69,20 @@ class WasteProfile(db.Model):
 
     request = relationship("Request", back_populates="waste_profile")
 
+    @property
+    def total_annual_volume(self):
+        """Berekent totaal volume op basis van vaten inputs."""
+        total = 0
+        streams = [
+            (self.number_of_barrels_1, self.volume_barrels_1),
+            (self.number_of_barrels_2, self.volume_barrels_2),
+            (self.number_of_barrels_3, self.volume_barrels_3),
+            (self.number_of_barrels_4, self.volume_barrels_4),
+        ]
+        for number, volume in streams:
+            if number is not None and volume is not None:
+                total += (number * volume)
+        return total
 
 class MachineSpecs(db.Model):
     __tablename__ = quoted_name("MACHINE_SPECS", True)
