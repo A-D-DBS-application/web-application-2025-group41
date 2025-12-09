@@ -16,22 +16,34 @@
       <th>Datum</th>
       <th>Totaal gewicht RMA</th>
       <th>Aantal WIVA-vaten</th>
-      <th>Huidige kost WIVA-vaten per jaar</th>
-      <th>Inhoud per WIVA-vat</th>
-      <th>Huidige kost ophaling en verbranding RMA per jaar</th>
-    </tr>
+      <th>Huidige kost/jaar</th>
+      <th>Type Machine</th> <th>Terugverdientijd</th> </tr>
   </thead>
   <tbody>
     {% for req in requests %}
       {% if req.waste_profile %}
       <tr>
         <td>{{ req.created_at.strftime('%d/%m/%Y') }}</td>
-        
-        <td>{{ req.waste_profile.hmw_total_weight }}</td>
+        <td>{{ req.waste_profile.hmw_total_weight }} kg</td>
         <td>{{ req.waste_profile.number_of_barrels_1 }}</td>
-        <td>{{ req.waste_profile.cost_hmw_barrels_1 }}</td>
-        <td>{{ req.waste_profile.volume_barrels_1 }}</td>
-        <td>{{ req.waste_profile.cost_collection_processing }}</td>
+        <td>€ {{ req.waste_profile.cost_hmw_barrels_1 }}</td>
+
+        <td>
+            {% if req.machine_size_calc and req.machine_size_calc.machine %}
+                <strong>{{ req.machine_size_calc.machine.size_code }}</strong>
+            {% else %}
+                <span style="color:grey;">-</span>
+            {% endif %}
+        </td>
+
+        <td>
+            {% if req.payback_period_calc and req.payback_period_calc.payback_months %}
+                <strong>{{ (req.payback_period_calc.payback_months / 12) | round(1) }} jaar</strong>
+            {% else %}
+                 <span style="color:grey;">-</span>
+            {% endif %}
+        </td>
+
       </tr>
       {% endif %}
     {% else %}

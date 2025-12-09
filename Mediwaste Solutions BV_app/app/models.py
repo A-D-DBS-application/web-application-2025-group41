@@ -90,6 +90,12 @@ class MachineSizeCalc1(db.Model):
 
     request = relationship("Request", back_populates="machine_size_calc")
 
+    machine = relationship(
+        "MachineSpecs",
+        primaryjoin="foreign(MachineSizeCalc1.recommended_machine_id) == remote(MachineSpecs.id)",
+        uselist=False,
+        viewonly=True
+    )
 
 
 class PaybackPeriodCalc2(db.Model):
