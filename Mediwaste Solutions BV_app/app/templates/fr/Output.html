@@ -14,12 +14,12 @@
     <div class="results">
       <div class="result-box">
         <h3>Type de machine recommandé</h3>
-        <p>{{ calc.recommended_machine or "—" }}</p>
+        <p>{{ machine.size_code if machine else "—" }}</p>
       </div>
       <div class="result-box">
-        <h3>Délai de récupération de l'investissement (en mois)</h3>
+        <h3>Délai de récupération de l'investissement</h3>
         <p>
-          {{ payback_period ~ " mois" if calc and payback_period is not none else "—" }}
+          {{ payback_period|int ~ " mois" if calc and payback_period is not none else "—" }}
         </p>
       </div>
     </div>

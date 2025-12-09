@@ -17,9 +17,9 @@
         <p>{{ machine.size_code if machine else "—" }}</p>
       </div>
       <div class="result-box">
-        <h3>Terugverdientijd van de investering (in maanden)</h3>
+        <h3>Terugverdientijd van de investering</h3>
         <p>
-          {{ payback_period ~ " maanden" if calc and payback_period is not none else "—" }}
+          {{ payback_period|int ~ " maanden" if calc and payback_period is not none else "—" }}
         </p>
       </div>
     </div>
