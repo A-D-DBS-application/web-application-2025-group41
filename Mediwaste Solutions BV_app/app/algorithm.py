@@ -110,26 +110,7 @@ def annuity(price, months):
     return (price * i) / (1 - (1 + i) ** (-months))
 
 #hoofdfunctie van het algoritme
-def run_user_algorithm(
-    hmw_density=None,
-    number_of_barrels=None,
-    cost_hmw_barrels=None,
-    volume_barrel=None,
-    cost_collection_processing=None,
-    cost_hmw=None,
-    joint_committee=None,
-    workdays=None,
-    request_id=None):
-
-    """
-    Backwards-compatible machine recommendation function.
-
-    - Routes.py blijft werken omdat alle oude parameters behouden blijven.
-    - Nieuwe logica werkt correct omdat we WASTE_PROFILE uit de database gebruiken.
-    - request_id kan optioneel worden meegegeven, maar als dat niet gebeurt,
-      halen we het automatisch op via de laatst aangemaakte WasteProfile.
-    """
-    
+def run_user_algorithm(request_id=None):
 
     # 1. request_id bepalen
     if request_id is None:
