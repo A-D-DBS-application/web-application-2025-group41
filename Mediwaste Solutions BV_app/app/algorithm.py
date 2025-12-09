@@ -193,7 +193,6 @@ def run_payback_for_request(request_id) -> dict:
     - Schrijft resultaat weg in PAYBACK_PERIOD_CALC2
     - Geeft resultaat ook terug als dict (voor templates / debug) (?????waarom)
     """
-
     # 1. WASTE_PROFILE ophalen
     # -----------------------------
     waste = WasteProfile.query.filter_by(request_id=request_id).first()
@@ -246,8 +245,8 @@ def run_payback_for_request(request_id) -> dict:
 
     # 4. Kosten mét machine
     # -----------------------------
-    electricity_cost_annual = cycles_per_year * machine.electricity_consumption * ELECTRICITY_PRICE_PER_KWH
-    water_cost_annual = cycles_per_year * machine.water_consumption  * WATER_PRICE_PER_L
+    electricity_cost_annual = Decimal(cycles_per_year) * Decimal(machine.electricity_consumption) * Decimal(str(ELECTRICITY_PRICE_PER_KWH))
+    water_cost_annual = Decimal(cycles_per_year) * Decimal(machine.water_consumption)  * Decimal(str(WATER_PRICE_PER_L))
 
     processing_cost_with_machine = processing_cost_annual * COLLECTION_REDUCTION_FACTOR
 
