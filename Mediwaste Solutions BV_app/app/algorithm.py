@@ -211,7 +211,7 @@ def run_payback_for_request(request_id) -> dict:
 
     for n_barrels, total_cost in cost_streams:
         if n_barrels is not None and total_cost is not None:
-            barrel_cost_annual += total_cost
+            barrel_cost_annual += Decimal(total_cost)
 
     # Verwerking/verbranding en ophaling, excl. WIVA-vaten
     processing_cost_annual = Decimal(str(waste.cost_collection_processing or "0"))
