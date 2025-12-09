@@ -206,13 +206,9 @@ def run_payback_for_request(request_id) -> dict:
         (waste.number_of_barrels_4, waste.cost_hmw_barrels_4),
         ]
 
-    for n_barrels, cost_per_barrel in cost_streams:
-        # expliciet op None testen zodat 0 ook als geldige input kan
-        if n_barrels is not None and cost_per_barrel is not None:
-            barrel_cost_annual += n_barrels * cost_per_barrel
-
-    # berekende vatkost wegschrijven in het model
-    waste.total_cost_hmw_barrels = barrel_cost_annual
+    for n_barrels, total_cost in cost_streams:
+        if n_barrels is not None and total_cost is not None:
+            barrel_cost_annual += total_cost
 
     # Verwerking/verbranding en ophaling, excl. WIVA-vaten
     processing_cost_annual = waste.cost_collection_processing or 0.0
