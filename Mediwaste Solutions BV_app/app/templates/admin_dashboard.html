@@ -1,85 +1,149 @@
-<h1>Admin Dashboard</h1>
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+</head>
+<body>
 
-<h2>Gebruikers</h2>
-<table border="1">
-    <tr>
-        <th>Naam</th>
-        <th>Email</th>
-        <th>Bedrijf</th>
-    </tr>
-    {% for u in users %}
-    <tr>
-        <td>{{ u.name_user }}</td>
-        <td>{{ u.email }}</td>
-        <td>{{ u.name_organization }}</td>
-    </tr>
-    {% endfor %}
-</table>
+    <a href="{{ url_for('main.homepage') }}" class="home-btn">← Terug naar de homepagina</a>
 
-<h2>Aanvragen (Requests)</h2>
-<table border="1">
-    <tr>
-        <th>Request ID</th>
-        <th>Email</th>
-        <th>Datum</th>
-    </tr>
-    {% for r in requests %}
-    <tr>
-        <td>{{ r.id }}</td>
-        <td>{{ r.user.email }}</td> 
-        <td>{{ r.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
-    </tr>
-    {% endfor %}
-</table>
+    <h1>Admin Dashboard</h1>
 
-<h2>Input (Waste Profiles)</h2>
-<table border="1">
-    <tr>
-        <th>Request</th>
-        <th>Email</th>
-        <th>Gewicht</th>
-        <th>Barrels</th>
-        <th>Kost verwerking</th>
-    </tr>
-    {% for w in wastes %}
-    <tr>
-        <td>{{ w.request_id }}</td>
-        <td>{{ w.request.user.email }}</td>
-        <td>{{ w.hmw_total_weight }}</td>
-        <td>{{ w.number_of_barrels_1 }}</td>
-        <td>{{ w.cost_collection_processing }}</td>
-    </tr>
-    {% endfor %}
-</table>
+    <h2>Gebruikers</h2>
+    <table id="table-users">
+        <thead>
+            <tr>
+                <th>Naam</th>
+                <th>Email</th>
+                <th>Bedrijf</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for u in users %}
+            <tr>
+                <td>{{ u.name_user }}</td>
+                <td>{{ u.email }}</td>
+                <td>{{ u.name_organization }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
-<h2>Output (Machine)</h2>
-<table border="1">
-    <tr>
-        <th>Request</th>
-        <th>Email</th>
-        <th>Recommended Machine</th>
-    </tr>
-    {% for m in machines %}
-    <tr>
-        <td>{{ m.request_id }}</td>
-        <td>{{ m.request.user.email }}</td>
-        <td>{{ m.recommended_machine_id }}</td>
-    </tr>
-    {% endfor %}
-</table>
+    <h2>Aanvragen (Requests)</h2>
+    <table id="table-requests">
+        <thead>
+            <tr>
+                <th>Request ID</th>
+                <th>Email</th>
+                <th>Datum</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in requests %}
+            <tr>
+                <td>{{ r.id }}</td>
+                <td>{{ r.user.email }}</td> 
+                <td>{{ r.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
-<h2>Output (Payback)</h2>
-<table border="1">
-    <tr>
-        <th>Request</th>
-        <th>Email</th>
-        <th>Payback (maanden)</th>
-    </tr>
-    {% for p in paybacks %}
-    <tr>
-        <td>{{ p.request_id }}</td>
-        <td>{{ p.request.user.email }}</td>
-        <td>{{ p.payback_months }}</td>
-    </tr>
-    {% endfor %}
-</table>
+    <h2>Input (Waste Profiles)</h2>
+    <table id="table-input">
+        <thead>
+            <tr>
+                <th>Request</th>
+                <th>Email</th>
+                <th>Gewicht</th>
+                <th>Barrels</th>
+                <th>Kost verwerking</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for w in wastes %}
+            <tr>
+                <td>{{ w.request_id }}</td>
+                <td>{{ w.request.user.email }}</td>
+                <td>{{ w.hmw_total_weight }}</td>
+                <td>{{ w.number_of_barrels_1 }}</td>
+                <td>{{ w.cost_collection_processing }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Output (Machine)</h2>
+    <table id="table-machine">
+        <thead>
+            <tr>
+                <th>Request</th>
+                <th>Email</th>
+                <th>Recommended Machine</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for m in machines %}
+            <tr>
+                <td>{{ m.request_id }}</td>
+                <td>{{ m.request.user.email }}</td>
+                <td>{{ m.recommended_machine_id }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Output (Payback)</h2>
+    <table id="table-payback">
+        <thead>
+            <tr>
+                <th>Request</th>
+                <th>Email</th>
+                <th>Payback (maanden)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in paybacks %}
+            <tr>
+                <td>{{ p.request_id }}</td>
+                <td>{{ p.request.user.email }}</td>
+                <td>{{ p.payback_months }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const tables = document.querySelectorAll("table");
+
+            tables.forEach(table => {
+                const tbody = table.querySelector("tbody");
+                const rows = tbody.querySelectorAll("tr");
+                const limit = 10;
+
+                if (rows.length > limit) {
+                    for (let i = limit; i < rows.length; i++) {
+                        rows[i].classList.add("hidden-row");
+                    }
+
+                    const btn = document.createElement("button");
+                    btn.innerText = "Meer tonen (" + (rows.length - limit) + ")";
+                    btn.className = "show-more-btn";
+
+                    table.parentNode.insertBefore(btn, table.nextSibling);
+
+                    btn.addEventListener("click", function() {
+                        rows.forEach(row => row.classList.remove("hidden-row"));
+                        btn.remove();
+                    });
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

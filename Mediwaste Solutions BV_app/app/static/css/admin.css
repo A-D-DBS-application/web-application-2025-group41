@@ -1,0 +1,110 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f6f8;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    color: #2c3e50;
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+    padding-bottom: 10px;
+    border-bottom: 3px solid #2150b6;
+    
+    /* Centreren */
+    display: table; 
+    margin-left: auto;
+    margin-right: auto;
+}
+
+h2 {
+    color: #34495e;
+    font-size: 1.5rem;
+    margin-top: 40px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 10px; /* Iets minder margin ivm knop */
+}
+
+th {
+    background-color: #2150b6; /* Nieuwe kleur */
+    color: white;
+    text-align: left;
+    padding: 15px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+}
+
+td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #ecf0f1;
+    color: #555;
+    font-size: 0.95rem;
+}
+
+tr:nth-child(even) {
+    background-color: #f9fbfc;
+}
+
+tr:hover {
+    background-color: #eaf2f8;
+    transition: background-color 0.2s ease;
+}
+
+/* Verberg rijen standaard via CSS class (wordt door JS gebruikt) */
+.hidden-row {
+    display: none;
+}
+
+/* Stijl voor de 'Meer tonen' knop */
+.show-more-btn {
+    background-color: transparent;
+    border: 2px solid #2150b6;
+    color: #2150b6;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+    margin-bottom: 30px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    transition: all 0.2s;
+}
+
+.show-more-btn:hover {
+    background-color: #2150b6;
+    color: white;
+}
+
+.home-btn {
+    position: absolute;
+    top: 30px;
+    left: 20px;
+    background-color: #eded1a;
+    color: #333;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: 600;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    border: 1px solid #dcdc15;
+}
+
+.home-btn:hover {
+    background-color: #dcdc15;
+    cursor: pointer;
+}
