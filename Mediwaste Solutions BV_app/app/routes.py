@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash
-from .models import db, User, Request, WasteProfile, MachineSizeCalc1, PaybackPeriodCalc2
+from .models import db, User, Request, WasteProfile, MachineSizeCalc1, PaybackPeriodCalc2, MachineSpecs
 from .algorithm import run_user_algorithm
 from .algorithm import run_payback_for_request
 import uuid
@@ -241,43 +241,46 @@ def admin_dashboard():
 
     # JOIN QUERY – alles in één rij
     results = (
-        db.session.query(
-            Request.id.label("request_id"),
-            Request.created_at.label("created_at"),
+    db.session.query(
+        Request.id.label("request_id"),
+        Request.created_at.label("created_at"),
 
-            User.email.label("email"),
-            User.name_organization.label("company"),
-            User.name_user.label("username"),
+        User.email.label("email"),
+        User.name_organization.label("company"),
+        User.name_user.label("username"),
 
-            WasteProfile.hmw_total_weight,
-            WasteProfile.cost_collection_processing,
-            WasteProfile.wiva_types,
-            WasteProfile.number_of_barrels_1,
-            WasteProfile.number_of_barrels_2,
-            WasteProfile.number_of_barrels_3,
-            WasteProfile.number_of_barrels_4,
-            WasteProfile.volume_barrels_1,
-            WasteProfile.volume_barrels_2,
-            WasteProfile.volume_barrels_3,
-            WasteProfile.volume_barrels_4,
-            WasteProfile.cost_hmw_barrels_1,
-            WasteProfile.cost_hmw_barrels_2,
-            WasteProfile.cost_hmw_barrels_3,
-            WasteProfile.cost_hmw_barrels_4,
-            WasteProfile.steam_generator_needed,
+        WasteProfile.hmw_total_weight,
+        WasteProfile.cost_collection_processing,
+        WasteProfile.wiva_types,
+        WasteProfile.number_of_barrels_1,
+        WasteProfile.number_of_barrels_2,
+        WasteProfile.number_of_barrels_3,
+        WasteProfile.number_of_barrels_4,
+        WasteProfile.volume_barrels_1,
+        WasteProfile.volume_barrels_2,
+        WasteProfile.volume_barrels_3,
+        WasteProfile.volume_barrels_4,
+        WasteProfile.cost_hmw_barrels_1,
+        WasteProfile.cost_hmw_barrels_2,
+        WasteProfile.cost_hmw_barrels_3,
+        WasteProfile.cost_hmw_barrels_4,
+        WasteProfile.steam_generator_needed,
 
-            MachineSizeCalc1.recommended_machine_id,
-            PaybackPeriodCalc2.payback_months
-        )
-        .join(User, User.id == Request.user_id)
-        .join(WasteProfile, WasteProfile.request_id == Request.id)
-        .join(MachineSizeCalc1, MachineSizeCalc1.request_id == Request.id)
-        .join(PaybackPeriodCalc2, PaybackPeriodCalc2.request_id == Request.id)
-        .order_by(Request.created_at.desc())
-        .limit(page_size)
-        .offset(offset)
-        .all()
+        MachineSizeCalc1.recommended_machine_id,
+        MachineSpecs.size_code.label("machine_type"),   # ✔️ nieuw
+        PaybackPeriodCalc2.payback_months
     )
+    .join(User, User.id == Request.user_id)
+    .join(WasteProfile, WasteProfile.request_id == Request.id)
+    .join(MachineSizeCalc1, MachineSizeCalc1.request_id == Request.id)
+    .join(MachineSpecs, MachineSpecs.id == MachineSizeCalc1.recommended_machine_id)   # ✔️ nieuw
+    .join(PaybackPeriodCalc2, PaybackPeriodCalc2.request_id == Request.id)
+    .order_by(Request.created_at.desc())
+    .limit(page_size)
+    .offset(offset)
+    .all()
+)
+
 
     # COUNT FOR PAGINATION
     total_requests = Request.query.count()

@@ -88,8 +88,12 @@
             <tr>
                 <td>{{ r.company }}</td>
                 <td>{{ r.email }}</td>
-                <td>{{ r.recommended_machine_id }}</td>
-                <td>{{ r.payback_months }}</td>
+
+                <!-- MACHINE TYPE (T100, T150, …) -->
+                <td>{{ r.machine_type }}</td>
+
+                <!-- PAYBACK AS INTEGER (no decimals) -->
+                <td>{{ r.payback_months|int }}</td>
 
                 <td>
                     <button class="details-btn" data-target="details-{{ loop.index0 }}">
@@ -189,7 +193,8 @@
             document.querySelectorAll(".details-btn").forEach(btn => {
                 btn.addEventListener("click", () => {
                     const row = document.getElementById(btn.dataset.target);
-                    row.style.display = row.style.display === "table-row" ? "none" : "table-row";
+                    row.style.display =
+                        row.style.display === "table-row" ? "none" : "table-row";
                 });
             });
         });
