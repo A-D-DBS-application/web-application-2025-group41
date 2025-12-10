@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="{{ session.get('lang', 'nl') }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tableau de bord - Mediwaste Solutions</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+  <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+</head>
+
+<body>
+  <header>
+    Mediwaste Solutions
+    <a href="{{ url_for('main.homepage') }}" class="logout-btn">Se déconnecter</a>
+  </header> 
+
+  <div class="dashboard-container">
+    <h1>Bienvenue à nouveau!</h1>
+    <p>Lancez une nouvelle simulation ou consultez vos simulations précédentes.</p>
+
+    <!-- Knoppen verwijzen nu naar de juiste routes -->
+    <a class="btn" href="{{ url_for('main.input_page') }}">Nouvelle simulation</a>
+    <a class="btn btn-secondary" href="{{ url_for('main.aanvragen') }}">Mes simulations</a>
+
+    <!-- Terug naar homepagina -->
+    <a href="{{ url_for('main.homepage') }}">← Retour à la page d'accueil</a>
+  </div>
+
+  <footer>
+    © 2025 Mediwaste Solutions. Tous droits réservés.
+  </footer>
+</body>
+</html>

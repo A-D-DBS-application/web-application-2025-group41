@@ -7,6 +7,14 @@ from datetime import datetime
 
 main = Blueprint("main", __name__)
 
+def render_lang(template_name, **kwargs):
+    lang = session.get("lang", "nl")
+
+    if lang == "fr":
+        template_name = f"fr/{template_name}"
+
+    return render_template(template_name, **kwargs)
+
 # --- Taalfunctie (set_language) moet nog steeds in dit bestand staan om te werken ---
 @main.route('/set-language/<lang_code>')
 def set_language(lang_code):
@@ -36,7 +44,7 @@ def to_null(value):
 @main.route("/")
 @main.route("/homepage")
 def homepage():
-    return render_template("homepage.html")
+    return render_lang("homepage.html")
 
 # -------------------------
 # 2. Login (Aangepast)
@@ -65,7 +73,7 @@ def login():
             flash("Ongeldige login.")
             return redirect(url_for("main.login"))
 
-    return render_template("login.html")
+    return render_lang("login.html")
 
 
 # -------------------------
@@ -104,7 +112,7 @@ def register():
         # PAS HIER AAN: Stuur nieuwe gebruiker naar Dashboard
         return redirect(url_for("main.dashboard")) 
 
-    return render_template("register.html")
+    return render_lang("register.html")
 
 # -------------------------
 # 4. Dashboard
@@ -115,7 +123,7 @@ def dashboard():
     if not user_id:
         # Als niet ingelogd, stuur naar login (Belangrijke beveiligingscheck)
         return redirect(url_for("main.login")) 
-    return render_template("dashboard.html")
+    return render_lang("dashboard.html")
 
 # -------------------------
 # 5. Aanvragen
@@ -128,7 +136,7 @@ def aanvragen():
 
     # converteer naar UUID
     requests = Request.query.filter_by(user_id=uuid.UUID(user_id)).all()
-    return render_template("aanvragen.html", requests=requests)
+    return render_lang("aanvragen.html", requests=requests)
 
 # -------------------------
 # 6. Nieuwe berekening (input)
@@ -186,7 +194,7 @@ def input_page():
         # Doorsturen naar output
         return redirect(url_for("main.output", request_id=new_request.id))
 
-    return render_template("input.html")
+    return render_lang("input.html")
 
 # -------------------------
 # 7. Output
@@ -201,7 +209,7 @@ def output(request_id):
         from .models import MachineSpecs
         machine = MachineSpecs.query.filter_by(id=machine_calc.recommended_machine_id).first()
 
-    return render_template(
+    return render_lang(
         "output.html",
         calc=machine_calc,
         machine=machine,
@@ -224,7 +232,7 @@ def admin_dashboard():
     machine_calcs = MachineSizeCalc1.query.all()
     payback_calcs = PaybackPeriodCalc2.query.all()
 
-    return render_template(
+    return render_lang(
         "admin_dashboard.html",
         users=users,
         requests=requests,

@@ -18,7 +18,7 @@
 
         <label for="hmw_total_weight">Poids total DASRI</label>
         <div class="input-group">
-          <input type="number" id="hmw_total_weight" name="hmw_total_weight" placeholder="Bijv. 160000" required>
+          <input type="number" id="hmw_total_weight" name="hmw_total_weight" placeholder="p. ex. 160000" required>
           <span class="unit">kg</span>
         </div>
 
@@ -33,38 +33,38 @@
         <div class="wiva-group" data-group="1">
           <label for="number_of_barrels_1">Nombre de fûts WIVA type 1</label>
           <div class="input-group">
-            <input type="number" id="number_of_barrels_1" name="number_of_barrels_1" placeholder="Bijv. 5000">
+            <input type="number" id="number_of_barrels_1" name="number_of_barrels_1" placeholder="p. ex. 5000">
           </div>
 
           <label for="cost_hmw_barrels_1">Coût actuel des fûts WIVA par an type 1</label>
           <div class="input-group">
-            <input type="number" id="cost_hmw_barrels_1" name="cost_hmw_barrels_1" placeholder="Bijv. 100000">
+            <input type="number" id="cost_hmw_barrels_1" name="cost_hmw_barrels_1" placeholder="p. ex. 100000">
             <span class="unit">€</span>
           </div>
 
-          <label for="volume_barrel_1">Contenu par fût WIVA type 1</label>
+          <label for="volume_barrels_1">Contenu par fût WIVA type 1</label>
           <div class="input-group">
-            <input type="number" id="volume_barrel_1" name="volume_barrel_1" placeholder="Bijv. 60">
-            <span class="unit">Liter</span>
+            <input type="number" id="volume_barrels_1" name="volume_barrels_1" placeholder="p. ex. 60">
+            <span class="unit">Litre</span>
           </div>
         </div>
 
         <div class="wiva-group" data-group="2">
           <label for="number_of_barrels_2">Nombre de fûts WIVA type 2</label>
           <div class="input-group">
-            <input type="number" id="number_of_barrels_2" name="number_of_barrels_2" placeholder="Bijv. 5000">
+            <input type="number" id="number_of_barrels_2" name="number_of_barrels_2" placeholder="p. ex. 5000">
           </div>
 
           <label for="cost_hmw_barrels_2">Coût actuel des fûts WIVA par an type 2</label>
           <div class="input-group">
-            <input type="number" id="cost_hmw_barrels_2" name="cost_hmw_barrels_2" placeholder="Bijv. 100000">
+            <input type="number" id="cost_hmw_barrels_2" name="cost_hmw_barrels_2" placeholder="p. ex. 100000">
             <span class="unit">€</span>
           </div>
 
-          <label for="volume_barrel_2">Contenu par fût WIVA type 2</label>
+          <label for="volume_barrels_2">Contenu par fût WIVA type 2</label>
           <div class="input-group">
-            <input type="number" id="volume_barrel_2" name="volume_barrel_2" placeholder="Bijv. 50">
-            <span class="unit">Liter</span>
+            <input type="number" id="volume_barrels_2" name="volume_barrels_2" placeholder="p. ex. 50">
+            <span class="unit">Litre</span>
           </div>
         </div>
 
@@ -80,10 +80,10 @@
             <span class="unit">€</span>
           </div>
 
-          <label for="volume_barrel_3">Contenu par fût WIVA type 3</label>
+          <label for="volume_barrels_3">Contenu par fût WIVA type 3</label>
           <div class="input-group">
-            <input type="number" id="volume_barrel_3" name="volume_barrel_3">
-            <span class="unit">Liter</span>
+            <input type="number" id="volume_barrels_3" name="volume_barrels_3">
+            <span class="unit">Litre</span>
           </div>
         </div>
 
@@ -99,37 +99,37 @@
             <span class="unit">€</span>
           </div>
 
-          <label for="volume_barrel_4">Contenu par fût WIVA type 4</label>
+          <label for="volume_barrels_4">Contenu par fût WIVA type 4</label>
           <div class="input-group">
-            <input type="number" id="volume_barrel_4" name="volume_barrel_4">
-            <span class="unit">Liter</span>
+            <input type="number" id="volume_barrels_4" name="volume_barrels_4">
+            <span class="unit">Litre</span>
           </div>
         </div>
 
         <label for="cost_collection_processing">Coût actuel de collecte et d'incinération des DASRI par an (sans coût des fûts WIVA)</label>
         <div class="input-group">
-          <input type="number" id="cost_collection_processing" name="cost_collection_processing" placeholder="Bijv. 5000" required>
+          <input type="number" id="cost_collection_processing" name="cost_collection_processing" placeholder="p. ex. 5000" required>
           <span class="unit">€</span>
         </div>
 
         <label for="steam_generator_needed">Générateur de vapeur nécessaire?</label>
         <div class="input-group">
           <select id="steam_generator_needed" name="steam_generator_needed" required>
-              <option value="true">Ja</option>
-              <option value="false">Nee</option>
+              <option value="true">Oui</option>
+              <option value="false">Non</option>
           </select>
         </div>
 
         <div class="button-group">
-          <a href="{{ url_for('main.dashboard') }}" class="secondary-btn">Terug naar dashboard</a>
-          <button type="submit">Bewaar en bekijk resultaat</button>
+          <a href="{{ url_for('main.dashboard') }}" class="secondary-btn">Retour au tableau de bord</a>
+          <button type="submit">Sauvegarder et consulter le résultat</button>
         </div>
       </form>
     </div>
   </div>
 
   <footer>
-    © 2025 Mediwaste Solutions BV. Alle rechten voorbehouden.
+    © 2025 Mediwaste Solutions BV. Tous droits réservés.
   </footer>
 
   <script>
