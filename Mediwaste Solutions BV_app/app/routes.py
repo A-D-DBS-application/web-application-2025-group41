@@ -16,6 +16,12 @@ def render_lang(template_name, **kwargs):
 
     return render_template(template_name, **kwargs)
 
+@main.app_template_filter('format_date')
+def format_date(value, format='%Y-%m-%d %H:%M'):
+    if value is None:
+        return ""
+    return value.strftime(format)
+
 # --- Taalfunctie (set_language) moet nog steeds in dit bestand staan om te werken ---
 @main.route('/set-language/<lang_code>')
 def set_language(lang_code):

@@ -20,13 +20,14 @@
 <table border="1">
     <tr>
         <th>Request ID</th>
-        <th>Email</th> <th>Datum</th>
+        <th>Email</th>
+        <th>Datum</th>
     </tr>
     {% for r in requests %}
     <tr>
         <td>{{ r.id }}</td>
         <td>{{ r.user.email }}</td> 
-        <td>{{ r.created_at }}</td>
+        <td>{{ r.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
     </tr>
     {% endfor %}
 </table>
@@ -35,7 +36,8 @@
 <table border="1">
     <tr>
         <th>Request</th>
-        <th>Email</th> <th>Gewicht</th>
+        <th>Email</th>
+        <th>Gewicht</th>
         <th>Barrels</th>
         <th>Kost verwerking</th>
     </tr>
@@ -54,7 +56,8 @@
 <table border="1">
     <tr>
         <th>Request</th>
-        <th>Email</th> <th>Recommended Machine</th>
+        <th>Email</th>
+        <th>Recommended Machine</th>
     </tr>
     {% for m in machines %}
     <tr>
@@ -69,7 +72,8 @@
 <table border="1">
     <tr>
         <th>Request</th>
-        <th>Email</th> <th>Payback (maanden)</th>
+        <th>Email</th>
+        <th>Payback (maanden)</th>
     </tr>
     {% for p in paybacks %}
     <tr>
