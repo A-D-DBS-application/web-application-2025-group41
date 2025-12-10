@@ -158,12 +158,36 @@
                     <span class="input-title">Kost ophaling/verbranding:</span> € {{ r.cost_collection_processing }}
                 </div>
 
+                <div class="input-block">
+                    <span class="input-title">Stoomgenerator nodig:</span>
+                    {% if r.steam_generator_needed %}
+                        Ja
+                    {% else %}
+                        Nee
+                    {% endif %}
+                </div>
+
                 <h4>WIVA-vaten per type</h4>
 
-                <div class="input-block"><strong>Type 1</strong><br>Aantal: {{ r.number_of_barrels_1 }}<br>Volume: {{ r.volume_barrels_1 }} L<br>Kost: € {{ r.cost_hmw_barrels_1 }}</div>
-                <div class="input-block"><strong>Type 2</strong><br>Aantal: {{ r.number_of_barrels_2 }}<br>Volume: {{ r.volume_barrels_2 }} L<br>Kost: € {{ r.cost_hmw_barrels_2 }}</div>
-                <div class="input-block"><strong>Type 3</strong><br>Aantal: {{ r.number_of_barrels_3 }}<br>Volume: {{ r.volume_barrels_3 }} L<br>Kost: € {{ r.cost_hmw_barrels_3 }}</div>
-                <div class="input-block"><strong>Type 4</strong><br>Aantal: {{ r.number_of_barrels_4 }}<br>Volume: {{ r.volume_barrels_4 }} L<br>Kost: € {{ r.cost_hmw_barrels_4 }}</div>
+                <div class="input-block"><strong>Type 1</strong><br>
+                Aantal: {{ r.number_of_barrels_1 }}<br>
+                Volume: {{ r.volume_barrels_1 }} L<br>
+                Kost: € {{ r.cost_hmw_barrels_1 }}</div>
+
+                <div class="input-block"><strong>Type 2</strong><br>
+                Aantal: {{ r.number_of_barrels_2 }}<br>
+                Volume: {{ r.volume_barrels_2 }} L<br>
+                Kost: € {{ r.cost_hmw_barrels_2 }}</div>
+
+                <div class="input-block"><strong>Type 3</strong><br>
+                Aantal: {{ r.number_of_barrels_3 }}<br>
+                Volume: {{ r.volume_barrels_3 }} L<br>
+                Kost: € {{ r.cost_hmw_barrels_3 }}</div>
+
+                <div class="input-block"><strong>Type 4</strong><br>
+                Aantal: {{ r.number_of_barrels_4 }}<br>
+                Volume: {{ r.volume_barrels_4 }} L<br>
+                Kost: € {{ r.cost_hmw_barrels_4 }}</div>
 
             </td>
         </tr>
