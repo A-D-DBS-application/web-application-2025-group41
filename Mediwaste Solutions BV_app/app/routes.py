@@ -4,6 +4,7 @@ from .algorithm import run_user_algorithm
 from .algorithm import run_payback_for_request
 import uuid
 from datetime import datetime
+from sqlalchemy.orm import joinedload
 
 main = Blueprint("main", __name__)
 
@@ -225,12 +226,20 @@ def admin_dashboard():
         return redirect(url_for("main.homepage"))
 
     users = User.query.all()
-    requests = Request.query.all()
 
-    # join input/output tables
-    waste_profiles = WasteProfile.query.all()
-    machine_calcs = MachineSizeCalc1.query.all()
-    payback_calcs = PaybackPeriodCalc2.query.all()
+    requests = Request.query.options(joinedload(Request.user)).all()
+
+    waste_profiles = WasteProfile.query.options(
+        joinedload(WasteProfile.request).joinedload(Request.user)
+    ).all()
+
+    machine_calcs = MachineSizeCalc1.query.options(
+        joinedload(MachineSizeCalc1.request).joinedload(Request.user)
+    ).all()
+
+    payback_calcs = PaybackPeriodCalc2.query.options(
+        joinedload(PaybackPeriodCalc2.request).joinedload(Request.user)
+    ).all()
 
     return render_lang(
         "admin_dashboard.html",

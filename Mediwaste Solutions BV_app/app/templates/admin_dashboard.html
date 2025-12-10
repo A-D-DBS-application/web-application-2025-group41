@@ -20,13 +20,12 @@
 <table border="1">
     <tr>
         <th>Request ID</th>
-        <th>User</th>
-        <th>Datum</th>
+        <th>Email</th> <th>Datum</th>
     </tr>
     {% for r in requests %}
     <tr>
         <td>{{ r.id }}</td>
-        <td>{{ r.user_id }}</td>
+        <td>{{ r.user.email }}</td> 
         <td>{{ r.created_at }}</td>
     </tr>
     {% endfor %}
@@ -36,13 +35,14 @@
 <table border="1">
     <tr>
         <th>Request</th>
-        <th>Gewicht</th>
+        <th>Email</th> <th>Gewicht</th>
         <th>Barrels</th>
         <th>Kost verwerking</th>
     </tr>
     {% for w in wastes %}
     <tr>
         <td>{{ w.request_id }}</td>
+        <td>{{ w.request.user.email }}</td>
         <td>{{ w.hmw_total_weight }}</td>
         <td>{{ w.number_of_barrels_1 }}</td>
         <td>{{ w.cost_collection_processing }}</td>
@@ -54,11 +54,12 @@
 <table border="1">
     <tr>
         <th>Request</th>
-        <th>Recommended Machine</th>
+        <th>Email</th> <th>Recommended Machine</th>
     </tr>
     {% for m in machines %}
     <tr>
         <td>{{ m.request_id }}</td>
+        <td>{{ m.request.user.email }}</td>
         <td>{{ m.recommended_machine_id }}</td>
     </tr>
     {% endfor %}
@@ -68,11 +69,12 @@
 <table border="1">
     <tr>
         <th>Request</th>
-        <th>Payback (maanden)</th>
+        <th>Email</th> <th>Payback (maanden)</th>
     </tr>
     {% for p in paybacks %}
     <tr>
         <td>{{ p.request_id }}</td>
+        <td>{{ p.request.user.email }}</td>
         <td>{{ p.payback_months }}</td>
     </tr>
     {% endfor %}
