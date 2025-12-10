@@ -7,27 +7,58 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
 
     <style>
-        .details-row {
-            display: none;
-            background-color: #f7faff;
-        }
-
-        .details-cell {
-            padding: 20px;
-        }
-
+        .details-row { display: none; background-color: #f7faff; }
+        .details-cell { padding: 20px; }
         .details-btn {
+            background-color: #2150b6; color: white;
+            border: none; padding: 8px 14px;
+            border-radius: 6px; cursor: pointer; font-size: 0.9rem;
+        }
+        .details-btn:hover { background-color: #183f8f; }
+
+        .filter-box {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            width: fit-content;
+        }
+
+        .filter-box input {
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            margin-right: 10px;
+        }
+
+        .filter-btn {
             background-color: #2150b6;
             color: white;
-            border: none;
             padding: 8px 14px;
             border-radius: 6px;
+            border: none;
             cursor: pointer;
-            font-size: 0.9rem;
+            font-weight: 600;
         }
 
-        .details-btn:hover {
+        .filter-btn:hover {
             background-color: #183f8f;
+        }
+
+        .reset-btn {
+            background-color: #888;
+            color: white;
+            padding: 8px 14px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            margin-left: 10px;
+            font-weight: 600;
+        }
+
+        .reset-btn:hover {
+            background-color: #666;
         }
 
         .input-block { margin-bottom: 12px; }
@@ -37,168 +68,136 @@
 
 <body>
 
-    <a href="{{ url_for('main.homepage') }}" class="home-btn">← Terug naar de homepagina</a>
+<a href="{{ url_for('main.homepage') }}" class="home-btn">← Terug naar de homepagina</a>
 
-    <h1>Admin Dashboard</h1>
+<h1>Admin Dashboard</h1>
 
-    <!-- USERS TABLE -->
-    <h2>Gebruikers</h2>
+<!-- USERS -->
+<h2>Gebruikers</h2>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Bedrijf</th>
-                <th>Naam</th>
-                <th>Email</th>
-                <th>Functie</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for u in users %}
-            <tr>
-                <td>{{ u.name_organization }}</td>
-                <td>{{ u.name_user }}</td>
-                <td>{{ u.email }}</td>
-                <td>{{ u.position }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-
-
-    <!-- REQUEST TABLE -->
-    <h2>Aanvragen – Overzicht</h2>
-
-    <table>
-        <thead>
-            <tr>
-                <th>Bedrijf</th>
-                <th>Email</th>
-                <th>Machine</th>
-                <th>Payback (maanden)</th>
-                <th>Input</th>
-                <th>Datum</th>
-                <th>Request ID</th>
-            </tr>
-        </thead>
-
-        <tbody>
-            {% for r in requests %}
-            <!-- MAIN ROW -->
-            <tr>
-                <td>{{ r.company }}</td>
-                <td>{{ r.email }}</td>
-
-                <!-- MACHINE TYPE (T100, T150, …) -->
-                <td>{{ r.machine_type }}</td>
-
-                <!-- PAYBACK AS INTEGER (no decimals) -->
-                <td>{{ r.payback_months|int }}</td>
-
-                <td>
-                    <button class="details-btn" data-target="details-{{ loop.index0 }}">
-                        Bekijk details
-                    </button>
-                </td>
-
-                <td>{{ r.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
-                <td>{{ r.request_id }}</td>
-            </tr>
-
-            <!-- DETAILS ROW -->
-            <tr id="details-{{ loop.index0 }}" class="details-row">
-                <td colspan="7" class="details-cell">
-
-                    <h3>Input Details</h3>
-
-                    <div class="input-block">
-                        <span class="input-title">Totaal gewicht RMA:</span> {{ r.hmw_total_weight }} kg
-                    </div>
-
-                    <div class="input-block">
-                        <span class="input-title">Kost ophaling/verbranding:</span> € {{ r.cost_collection_processing }}
-                    </div>
-
-                    <div class="input-block">
-                        <span class="input-title">Aantal WIVA types:</span> {{ r.wiva_types }}
-                    </div>
-
-                    <h4>WIVA-vaten per type</h4>
-
-                    <div class="input-block">
-                        <strong>Type 1</strong><br>
-                        Aantal: {{ r.number_of_barrels_1 }}<br>
-                        Volume: {{ r.volume_barrels_1 }} L<br>
-                        Kost: € {{ r.cost_hmw_barrels_1 }}
-                    </div>
-
-                    <div class="input-block">
-                        <strong>Type 2</strong><br>
-                        Aantal: {{ r.number_of_barrels_2 }}<br>
-                        Volume: {{ r.volume_barrels_2 }} L<br>
-                        Kost: € {{ r.cost_hmw_barrels_2 }}
-                    </div>
-
-                    <div class="input-block">
-                        <strong>Type 3</strong><br>
-                        Aantal: {{ r.number_of_barrels_3 }}<br>
-                        Volume: {{ r.volume_barrels_3 }} L<br>
-                        Kost: € {{ r.cost_hmw_barrels_3 }}
-                    </div>
-
-                    <div class="input-block">
-                        <strong>Type 4</strong><br>
-                        Aantal: {{ r.number_of_barrels_4 }}<br>
-                        Volume: {{ r.volume_barrels_4 }} L<br>
-                        Kost: € {{ r.cost_hmw_barrels_4 }}
-                    </div>
-
-                    <div class="input-block">
-                        <span class="input-title">Stoomgenerator nodig:</span>
-                        {% if r.steam_generator_needed %}Ja{% else %}Nee{% endif %}
-                    </div>
-
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+<table>
+    <thead>
+        <tr>
+            <th>Bedrijf</th>
+            <th>Naam</th>
+            <th>Email</th>
+            <th>Functie</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for u in users %}
+        <tr>
+            <td>{{ u.name_organization }}</td>
+            <td>{{ u.name_user }}</td>
+            <td>{{ u.email }}</td>
+            <td>{{ u.position }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 
 
-    <!-- PAGINATION -->
-    <div style="text-align: center; margin-top: 25px;">
+<!-- FILTERS (ONLY COMPANY) -->
+<h2>Aanvragen – Overzicht</h2>
 
-        {% if has_prev %}
-            <a href="{{ url_for('main.admin_dashboard', page=page-1) }}"
-               class="show-more-btn"
-               style="margin-right: 10px;">
-                ← Vorige
-            </a>
-        {% endif %}
+<form method="GET" action="{{ url_for('main.admin_dashboard') }}">
+    <div class="filter-box">
 
-        {% if has_next %}
-            <a href="{{ url_for('main.admin_dashboard', page=page+1) }}"
-               class="show-more-btn"
-               style="margin-left: 10px;">
-                Volgende →
-            </a>
-        {% endif %}
+        <label>Filter bedrijf:</label>
+        <input type="text" name="company" value="{{ filter_company }}" placeholder="bv. UZ Gent">
 
+        <button type="submit" class="filter-btn">Filter toepassen</button>
+
+        <!-- RESET BUTTON -->
+        <a href="{{ url_for('main.admin_dashboard') }}" class="reset-btn">Reset</a>
     </div>
+</form>
 
 
-    <!-- DETAILS JS -->
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            document.querySelectorAll(".details-btn").forEach(btn => {
-                btn.addEventListener("click", () => {
-                    const row = document.getElementById(btn.dataset.target);
-                    row.style.display =
-                        row.style.display === "table-row" ? "none" : "table-row";
-                });
-            });
+<!-- REQUEST TABLE -->
+<table>
+    <thead>
+        <tr>
+            <th>Bedrijf</th>
+            <th>Email</th>
+            <th>Machine</th>
+            <th>Payback (maanden)</th>
+            <th>Input</th>
+            <th>Datum</th>
+            <th>Request ID</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for r in requests %}
+        <tr>
+            <td>{{ r.company }}</td>
+            <td>{{ r.email }}</td>
+            <td>{{ r.machine_type }}</td>
+            <td>{{ r.payback_months|int }}</td>
+
+            <td>
+                <button class="details-btn" data-target="details-{{ loop.index0 }}">Bekijk details</button>
+            </td>
+
+            <td>{{ r.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+            <td>{{ r.request_id }}</td>
+        </tr>
+
+        <!-- DETAIL ROW -->
+        <tr id="details-{{ loop.index0 }}" class="details-row">
+            <td colspan="7" class="details-cell">
+
+                <h3>Input Details</h3>
+
+                <div class="input-block">
+                    <span class="input-title">Totaal gewicht RMA:</span> {{ r.hmw_total_weight }} kg
+                </div>
+
+                <div class="input-block">
+                    <span class="input-title">Kost ophaling/verbranding:</span> € {{ r.cost_collection_processing }}
+                </div>
+
+                <h4>WIVA-vaten per type</h4>
+
+                <div class="input-block"><strong>Type 1</strong><br>Aantal: {{ r.number_of_barrels_1 }}<br>Volume: {{ r.volume_barrels_1 }} L<br>Kost: € {{ r.cost_hmw_barrels_1 }}</div>
+                <div class="input-block"><strong>Type 2</strong><br>Aantal: {{ r.number_of_barrels_2 }}<br>Volume: {{ r.volume_barrels_2 }} L<br>Kost: € {{ r.cost_hmw_barrels_2 }}</div>
+                <div class="input-block"><strong>Type 3</strong><br>Aantal: {{ r.number_of_barrels_3 }}<br>Volume: {{ r.volume_barrels_3 }} L<br>Kost: € {{ r.cost_hmw_barrels_3 }}</div>
+                <div class="input-block"><strong>Type 4</strong><br>Aantal: {{ r.number_of_barrels_4 }}<br>Volume: {{ r.volume_barrels_4 }} L<br>Kost: € {{ r.cost_hmw_barrels_4 }}</div>
+
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+<!-- PAGINATION -->
+<div style="text-align: center; margin-top: 25px;">
+
+    {% if has_prev %}
+        <a href="{{ url_for('main.admin_dashboard', page=page-1, company=filter_company) }}"
+           class="show-more-btn" style="margin-right: 10px;">← Vorige</a>
+    {% endif %}
+
+    {% if has_next %}
+        <a href="{{ url_for('main.admin_dashboard', page=page+1, company=filter_company) }}"
+           class="show-more-btn" style="margin-left: 10px;">Volgende →</a>
+    {% endif %}
+
+</div>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".details-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+            const r = document.getElementById(btn.dataset.target);
+            r.style.display = (r.style.display === "table-row") ? "none" : "table-row";
         });
-    </script>
+    });
+});
+</script>
 
 </body>
 </html>

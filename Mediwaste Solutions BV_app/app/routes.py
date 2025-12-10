@@ -236,55 +236,64 @@ def admin_dashboard():
     page_size = 20
     offset = (page - 1) * page_size
 
-    # Load all users
-    users = User.query.all()
+    # Filtering parameter (ONLY company)
+    filter_company = request.args.get("company", default="", type=str)
 
-    # JOIN QUERY – alles in één rij
-    results = (
-    db.session.query(
-        Request.id.label("request_id"),
-        Request.created_at.label("created_at"),
+    # USERS (sorted alphabetically by company)
+    users = User.query.order_by(User.name_organization.asc()).all()
 
-        User.email.label("email"),
-        User.name_organization.label("company"),
-        User.name_user.label("username"),
+    # Base query
+    query = (
+        db.session.query(
+            Request.id.label("request_id"),
+            Request.created_at.label("created_at"),
 
-        WasteProfile.hmw_total_weight,
-        WasteProfile.cost_collection_processing,
-        WasteProfile.wiva_types,
-        WasteProfile.number_of_barrels_1,
-        WasteProfile.number_of_barrels_2,
-        WasteProfile.number_of_barrels_3,
-        WasteProfile.number_of_barrels_4,
-        WasteProfile.volume_barrels_1,
-        WasteProfile.volume_barrels_2,
-        WasteProfile.volume_barrels_3,
-        WasteProfile.volume_barrels_4,
-        WasteProfile.cost_hmw_barrels_1,
-        WasteProfile.cost_hmw_barrels_2,
-        WasteProfile.cost_hmw_barrels_3,
-        WasteProfile.cost_hmw_barrels_4,
-        WasteProfile.steam_generator_needed,
+            User.email.label("email"),
+            User.name_organization.label("company"),
+            User.name_user.label("username"),
 
-        MachineSizeCalc1.recommended_machine_id,
-        MachineSpecs.size_code.label("machine_type"),   # ✔️ nieuw
-        PaybackPeriodCalc2.payback_months
+            WasteProfile.hmw_total_weight,
+            WasteProfile.cost_collection_processing,
+            WasteProfile.wiva_types,
+            WasteProfile.number_of_barrels_1,
+            WasteProfile.number_of_barrels_2,
+            WasteProfile.number_of_barrels_3,
+            WasteProfile.number_of_barrels_4,
+            WasteProfile.volume_barrels_1,
+            WasteProfile.volume_barrels_2,
+            WasteProfile.volume_barrels_3,
+            WasteProfile.volume_barrels_4,
+            WasteProfile.cost_hmw_barrels_1,
+            WasteProfile.cost_hmw_barrels_2,
+            WasteProfile.cost_hmw_barrels_3,
+            WasteProfile.cost_hmw_barrels_4,
+            WasteProfile.steam_generator_needed,
+
+            MachineSizeCalc1.recommended_machine_id,
+            MachineSpecs.size_code.label("machine_type"),
+            PaybackPeriodCalc2.payback_months
+        )
+        .join(User, User.id == Request.user_id)
+        .join(WasteProfile, WasteProfile.request_id == Request.id)
+        .join(MachineSizeCalc1, MachineSizeCalc1.request_id == Request.id)
+        .join(MachineSpecs, MachineSpecs.id == MachineSizeCalc1.recommended_machine_id)
+        .join(PaybackPeriodCalc2, PaybackPeriodCalc2.request_id == Request.id)
     )
-    .join(User, User.id == Request.user_id)
-    .join(WasteProfile, WasteProfile.request_id == Request.id)
-    .join(MachineSizeCalc1, MachineSizeCalc1.request_id == Request.id)
-    .join(MachineSpecs, MachineSpecs.id == MachineSizeCalc1.recommended_machine_id)   # ✔️ nieuw
-    .join(PaybackPeriodCalc2, PaybackPeriodCalc2.request_id == Request.id)
-    .order_by(Request.created_at.desc())
-    .limit(page_size)
-    .offset(offset)
-    .all()
-)
 
+    # Apply company filter
+    if filter_company:
+        query = query.filter(User.name_organization.ilike(f"%{filter_company}%"))
 
-    # COUNT FOR PAGINATION
-    total_requests = Request.query.count()
-    max_pages = (total_requests + page_size - 1) // page_size
+    # Pagination
+    results = (
+        query.order_by(Request.created_at.desc())
+        .limit(page_size)
+        .offset(offset)
+        .all()
+    )
+
+    total_filtered = query.count()
+    max_pages = (total_filtered + page_size - 1) // page_size
 
     has_prev = page > 1
     has_next = page < max_pages
@@ -296,5 +305,6 @@ def admin_dashboard():
         page=page,
         has_prev=has_prev,
         has_next=has_next,
-        max_pages=max_pages
+        max_pages=max_pages,
+        filter_company=filter_company
     )
