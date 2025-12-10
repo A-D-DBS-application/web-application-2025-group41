@@ -231,27 +231,67 @@ def admin_dashboard():
     if not session.get("is_admin"):
         return redirect(url_for("main.homepage"))
 
+    # Pagination
+    page = request.args.get("page", default=1, type=int)
+    page_size = 20
+    offset = (page - 1) * page_size
+
+    # Load all users
     users = User.query.all()
 
-    requests = Request.query.options(joinedload(Request.user)).all()
+    # JOIN QUERY – alles in één rij
+    results = (
+        db.session.query(
+            Request.id.label("request_id"),
+            Request.created_at.label("created_at"),
 
-    waste_profiles = WasteProfile.query.options(
-        joinedload(WasteProfile.request).joinedload(Request.user)
-    ).all()
+            User.email.label("email"),
+            User.name_organization.label("company"),
+            User.name_user.label("username"),
 
-    machine_calcs = MachineSizeCalc1.query.options(
-        joinedload(MachineSizeCalc1.request).joinedload(Request.user)
-    ).all()
+            WasteProfile.hmw_total_weight,
+            WasteProfile.cost_collection_processing,
+            WasteProfile.wiva_types,
+            WasteProfile.number_of_barrels_1,
+            WasteProfile.number_of_barrels_2,
+            WasteProfile.number_of_barrels_3,
+            WasteProfile.number_of_barrels_4,
+            WasteProfile.volume_barrels_1,
+            WasteProfile.volume_barrels_2,
+            WasteProfile.volume_barrels_3,
+            WasteProfile.volume_barrels_4,
+            WasteProfile.cost_hmw_barrels_1,
+            WasteProfile.cost_hmw_barrels_2,
+            WasteProfile.cost_hmw_barrels_3,
+            WasteProfile.cost_hmw_barrels_4,
+            WasteProfile.steam_generator_needed,
 
-    payback_calcs = PaybackPeriodCalc2.query.options(
-        joinedload(PaybackPeriodCalc2.request).joinedload(Request.user)
-    ).all()
+            MachineSizeCalc1.recommended_machine_id,
+            PaybackPeriodCalc2.payback_months
+        )
+        .join(User, User.id == Request.user_id)
+        .join(WasteProfile, WasteProfile.request_id == Request.id)
+        .join(MachineSizeCalc1, MachineSizeCalc1.request_id == Request.id)
+        .join(PaybackPeriodCalc2, PaybackPeriodCalc2.request_id == Request.id)
+        .order_by(Request.created_at.desc())
+        .limit(page_size)
+        .offset(offset)
+        .all()
+    )
 
-    return render_lang(
+    # COUNT FOR PAGINATION
+    total_requests = Request.query.count()
+    max_pages = (total_requests + page_size - 1) // page_size
+
+    has_prev = page > 1
+    has_next = page < max_pages
+
+    return render_template(
         "admin_dashboard.html",
         users=users,
-        requests=requests,
-        wastes=waste_profiles,
-        machines=machine_calcs,
-        paybacks=payback_calcs
+        requests=results,
+        page=page,
+        has_prev=has_prev,
+        has_next=has_next,
+        max_pages=max_pages
     )

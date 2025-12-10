@@ -5,142 +5,192 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+
+    <style>
+        .details-row {
+            display: none;
+            background-color: #f7faff;
+        }
+
+        .details-cell {
+            padding: 20px;
+        }
+
+        .details-btn {
+            background-color: #2150b6;
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .details-btn:hover {
+            background-color: #183f8f;
+        }
+
+        .input-block { margin-bottom: 12px; }
+        .input-title { font-weight: bold; }
+    </style>
 </head>
+
 <body>
 
     <a href="{{ url_for('main.homepage') }}" class="home-btn">← Terug naar de homepagina</a>
 
     <h1>Admin Dashboard</h1>
 
+    <!-- USERS TABLE -->
     <h2>Gebruikers</h2>
-    <table id="table-users">
+
+    <table>
         <thead>
             <tr>
+                <th>Bedrijf</th>
                 <th>Naam</th>
                 <th>Email</th>
-                <th>Bedrijf</th>
+                <th>Functie</th>
             </tr>
         </thead>
         <tbody>
             {% for u in users %}
             <tr>
+                <td>{{ u.name_organization }}</td>
                 <td>{{ u.name_user }}</td>
                 <td>{{ u.email }}</td>
-                <td>{{ u.name_organization }}</td>
+                <td>{{ u.position }}</td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
 
-    <h2>Aanvragen (Requests)</h2>
-    <table id="table-requests">
+
+    <!-- REQUEST TABLE -->
+    <h2>Aanvragen – Overzicht</h2>
+
+    <table>
         <thead>
             <tr>
-                <th>Request ID</th>
+                <th>Bedrijf</th>
                 <th>Email</th>
+                <th>Machine</th>
+                <th>Payback (maanden)</th>
+                <th>Input</th>
                 <th>Datum</th>
+                <th>Request ID</th>
             </tr>
         </thead>
+
         <tbody>
             {% for r in requests %}
+            <!-- MAIN ROW -->
             <tr>
-                <td>{{ r.id }}</td>
-                <td>{{ r.user.email }}</td> 
+                <td>{{ r.company }}</td>
+                <td>{{ r.email }}</td>
+                <td>{{ r.recommended_machine_id }}</td>
+                <td>{{ r.payback_months }}</td>
+
+                <td>
+                    <button class="details-btn" data-target="details-{{ loop.index0 }}">
+                        Bekijk details
+                    </button>
+                </td>
+
                 <td>{{ r.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                <td>{{ r.request_id }}</td>
+            </tr>
+
+            <!-- DETAILS ROW -->
+            <tr id="details-{{ loop.index0 }}" class="details-row">
+                <td colspan="7" class="details-cell">
+
+                    <h3>Input Details</h3>
+
+                    <div class="input-block">
+                        <span class="input-title">Totaal gewicht RMA:</span> {{ r.hmw_total_weight }} kg
+                    </div>
+
+                    <div class="input-block">
+                        <span class="input-title">Kost ophaling/verbranding:</span> € {{ r.cost_collection_processing }}
+                    </div>
+
+                    <div class="input-block">
+                        <span class="input-title">Aantal WIVA types:</span> {{ r.wiva_types }}
+                    </div>
+
+                    <h4>WIVA-vaten per type</h4>
+
+                    <div class="input-block">
+                        <strong>Type 1</strong><br>
+                        Aantal: {{ r.number_of_barrels_1 }}<br>
+                        Volume: {{ r.volume_barrels_1 }} L<br>
+                        Kost: € {{ r.cost_hmw_barrels_1 }}
+                    </div>
+
+                    <div class="input-block">
+                        <strong>Type 2</strong><br>
+                        Aantal: {{ r.number_of_barrels_2 }}<br>
+                        Volume: {{ r.volume_barrels_2 }} L<br>
+                        Kost: € {{ r.cost_hmw_barrels_2 }}
+                    </div>
+
+                    <div class="input-block">
+                        <strong>Type 3</strong><br>
+                        Aantal: {{ r.number_of_barrels_3 }}<br>
+                        Volume: {{ r.volume_barrels_3 }} L<br>
+                        Kost: € {{ r.cost_hmw_barrels_3 }}
+                    </div>
+
+                    <div class="input-block">
+                        <strong>Type 4</strong><br>
+                        Aantal: {{ r.number_of_barrels_4 }}<br>
+                        Volume: {{ r.volume_barrels_4 }} L<br>
+                        Kost: € {{ r.cost_hmw_barrels_4 }}
+                    </div>
+
+                    <div class="input-block">
+                        <span class="input-title">Stoomgenerator nodig:</span>
+                        {% if r.steam_generator_needed %}Ja{% else %}Nee{% endif %}
+                    </div>
+
+                </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
 
-    <h2>Input (Waste Profiles)</h2>
-    <table id="table-input">
-        <thead>
-            <tr>
-                <th>Request</th>
-                <th>Email</th>
-                <th>Gewicht</th>
-                <th>Barrels</th>
-                <th>Kost verwerking</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for w in wastes %}
-            <tr>
-                <td>{{ w.request_id }}</td>
-                <td>{{ w.request.user.email }}</td>
-                <td>{{ w.hmw_total_weight }}</td>
-                <td>{{ w.number_of_barrels_1 }}</td>
-                <td>{{ w.cost_collection_processing }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
 
-    <h2>Output (Machine)</h2>
-    <table id="table-machine">
-        <thead>
-            <tr>
-                <th>Request</th>
-                <th>Email</th>
-                <th>Recommended Machine</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for m in machines %}
-            <tr>
-                <td>{{ m.request_id }}</td>
-                <td>{{ m.request.user.email }}</td>
-                <td>{{ m.recommended_machine_id }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <!-- PAGINATION -->
+    <div style="text-align: center; margin-top: 25px;">
 
-    <h2>Output (Payback)</h2>
-    <table id="table-payback">
-        <thead>
-            <tr>
-                <th>Request</th>
-                <th>Email</th>
-                <th>Payback (maanden)</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for p in paybacks %}
-            <tr>
-                <td>{{ p.request_id }}</td>
-                <td>{{ p.request.user.email }}</td>
-                <td>{{ p.payback_months }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+        {% if has_prev %}
+            <a href="{{ url_for('main.admin_dashboard', page=page-1) }}"
+               class="show-more-btn"
+               style="margin-right: 10px;">
+                ← Vorige
+            </a>
+        {% endif %}
 
+        {% if has_next %}
+            <a href="{{ url_for('main.admin_dashboard', page=page+1) }}"
+               class="show-more-btn"
+               style="margin-left: 10px;">
+                Volgende →
+            </a>
+        {% endif %}
+
+    </div>
+
+
+    <!-- DETAILS JS -->
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const tables = document.querySelectorAll("table");
-
-            tables.forEach(table => {
-                const tbody = table.querySelector("tbody");
-                const rows = tbody.querySelectorAll("tr");
-                const limit = 10;
-
-                if (rows.length > limit) {
-                    for (let i = limit; i < rows.length; i++) {
-                        rows[i].classList.add("hidden-row");
-                    }
-
-                    const btn = document.createElement("button");
-                    btn.innerText = "Meer tonen (" + (rows.length - limit) + ")";
-                    btn.className = "show-more-btn";
-
-                    table.parentNode.insertBefore(btn, table.nextSibling);
-
-                    btn.addEventListener("click", function() {
-                        rows.forEach(row => row.classList.remove("hidden-row"));
-                        btn.remove();
-                    });
-                }
+        document.addEventListener("DOMContentLoaded", () => {
+            document.querySelectorAll(".details-btn").forEach(btn => {
+                btn.addEventListener("click", () => {
+                    const row = document.getElementById(btn.dataset.target);
+                    row.style.display = row.style.display === "table-row" ? "none" : "table-row";
+                });
             });
         });
     </script>
