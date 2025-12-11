@@ -39,3 +39,6 @@ https://teams.microsoft.com/l/meetingrecap?driveId=b%21HgPf5zJvTk-HFEwkuw_k3Q0hz
 
     SPRINT 2
 https://teams.microsoft.com/l/meetingrecap?driveId=b%21HgPf5zJvTk-HFEwkuw_k3Q0hz6xoNQ1HvCSPhMKT-V1e_e7piuuQRrij6cHVusut&driveItemId=01Y5WWU7XFKC2WKOL2TVEKPY6LRI46AFM6&sitePath=https%3A%2F%2Fugentbe-my.sharepoint.com%2F%3Av%3A%2Fg%2Fpersonal%2Fjohan_verrue_ugent_be%2FEeVQtWU5ep1Ip-PLijngFZ4BQPI7Lk2f3ocyShFPegrHqQ&fileUrl=https%3A%2F%2Fugentbe-my.sharepoint.com%2F%3Av%3A%2Fg%2Fpersonal%2Fjohan_verrue_ugent_be%2FEeVQtWU5ep1Ip-PLijngFZ4BQPI7Lk2f3ocyShFPegrHqQ&iCalUid=040000008200E00074C5B7101A82E00800000000006D3F64EC5BDC010000000000000000100000008FAA8B8B791B3A46BBF53B815B5AE2DE&threadId=19%3Ameeting_YzI1ZDUxOWYtMzg0My00MmZhLWEzZGMtMWI1MWY2NzhiYzE1%40thread.v2&organizerId=3563dc47-b789-460c-b125-119d5d6d30bd&tenantId=d7811cde-ecef-496c-8f91-a1786241b99c&callId=2fc175b9-e7a6-4f4a-bbd7-7b2cd39baf97&threadType=Meeting&meetingType=Scheduled&subType=RecapSharingLink_RecapChiclet 
+
+SPRINT 3
+https://ugentbe-my.sharepoint.com/:v:/g/personal/johan_verrue_ugent_be/IQBMijqtna6yR6h1aBS6rs0rAbORXldbwH1OmZllVFAgd7k 
