@@ -35,24 +35,22 @@ MAX_PAYBACK_YEARS = 15
 
 
 #gedeelde hulpfunctie voor volume
-def compute_annual_volume_l(waste) -> float:
+def compute_annual_volume_l(waste) -> Decimal:
     """
-    Berekent het totale jaarlijkse afvalvolume in liter,
-    op basis van de aantallen vaten en hun volumes.
+    Berekent het totale jaarlijkse afvalvolume in liters op basis van tonnage.
     """
-    annual_volume_l = Decimal("0")
+    if waste.hmw_total_weight is None:
+        return Decimal("0")
 
-    barrel_streams = [
-        (waste.number_of_barrels_1, waste.volume_barrels_1),
-        (waste.number_of_barrels_2, waste.volume_barrels_2),
-        (waste.number_of_barrels_3, waste.volume_barrels_3),
-        (waste.number_of_barrels_4, waste.volume_barrels_4),
-    ]
+    # Gewichtsinput (kg) kan als string binnenkomen → cast naar Decimal
+    kg = Decimal(str(waste.hmw_total_weight))
 
-    for n_barrels, vol_per_barrel in barrel_streams:
-        # expliciet op None testen, zodat 0 ook geldig is
-        if n_barrels is not None and vol_per_barrel is not None:
-            annual_volume_l += Decimal(str(n_barrels)) * Decimal(str(vol_per_barrel)) 
+    # 1 kg → 10/1.2 liter
+    liters_per_kg = Decimal("10") / Decimal("1.2")
+
+    # Jaarvolume in liters
+    annual_volume_l = kg * liters_per_kg
+
     return annual_volume_l
 
 
