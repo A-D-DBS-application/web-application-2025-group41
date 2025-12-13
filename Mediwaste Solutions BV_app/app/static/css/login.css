@@ -1,7 +1,7 @@
     body {
       font-family: Arial, sans-serif;
       margin: 0;
-      background-color: #f9fbff; /* lichte achtergrond */
+      background-color: #f9fbff; 
       display: flex;
       flex-direction: column;
       justify-content: center;

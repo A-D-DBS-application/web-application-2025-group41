@@ -59,7 +59,7 @@
 
     .input-group input {
       width: 100%;
-      padding: 10px 40px 10px 10px; /* ruimte voor de eenheid rechts */
+      padding: 10px 40px 10px 10px; 
       border: 1px solid #ccc;
       border-radius: 6px;
       font-size: 1rem;
@@ -72,7 +72,7 @@
       transform: translateY(-50%);
       color: #666;
       font-size: 0.95rem;
-      pointer-events: none; /* klik gaat gewoon naar input */
+      pointer-events: none; 
     }
 
     .button-group {

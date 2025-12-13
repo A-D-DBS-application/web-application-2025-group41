@@ -12,8 +12,6 @@ h1 {
     margin-bottom: 40px;
     padding-bottom: 10px;
     border-bottom: 3px solid #2150b6;
-    
-    /* Centreren */
     display: table; 
     margin-left: auto;
     margin-right: auto;
@@ -35,11 +33,11 @@ table {
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     border-radius: 8px;
     overflow: hidden;
-    margin-bottom: 10px; /* Iets minder margin ivm knop */
+    margin-bottom: 10px; 
 }
 
 th {
-    background-color: #2150b6; /* Nieuwe kleur */
+    background-color: #2150b6; 
     color: white;
     text-align: left;
     padding: 15px;
@@ -64,12 +62,10 @@ tr:hover {
     transition: background-color 0.2s ease;
 }
 
-/* Verberg rijen standaard via CSS class (wordt door JS gebruikt) */
 .hidden-row {
     display: none;
 }
 
-/* Stijl voor de 'Meer tonen' knop */
 .show-more-btn {
     background-color: transparent;
     border: 2px solid #2150b6;

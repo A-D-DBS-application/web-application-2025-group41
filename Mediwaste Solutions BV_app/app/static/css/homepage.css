@@ -87,25 +87,23 @@ p {
   margin: 30px auto;
 }
 
-/* Compacte blauwe knop voor taalkeuze */
 .btn2-small {
   background-color: #2150b6;
   color: white;
   border: none;
-  padding: 6px 12px;   /* minder padding */
-  font-size: 0.85rem;  /* iets kleinere tekst */
+  padding: 6px 12px;
+  font-size: 0.85rem;
   border-radius: 6px;
   cursor: pointer;
   display: inline-block;
   text-align: center;
   text-decoration: none;
-  margin: 0;           /* geen margin, past compact naast elkaar */
+  margin: 0;
 }
 
 .btn2-small:hover {
-  opacity: 0.9;        /* subtiele hover */
+  opacity: 0.9;
 }
-
 
 .section {
   max-width: 1000px;

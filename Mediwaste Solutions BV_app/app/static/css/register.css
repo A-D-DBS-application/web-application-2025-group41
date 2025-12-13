@@ -114,7 +114,6 @@
       border-top: 1px solid #ccc;
     }
 
-    /* AANGEPAST: Verbergt nu beide containers standaard */
     #other-org-container, 
     #other-job-container {
         display: none;
