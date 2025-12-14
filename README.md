@@ -1,6 +1,12 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/DxqGQVx4)
 
 Information how to use the app: 
+Our app is designed for use by our client, Mediwaste Solutions, and their customers to whom the machines are presented. Access to the app is restricted to ensure that sensitive business and calculation data remains private and cannot be accessed by competitors.
+
+The app serves as a tool to calculate the appropriate size of a medical waste treatment machine that cleans hazardous medical waste so it can be safely recycled with regular waste. In doing so, the machine also reduces waste volume and overall waste disposal costs. The app additionally estimates the investment payback period.
+
+No special installation steps are required; the app can be accessed directly via the homepage. Users can register or log in, enter field-specific variables, and perform calculations. All calculations are automatically saved and can be viewed later within the user’s account. An admin account is also available, allowing administrators to review all past calculations made by users.
+
 
 Link Lovable: 
     ![Lovable](./lovable%20link)
