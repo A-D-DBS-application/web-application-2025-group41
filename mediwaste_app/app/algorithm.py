@@ -143,7 +143,8 @@ def run_user_algorithm(request_id=None):
     # 4. Outputstructuur blijft identiek voor routes + templates
     return {
         "machine_id": recommended_machine_id,
-        "payback_period": None}
+        "payback_period": None,
+        "dcf":None}
 
 #CALC2
 # HULPFUNCTIE: payback in maanden (discounted)
