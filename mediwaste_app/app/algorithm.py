@@ -1,4 +1,3 @@
-from app.algorithm_settings import values, models
 import math
 from .models import db, WasteProfile, MachineSizeCalc1, MachineSpecs, PaybackPeriodCalc2
 from decimal import Decimal
@@ -32,6 +31,7 @@ MAINTENANCE_COSTS = {
 }
 # FINANCIAL MODEL SETTINGS
 MAX_PAYBACK_YEARS = 15
+YEARLY_INTEREST = Decimal("0.04")  # 4% rente
 
 
 #gedeelde hulpfunctie voor volume
@@ -62,7 +62,7 @@ def recommend_machine(request_id):
     # Jaarvolume berekenen met gedeelde hulpfunctie
     annual_volume_l = compute_annual_volume_l(waste)
 
-    # ❗ BELANGRIJKE CHECK — deze was verdwenen
+    # Checks met debug prints erin
     if annual_volume_l == 0:
         print("DEBUG: annual_volume_l == 0 → geen machine")
         return None
@@ -102,7 +102,7 @@ def recommend_machine(request_id):
 
 #annuiteit berekenen voor aankoop prijs machine
 def annuity(price, months):
-    i = values.yearly_interest / 12
+    i = YEARLY_INTEREST / 12
     if not price or price <= 0 or months <= 0:
         return None
     return (price * i) / (1 - (1 + i) ** (-months))
@@ -158,7 +158,7 @@ def payback_period_months(investment, annual_savings):
         return None
 
     monthly_savings = annual_savings / Decimal("12.0")
-    monthly_rate = Decimal(str(values.yearly_interest)) / Decimal("12")
+    monthly_rate = Decimal(str(YEARLY_INTEREST)) / Decimal("12")
 
     cumulative_saved = Decimal("0")
     max_months = MAX_PAYBACK_YEARS * 12
@@ -258,7 +258,7 @@ def run_payback_for_request(request_id):
 
     # Zorg dat alles Decimals worden
     selling_price = Decimal(machine.selling_price)
-    monthly_rate = Decimal(str(values.yearly_interest)) / Decimal("12")
+    monthly_rate = Decimal(str(YEARLY_INTEREST)) / Decimal("12")
 
     # (1 + r) ** -120  → Decimal power werkt NIET met floats of negatieve exponenten
     # oplossing: gebruik Decimal ** int  (negatieve exponent kan wél)
