@@ -143,10 +143,7 @@ def run_user_algorithm(request_id=None):
     # 4. Outputstructuur blijft identiek voor routes + templates
     return {
         "machine_id": recommended_machine_id,
-        "selling_price": None,
-        "payback_period": None,
-        "dcf": None,}
-
+        "payback_period": None}
 
 #CALC2
 # HULPFUNCTIE: payback in maanden (discounted)
@@ -187,7 +184,7 @@ def run_payback_for_request(request_id):
     - Berekent jaarlijkse kosten zonder/ met machine
     - Berekent discounted payback in maanden
     - Schrijft resultaat weg in PAYBACK_PERIOD_CALC2
-    - Geeft resultaat ook terug als dict (voor templates / debug) (?????waarom)
+    - Geeft resultaat ook terug als dict (voor templates / debug)
     """
     # 1. WASTE_PROFILE ophalen
     # -----------------------------
