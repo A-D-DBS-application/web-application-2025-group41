@@ -23,26 +23,26 @@ Screenshots of UI: See also folder
 
     Homepage: 
 
-    ![Homepage 1 ](./screenshots_UI/homepage1.png)
-    ![Homepage 2 ](./screenshots_UI/homepage2.png)
-    ![Homepage 3 ](./screenshots_UI/homepage3.png)
+    ![Homepage 1 ](./screenshots_UI_prototype_sprint1/homepage1.png)
+    ![Homepage 2 ](./screenshots_UI_prototype_sprint1/homepage2.png)
+    ![Homepage 3 ](./screenshots_UI_prototype_sprint1/homepage3.png)
 
     Login:
-    ![Login ](./screenshots_UI/login.png)
+    ![Login ](./screenshots_UI_prototype_sprint1/login.png)
 
     Register: 
-    ![Register 1 ](./screenshots_UI/register1.png)
-    ![Register 2 ](./screenshots_UI/register2.png)
+    ![Register 1 ](./screenshots_UI_prototype_sprint1/register1.png)
+    ![Register 2 ](./screenshots_UI_prototype_sprint1/register2.png)
 
     Dashboard: 
-    ![dashboard ](./screenshots_UI/dashboard.png)
+    ![dashboard ](./screenshots_UI_prototype_sprint1/dashboard.png)
 
     Input: 
-    ![Input 1 ](./screenshots_UI/input1.png)
-    ![Input 2 ](./screenshots_UI/input2.png)
+    ![Input 1 ](./screenshots_UI_prototype_sprint1/input1.png)
+    ![Input 2 ](./screenshots_UI_prototype_sprint1/input2.png)
 
     Output: 
-    ![Output  ](./screenshots_UI/output.png)
+    ![Output  ](./screenshots_UI_prototype_sprint1/output.png)
 
 Link to feedback sessions with partner:
 
