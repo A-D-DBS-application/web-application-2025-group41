@@ -13,6 +13,18 @@
       <h2>Démarrer une nouvelle simulation</h2>
       <p class="subtitle">Complétez les données pour une analyse d'économies</p>
 
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            {% if message == "TONNAGE_TOO_HIGH" %}
+              <div class="error-box">
+                Le tonnage annuel introduit dépasse la capacité maximale de nos machines.
+              </div>
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+
       <form method="POST" action="{{ url_for('main.input_page') }}">
         <h3>Coûts</h3>
 

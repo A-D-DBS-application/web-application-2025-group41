@@ -13,6 +13,18 @@
       <h2>Start een nieuwe simulatie</h2>
       <p class="subtitle">Vul de gegevens in voor een besparingsanalyse</p>
 
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            {% if message == "TONNAGE_TOO_HIGH" %}
+              <div class="error-box">
+                Het ingegeven jaarlijks tonnage is te hoog voor onze beschikbare machines.
+              </div>
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+
       <form method="POST" action="{{ url_for('main.input_page') }}">
         <h3>Kosten</h3>
 

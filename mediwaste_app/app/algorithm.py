@@ -72,7 +72,17 @@ def recommend_machine(request_id):
         print("DEBUG: max_yearly_cycles <= 0 → geen machine")
         return None
     
+    machines = MachineSpecs.query.order_by(MachineSpecs.capacity.asc()).all()
+
     required_volume_per_cycle = Decimal(annual_volume_l) / Decimal(max_yearly_cycles)
+    # Bepaal maximale effectieve machinecapaciteit
+    max_machine_capacity = max(
+        Decimal(machine.capacity) * EFFECTIVE_CAPACITY_FACTOR
+        for machine in machines)
+
+    # Als het vereiste volume groter is dan wat eender welke machine aankan → fout
+    if required_volume_per_cycle > max_machine_capacity:
+        raise ValueError("TONNAGE_TOO_HIGH")
 
     # DEBUG PRINTS
     print("\n======================")
@@ -82,8 +92,6 @@ def recommend_machine(request_id):
     print("max_yearly_cycles:", max_yearly_cycles)
     print("required_volume_per_cycle:", required_volume_per_cycle)
     print("----------------------")
-
-    machines = MachineSpecs.query.order_by(MachineSpecs.capacity.asc()).all()
 
     for machine in machines:
         effective_capacity = Decimal(machine.capacity) * EFFECTIVE_CAPACITY_FACTOR

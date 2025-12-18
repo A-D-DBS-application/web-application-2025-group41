@@ -191,15 +191,21 @@ def input_page():
         )
         db.session.add(waste)
 
-        # Machine berekenen + opslaan
-        result = run_user_algorithm(request_id=new_request.id)
-        # Payback berekenen + opslaan
-        run_payback_for_request(new_request.id)
+        try:
+            # Machine berekenen + opslaan
+            run_user_algorithm(request_id=new_request.id)
 
-        db.session.commit()
-        
-        # Doorsturen naar output
-        return redirect(url_for("main.output", request_id=new_request.id))
+            # Payback berekenen + opslaan
+            run_payback_for_request(new_request.id)
+
+            db.session.commit()
+
+            return redirect(url_for("main.output", request_id=new_request.id))
+
+        except ValueError as e:
+            db.session.rollback()
+            flash(str(e), "error")
+            return redirect(url_for("main.input_page"))
 
     return render_lang("input.html")
 

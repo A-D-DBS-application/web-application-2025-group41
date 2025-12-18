@@ -128,4 +128,20 @@
       box-shadow: 0 0 5px rgba(33, 80, 182, 0.3);
       transition: 0.2s;
     }
-  
+
+    .error-box {
+      background-color: #ffe5e5;
+      border: 2px solid #d8000c;
+      color: #d8000c;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 1.05rem;
+      text-align: center;
+    }
+
+    .error-box::before {
+      content: "⚠ ";
+      font-size: 1.2rem;
+    }
