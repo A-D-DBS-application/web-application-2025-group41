@@ -16,11 +16,19 @@
       {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
           {% for category, message in messages %}
+          
             {% if message == "TONNAGE_TOO_HIGH" %}
               <div class="error-box">
                 Le tonnage annuel introduit dépasse la capacité maximale de nos machines.
               </div>
             {% endif %}
+
+            {% if message == "ZERO_VOLUME" %}
+              <div class="error-box">
+                Le poids total introduit doit être supérieur à 0.
+              </div>
+            {% endif %}
+
           {% endfor %}
         {% endif %}
       {% endwith %}

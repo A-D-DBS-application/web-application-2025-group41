@@ -55,86 +55,55 @@ def compute_annual_volume_l(waste) -> Decimal:
 
 
 def recommend_machine(request_id):
+
     waste = WasteProfile.query.filter_by(request_id=request_id).first()
     if waste is None:
-        return None
-
+        raise ValueError("NO_WASTE_PROFILE") # Kan gebruiker niet oplossen -> niet getoond op site
+    
     # Jaarvolume berekenen met gedeelde hulpfunctie
     annual_volume_l = compute_annual_volume_l(waste)
-
-    # Checks met debug prints erin
     if annual_volume_l == 0:
-        print("DEBUG: annual_volume_l == 0 → geen machine")
-        return None
+        raise ValueError("ZERO_VOLUME") # Kan gebruiker oplossen -> wordt getoond op de site
 
-    max_yearly_cycles = MAX_DAILY_CYCLES * WORKDAYS_PER_YEAR
-    if max_yearly_cycles <= 0:
-        print("DEBUG: max_yearly_cycles <= 0 → geen machine")
-        return None
-    
     machines = MachineSpecs.query.order_by(MachineSpecs.capacity.asc()).all()
-
+    if not machines:
+        raise ValueError("NO_MACHINES_CONFIGURED") # Kan gebruiker niet oplossen -> niet getoond op site
+    
+    max_yearly_cycles = MAX_DAILY_CYCLES * WORKDAYS_PER_YEAR
     required_volume_per_cycle = Decimal(annual_volume_l) / Decimal(max_yearly_cycles)
+
     # Bepaal maximale effectieve machinecapaciteit
     max_machine_capacity = max(
         Decimal(machine.capacity) * EFFECTIVE_CAPACITY_FACTOR
         for machine in machines)
-
+    
     # Als het vereiste volume groter is dan wat eender welke machine aankan → fout
     if required_volume_per_cycle > max_machine_capacity:
-        raise ValueError("TONNAGE_TOO_HIGH")
-
-    # DEBUG PRINTS
-    print("\n======================")
-    print(" RECOMMEND MACHINE DEBUG")
-    print("======================")
-    print("annual_volume_l:", annual_volume_l)
-    print("max_yearly_cycles:", max_yearly_cycles)
-    print("required_volume_per_cycle:", required_volume_per_cycle)
-    print("----------------------")
+        raise ValueError("TONNAGE_TOO_HIGH") # Kan gebruiker oplossen -> wordt getoond op de site
 
     for machine in machines:
         effective_capacity = Decimal(machine.capacity) * EFFECTIVE_CAPACITY_FACTOR
-        print(f"Machine {machine.size_code}: "
-            f"capacity={machine.capacity}, "
-            f"effective_capacity={effective_capacity}")
         
         if effective_capacity >= Decimal(required_volume_per_cycle):
-            print(f"SELECTED MACHINE → {machine.size_code}")
-            print("======================\n")
             return machine
 
-    print("NO MACHINE SELECTED")
-    print("======================\n")
-    return None
+    raise ValueError("NO_MACHINE_FOUND") # Kan gebruiker niet oplossen -> niet getoond op site
 
-#annuiteit berekenen voor aankoop prijs machine
-def annuity(price, months):
-    i = YEARLY_INTEREST / 12
-    if not price or price <= 0 or months <= 0:
-        return None
-    return (price * i) / (1 - (1 + i) ** (-months))
-
-#hoofdfunctie van het algoritme
 def run_user_algorithm(request_id=None):
 
-    # 1. request_id bepalen
+    # Request_id bepalen
     if request_id is None:
         # routes.py geeft request_id niet door; we pakken de meest recente WasteProfile
         waste = WasteProfile.query.order_by(WasteProfile.id.desc()).first()
         if waste is None:
-            raise ValueError("Geen WASTE_PROFILE gevonden voor run_user_algorithm() zonder request_id.")
+            raise ValueError("NO_LATEST_WASTE_PROFILE")
         request_id = waste.request_id
 
-    # 2. Machine aanbevelen
+    # Machine aanbevelen
     machine = recommend_machine(request_id)
+    recommended_machine_id = machine.id
 
-    if machine is None:
-        recommended_machine_id = None
-    else:
-        recommended_machine_id = machine.id
-
-    # 3. Machine opslaan in MACHINE_SIZE_CALC1
+    # Machine opslaan in MACHINE_SIZE_CALC1
     existing = MachineSizeCalc1.query.filter_by(request_id=request_id).first()
 
     if existing is None:
@@ -148,11 +117,9 @@ def run_user_algorithm(request_id=None):
 
     db.session.commit()
 
-    # 4. Outputstructuur blijft identiek voor routes + templates
     return {
         "machine_id": recommended_machine_id,
-        "payback_period": None,
-        "dcf":None}
+        "payback_period": None}
 
 #CALC2
 # HULPFUNCTIE: payback in maanden (discounted)
@@ -220,7 +187,6 @@ def run_payback_for_request(request_id):
     # Totale huidige kost zonder machine
     baseline_annual_cost = barrel_cost_annual + processing_cost_annual
 
-
     # 2. Machinekeuze ophalen
     # -----------------------------
     msize = MachineSizeCalc1.query.filter_by(request_id=request_id).first()
@@ -233,7 +199,6 @@ def run_payback_for_request(request_id):
             f"MACHINE_SPECS not found for id={msize.recommended_machine_id}"
         )
 
-
     # 3. Cycli per jaar + gebruikskosten
     # -----------------------------
     effective_capacity = Decimal(machine.capacity) * EFFECTIVE_CAPACITY_FACTOR
@@ -243,7 +208,6 @@ def run_payback_for_request(request_id):
     annual_volume_l = compute_annual_volume_l(waste)
 
     cycles_per_year = math.ceil(Decimal(annual_volume_l) / effective_capacity)
-
 
     # 4. Kosten mét machine
     # -----------------------------
@@ -258,7 +222,7 @@ def run_payback_for_request(request_id):
 
     # geen WIVA-vaten meer nodig met machine? wel zakken, prijs?
     barrel_cost_with_machine = 0.0
-    reduced_volume = Decimal(annual_volume_l) * VOLUME_REDUCTION_FACTOR 
+    reduced_volume = Decimal(annual_volume_l) * VOLUME_REDUCTION_FACTOR
     bags = (reduced_volume / Decimal("60")).to_integral_value(rounding="ROUND_CEILING")
     cost_bags_for_machine = COST_PE_ZAKKEN_MACHINE * bags
 
