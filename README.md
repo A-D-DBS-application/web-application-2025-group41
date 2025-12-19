@@ -16,10 +16,11 @@ Link Render:
     https://web-application-2025-group41.onrender.com/
     ![Render](./render%20link)
     
-Link Kanban: 
+Kanban: 
+    See file "group 41 _ kanban.jpg" 
 
 
-Screenshots of UI: See also folder 
+Screenshots of UI: See folder 
 
     Homepage: 
 
